@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Akilan "Akil" Rammohan | Personal Website</title>
+  <title>Akilan Rammohan | Personal Website</title>
   <style>
     body {
       margin: 0;
@@ -14,6 +14,7 @@
       position: relative;
       min-height: 100vh;
     }
+    /* Title spans horizontally at top */
     #title {
       position: absolute;
       top: 5%;
@@ -33,32 +34,40 @@
       #title { display: block; text-align: center; padding: 20px 0; }
       #title span { display: inline; }
     }
-    #headshot {
+    /* Middle container to evenly space headshot and links */
+    #middle {
       position: absolute;
-      top: 16.5%;
-      left: 50%;
-      transform: translateX(-50%);
+      top: 10%;        /* just below the title */
+      bottom: 60px;    /* just above the first bio line */
+      left: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      box-sizing: border-box;
+      padding: 0 2%;
+    }
+    #headshot {
+      position: static;
       width: 200px;
       height: 200px;
       border-radius: 4px;
       object-fit: cover;
     }
     #links {
-      position: absolute;
-      top: 45%;
-      left: 50%;
-      transform: translateX(-50%);
+      position: static;
       text-align: center;
     }
     #links a {
       display: block;
       margin: 10px 0;
-      font-size: 1.5rem;
+      font-size: 1rem;
       text-decoration: none;
       color: inherit;
     }
     #links a:hover { text-decoration: underline; }
-    /* Bio lines: simple block text */
+    /* Bio lines: simple centered block text */
     #bio, #bio2, #bio3 {
       position: absolute;
       left: 50%;
@@ -75,7 +84,7 @@
     #bio2 { bottom: 40px; }
     #bio3 { bottom: 20px; }
     @media (max-width: 600px) {
-      #links, #bio, #bio2, #bio3 {
+      #middle, #links, #bio, #bio2, #bio3 {
         position: static;
         width: 100%;
         margin: 10px auto;
@@ -85,8 +94,6 @@
         transform: none;
       }
       #headshot {
-        position: static;
-        display: block;
         margin: 20px auto;
       }
     }
@@ -95,18 +102,19 @@
 <body>
   <div id="title">
     <span>A</span><span>k</span><span>i</span><span>l</span><span>a</span><span>n</span><span> </span>
-    <span>"</span><span>A</span><span>k</span><span>i</span><span>l</span><span>"</span><span> </span>
+    <span> </span>
     <span>R</span><span>a</span><span>m</span><span>m</span><span>o</span><span>h</span><span>a</span><span>n</span>
   </div>
 
-  <img src="headshot.jpg" alt="Headshot" id="headshot">
-
-  <div id="links">
-    <a href="https://github.com/akilrammohan" id="github">GitHub.</a>
-    <a href="https://www.linkedin.com/in/akilan-rammohan-950818219/" id="linkedin">LinkedIn.</a>
-    <a href="resume.pdf" id="resume">Resume.</a>
-    <a href="https://open.spotify.com/user/akster213" id="spotify">Spotify.</a>
-    <a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" id="goodreads">Goodreads.</a>
+  <div id="middle">
+    <img src="headshot.jpg" alt="Headshot" id="headshot">
+    <div id="links">
+      <a href="https://github.com/akilrammohan" id="github">GitHub.</a>
+      <a href="https://www.linkedin.com/in/akilan-rammohan-950818219/" id="linkedin">LinkedIn.</a>
+      <a href="resume.pdf" id="resume">Resume.</a>
+      <a href="https://open.spotify.com/user/akster213" id="spotify">Spotify.</a>
+      <a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" id="goodreads">Goodreads.</a>
+    </div>
   </div>
 
   <!-- Bio line 1 -->
@@ -127,7 +135,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const headshot = document.getElementById('headshot');
-      if (Math.random() < 0.25) headshot.src = 'alternate-headshot.jpg';
+      if (Math.random() < 0.25) headshot.src = 'subject.png';
     });
   </script>
 </body>

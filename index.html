@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Akilan Rammohan | Personal Website</title>
+  <title>Akilan "Akil" Rammohan | Personal Website</title>
   <style>
     body {
       margin: 0;
@@ -28,22 +28,14 @@
       font-weight: 900;
       text-transform: uppercase;
     }
-    #title span {
-      display: inline-block;
-    }
+    #title span { display: inline-block; }
     @media (max-width: 600px) {
-      #title {
-        display: block;
-        text-align: center;
-        padding: 20px 0;
-      }
-      #title span {
-        display: inline;
-      }
+      #title { display: block; text-align: center; padding: 20px 0; }
+      #title span { display: inline; }
     }
     #headshot {
       position: absolute;
-      top: 12%;
+      top: 16.5%; 
       left: 50%;
       transform: translateX(-50%);
       width: 200px;
@@ -65,30 +57,41 @@
       text-decoration: none;
       color: inherit;
     }
-    #links a:hover {
-      text-decoration: underline;
-    }
-    #bio {
+    #links a:hover { text-decoration: underline; }
+    /* Bio lines: three flex containers for even word spacing */
+    #bio, #bio2, #bio3 {
       position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 0;
+      width: 100%;
+      display: flex;
+      box-sizing: border-box;
+      padding: 0 2%;
       font-size: 1rem;
+      font-family: Georgia, Cambria, "Palatino Linotype", "Book Antiqua", serif;
+    }
+    /* Staggered from bottom: bio3 at 20px, bio2 at 40px, bio at 60px */
+    #bio3 { bottom: 20px; }
+    #bio2 { bottom: 40px; }
+    #bio { bottom: 60px; }
+    #bio span, #bio2 span, #bio3 span {
+      flex: 1;
       text-align: center;
-      width: 90%;
     }
     @media (max-width: 600px) {
-      #links,
-      #bio {
+      #links, #bio, #bio2, #bio3 {
         position: static;
         width: 100%;
-        margin: 20px auto;
+        margin: 10px auto;
+        display: block;
+        text-align: center;
+        padding: 0;
       }
       #headshot {
         position: static;
         display: block;
         margin: 20px auto;
       }
+      #bio span, #bio2 span, #bio3 span { display: inline; }
     }
   </style>
 </head>
@@ -98,7 +101,9 @@
     <span>"</span><span>A</span><span>k</span><span>i</span><span>l</span><span>"</span><span> </span>
     <span>R</span><span>a</span><span>m</span><span>m</span><span>o</span><span>h</span><span>a</span><span>n</span>
   </div>
+
   <img src="headshot.jpg" alt="Headshot" id="headshot">
+
   <div id="links">
     <a href="https://github.com/akilrammohan" id="github">GitHub.</a>
     <a href="https://www.linkedin.com/in/akilan-rammohan-950818219/" id="linkedin">LinkedIn.</a>
@@ -106,9 +111,58 @@
     <a href="https://open.spotify.com/user/akster213" id="spotify">Spotify.</a>
     <a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" id="goodreads">Goodreads.</a>
   </div>
+
+  <!-- Bio line 1 -->
   <div id="bio">
-    Junior at the University of Wisconsin-Madison double majoring in computer science and data science. Passionate about deep learning and natural language processing, interested in compilers/programming languages. Reach out at arammohan [at] wisc [dot] edu.
+    <span>Junior</span>
+    <span>at</span>
+    <span>the</span>
+    <span>University</span>
+    <span>of</span>
+    <span>Wisconsin</span>
+    <span>double</span>
+    <span>majoring</span>
+    <span>in</span>
+    <span>computer</span>
+    <span>science</span>
+    <span>and</span>
+    <span>data</span>
+    <span>science.</span>
   </div>
+
+  <!-- Bio line 2 -->
+  <div id="bio2">
+    <span>Passionate</span>
+    <span>about</span>
+    <span>deep</span>
+    <span>learning</span>
+    <span>and</span>
+    <span>natural</span>
+    <span>language</span>
+    <span>processing,</span>
+    <span>interested</span>
+    <span>in</span>
+    <span>compilers/PL.</span>
+  </div>
+
+  <!-- Bio line 3 -->
+  <div id="bio3">
+    <span>Reach</span>
+    <span>out</span>
+    <span>at</span>
+    <span>arammohan</span>
+    <span>[at]</span>
+    <span>wisc</span>
+    <span>[dot]</span>
+    <span>edu.</span>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const headshot = document.getElementById('headshot');
+      if (Math.random() < 0.25) headshot.src = 'alternate-headshot.jpg';
+    });
+  </script>
 </body>
 </html>
 

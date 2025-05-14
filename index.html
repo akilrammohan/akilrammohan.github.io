@@ -35,7 +35,7 @@
     }
     #headshot {
       position: absolute;
-      top: 16.5%; 
+      top: calc(5% + (45% - 5%) / 2);
       left: 50%;
       transform: translateX(-50%);
       width: 200px;
@@ -58,25 +58,22 @@
       color: inherit;
     }
     #links a:hover { text-decoration: underline; }
-    /* Bio lines: three flex containers for even word spacing */
+    /* Bio lines: simple block text */
     #bio, #bio2, #bio3 {
       position: absolute;
-      left: 0;
-      width: 100%;
-      display: flex;
-      box-sizing: border-box;
-      padding: 0 2%;
+      left: 50%;
+      width: 90%;
+      transform: translateX(-50%);
       font-size: 1rem;
       font-family: Georgia, Cambria, "Palatino Linotype", "Book Antiqua", serif;
-    }
-    /* Staggered from bottom: bio3 at 20px, bio2 at 40px, bio at 60px */
-    #bio3 { bottom: 20px; }
-    #bio2 { bottom: 40px; }
-    #bio { bottom: 60px; }
-    #bio span, #bio2 span, #bio3 span {
-      flex: 1;
       text-align: center;
+      margin: 0;
+      padding: 0;
+      white-space: normal;
     }
+    #bio { bottom: 60px; }
+    #bio2 { bottom: 40px; }
+    #bio3 { bottom: 20px; }
     @media (max-width: 600px) {
       #links, #bio, #bio2, #bio3 {
         position: static;
@@ -85,13 +82,13 @@
         display: block;
         text-align: center;
         padding: 0;
+        transform: none;
       }
       #headshot {
         position: static;
         display: block;
         margin: 20px auto;
       }
-      #bio span, #bio2 span, #bio3 span { display: inline; }
     }
   </style>
 </head>
@@ -114,47 +111,17 @@
 
   <!-- Bio line 1 -->
   <div id="bio">
-    <span>Junior</span>
-    <span>at</span>
-    <span>the</span>
-    <span>University</span>
-    <span>of</span>
-    <span>Wisconsin</span>
-    <span>double</span>
-    <span>majoring</span>
-    <span>in</span>
-    <span>computer</span>
-    <span>science</span>
-    <span>and</span>
-    <span>data</span>
-    <span>science.</span>
+    Junior at the University of Wisconsin double majoring in computer science and data science.
   </div>
 
   <!-- Bio line 2 -->
   <div id="bio2">
-    <span>Passionate</span>
-    <span>about</span>
-    <span>deep</span>
-    <span>learning</span>
-    <span>and</span>
-    <span>natural</span>
-    <span>language</span>
-    <span>processing,</span>
-    <span>interested</span>
-    <span>in</span>
-    <span>compilers/PL.</span>
+    Passionate about deep learning and natural language processing, interested in compilers/PL.
   </div>
 
   <!-- Bio line 3 -->
   <div id="bio3">
-    <span>Reach</span>
-    <span>out</span>
-    <span>at</span>
-    <span>arammohan</span>
-    <span>[at]</span>
-    <span>wisc</span>
-    <span>[dot]</span>
-    <span>edu.</span>
+    Reach out at arammohan [at] wisc [dot] edu.
   </div>
 
   <script>

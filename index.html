@@ -1,105 +1,114 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Akil Rammohan's Personal Website</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-
-    <style>
-      .vt323-regular {
-        font-family: "VT323", monospace;
-        font-weight: 400;
-        font-style: normal;
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akilan Rammohan | Personal Website</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Georgia, Cambria, "Palatino Linotype", "Book Antiqua", serif;
+      background: #ffffff;
+      color: #000000;
+      position: relative;
+      min-height: 100vh;
+    }
+    #title {
+      position: absolute;
+      top: 5%;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 2%;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    #title span {
+      display: inline-block;
+    }
+    @media (max-width: 600px) {
+      #title {
+        display: block;
+        text-align: center;
+        padding: 20px 0;
       }
-
-      #name {
-        position: absolute;
-        bottom: 0px; 
-        right: 30px;
+      #title span {
+        display: inline;
       }
-
-      /* Draggable container for the vibrating text */
-      #draggable {
-        position: absolute;
-        cursor: grab;
+    }
+    #headshot {
+      position: absolute;
+      top: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 200px;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+    #links {
+      position: absolute;
+      top: 45%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+    #links a {
+      display: block;
+      margin: 10px 0;
+      font-size: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+    }
+    #links a:hover {
+      text-decoration: underline;
+    }
+    #bio {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1rem;
+      text-align: center;
+      width: 90%;
+    }
+    @media (max-width: 600px) {
+      #links,
+      #bio {
+        position: static;
+        width: 100%;
+        margin: 20px auto;
       }
-
-      /* Vibrating text effect remains here */
-      #bouncer {
-        animation: vibrate 0.5s infinite linear;
+      #headshot {
+        position: static;
+        display: block;
+        margin: 20px auto;
       }
-
-      @keyframes vibrate {
-        0% { transform: translateX(0); }
-        25% { transform: translateX(2px); }
-        50% { transform: translateX(0); }
-        75% { transform: translateX(-2px); }
-        100% { transform: translateX(0); }
-      }
-    </style>
-  </head>
-  <body>
-    <h1 id="name" class="vt323-regular">
-      <a href = https://www.linkedin.com/in/akilan-rammohan-950818219/>Akil Rammohan</a>
-    </h1>
-    <!-- Wrap the vibrating text in a draggable container -->
-    <div id="draggable">
-      <p id="bouncer">work in progress !</p>
-    </div>
-
-    <script>
-      const draggable = document.getElementById("draggable");
-
-      // Function to set a random position within the window bounds (50px margin)
-      function setRandomPosition() {
-        const bound = 50; // minimum margin in pixels from each window edge
-        const sw = window.innerWidth;
-        const sh = window.innerHeight;
-        const containerWidth = draggable.offsetWidth;
-        const containerHeight = draggable.offsetHeight;
-        
-        // Calculate maximum allowed left/top positions
-        const maxX = sw - containerWidth - bound;
-        const maxY = sh - containerHeight - bound;
-
-        // Random left position between "bound" and "maxX"
-        const randomX = Math.floor(Math.random() * (maxX - bound + 1)) + bound;
-        // Random top position between "bound" and "maxY"
-        const randomY = Math.floor(Math.random() * (maxY - bound + 1)) + bound;
-        
-        draggable.style.left = randomX + "px";
-        draggable.style.top = randomY + "px";
-      }
-
-      // Set a random starting position on page load
-      setRandomPosition();
-
-      let offsetX = 0;
-      let offsetY = 0;
-      let isDragging = false;
-
-      draggable.addEventListener("mousedown", (e) => {
-        isDragging = true;
-        offsetX = e.clientX - draggable.offsetLeft;
-        offsetY = e.clientY - draggable.offsetTop;
-        draggable.style.cursor = "grabbing";
-      });
-
-      document.addEventListener("mousemove", (e) => {
-        if (!isDragging) return;
-        let newX = e.clientX - offsetX;
-        let newY = e.clientY - offsetY;
-        draggable.style.left = newX + "px";
-        draggable.style.top = newY + "px";
-      });
-
-      document.addEventListener("mouseup", () => {
-        isDragging = false;
-        draggable.style.cursor = "grab";
-      });
-    </script>
-  </body>
+    }
+  </style>
+</head>
+<body>
+  <div id="title">
+    <span>A</span><span>k</span><span>i</span><span>l</span><span>a</span><span>n</span><span> </span>
+    <span>"</span><span>A</span><span>k</span><span>i</span><span>l</span><span>"</span><span> </span>
+    <span>R</span><span>a</span><span>m</span><span>m</span><span>o</span><span>h</span><span>a</span><span>n</span>
+  </div>
+  <img src="headshot.jpg" alt="Headshot" id="headshot">
+  <div id="links">
+    <a href="https://github.com/akilrammohan" id="github">GitHub.</a>
+    <a href="https://www.linkedin.com/in/akilan-rammohan-950818219/" id="linkedin">LinkedIn.</a>
+    <a href="resume.pdf" id="resume">Resume.</a>
+    <a href="https://open.spotify.com/user/akster213" id="spotify">Spotify.</a>
+    <a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" id="goodreads">Goodreads.</a>
+  </div>
+  <div id="bio">
+    Junior at the University of Wisconsin-Madison double majoring in computer science and data science. Passionate about deep learning and natural language processing, interested in compilers/programming languages. Reach out at arammohan [at] wisc [dot] edu.
+  </div>
+</body>
 </html>
 

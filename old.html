@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Akil Rammohan's Personal Website</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+    <style>
+      .vt323-regular {
+        font-family: "VT323", monospace;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      #name {
+        position: absolute;
+        bottom: 0px; 
+        right: 30px;
+      }
+
+      /* Draggable container for the vibrating text */
+      #draggable {
+        position: absolute;
+        cursor: grab;
+      }
+
+      /* Vibrating text effect remains here */
+      #bouncer {
+        animation: vibrate 0.5s infinite linear;
+      }
+
+      @keyframes vibrate {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(2px); }
+        50% { transform: translateX(0); }
+        75% { transform: translateX(-2px); }
+        100% { transform: translateX(0); }
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="name" class="vt323-regular">
+      <a href = https://www.linkedin.com/in/akilan-rammohan-950818219/>Akil Rammohan</a>
+    </h1>
+    <!-- Wrap the vibrating text in a draggable container -->
+    <div id="draggable">
+      <p id="bouncer">work in progress !</p>
+    </div>
+
+    <script>
+      const draggable = document.getElementById("draggable");
+
+      // Function to set a random position within the window bounds (50px margin)
+      function setRandomPosition() {
+        const bound = 50; // minimum margin in pixels from each window edge
+        const sw = window.innerWidth;
+        const sh = window.innerHeight;
+        const containerWidth = draggable.offsetWidth;
+        const containerHeight = draggable.offsetHeight;
+        
+        // Calculate maximum allowed left/top positions
+        const maxX = sw - containerWidth - bound;
+        const maxY = sh - containerHeight - bound;
+
+        // Random left position between "bound" and "maxX"
+        const randomX = Math.floor(Math.random() * (maxX - bound + 1)) + bound;
+        // Random top position between "bound" and "maxY"
+        const randomY = Math.floor(Math.random() * (maxY - bound + 1)) + bound;
+        
+        draggable.style.left = randomX + "px";
+        draggable.style.top = randomY + "px";
+      }
+
+      // Set a random starting position on page load
+      setRandomPosition();
+
+      let offsetX = 0;
+      let offsetY = 0;
+      let isDragging = false;
+
+      draggable.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        offsetX = e.clientX - draggable.offsetLeft;
+        offsetY = e.clientY - draggable.offsetTop;
+        draggable.style.cursor = "grabbing";
+      });
+
+      document.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        let newX = e.clientX - offsetX;
+        let newY = e.clientY - offsetY;
+        draggable.style.left = newX + "px";
+        draggable.style.top = newY + "px";
+      });
+
+      document.addEventListener("mouseup", () => {
+        isDragging = false;
+        draggable.style.cursor = "grab";
+      });
+    </script>
+  </body>
+</html>
+

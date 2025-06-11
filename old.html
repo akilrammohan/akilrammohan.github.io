@@ -1,105 +1,144 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Akil Rammohan's Personal Website</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-
-    <style>
-      .vt323-regular {
-        font-family: "VT323", monospace;
-        font-weight: 400;
-        font-style: normal;
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akilan "Akil" Rammohan | Personal Website</title>
+  <!-- Import Chango font -->
+  <link href="https://fonts.googleapis.com/css2?family=Chango&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Georgia, Cambria, "Palatino Linotype", "Book Antiqua", serif;
+      background: #ffffff;
+      color: #000000;
+      position: relative;
+      min-height: 100vh;
+    }
+    /* Title spans horizontally at top with Chango font */
+    #title {
+      position: absolute;
+      top: 5%;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 2%;
+      box-sizing: border-box;
+      font-family: 'Chango', cursive;
+      font-size: 3rem;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+    #title span { display: inline-block; }
+    @media (max-width: 600px) {
+      #title { display: block; text-align: center; padding: 20px 0; }
+      #title span { display: inline; }
+    }
+    /* Middle container to evenly space headshot and links */
+    #middle {
+      position: absolute;
+      top: 10%;        /* just below the title */
+      bottom: 60px;    /* just above the first bio line */
+      left: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      box-sizing: border-box;
+      padding: 0 2%;
+    }
+    #headshot {
+      position: static;
+      width: 200px;
+      height: 200px;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+    #links {
+      position: static;
+      text-align: center;
+    }
+    #links a {
+      display: block;
+      margin: 10px 0;
+      font-size: 1rem;
+      text-decoration: none;
+      color: inherit;
+    }
+    #links a:hover { text-decoration: underline; }
+    /* Bio lines: simple centered block text */
+    #bio, #bio2, #bio3 {
+      position: absolute;
+      left: 50%;
+      width: 90%;
+      transform: translateX(-50%);
+      font-size: 1rem;
+      font-family: Georgia, Cambria, "Palatino Linotype", "Book Antiqua", serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      white-space: normal;
+    }
+    #bio { bottom: 60px; }
+    #bio2 { bottom: 40px; }
+    #bio3 { bottom: 20px; }
+    @media (max-width: 600px) {
+      #middle, #links, #bio, #bio2, #bio3 {
+        position: static;
+        width: 100%;
+        margin: 10px auto;
+        display: block;
+        text-align: center;
+        padding: 0;
+        transform: none;
       }
-
-      #name {
-        position: absolute;
-        bottom: 0px; 
-        right: 30px;
+      #headshot {
+        margin: 20px auto;
       }
+    }
+  </style>
+</head>
+<body>
+  <div id="title">
+    <span>A</span><span>k</span><span>i</span><span>l</span><span>a</span><span>n</span><span> </span>
+    <span>R</span><span>a</span><span>m</span><span>m</span><span>o</span><span>h</span><span>a</span><span>n</span>
+  </div>
 
-      /* Draggable container for the vibrating text */
-      #draggable {
-        position: absolute;
-        cursor: grab;
-      }
-
-      /* Vibrating text effect remains here */
-      #bouncer {
-        animation: vibrate 0.5s infinite linear;
-      }
-
-      @keyframes vibrate {
-        0% { transform: translateX(0); }
-        25% { transform: translateX(2px); }
-        50% { transform: translateX(0); }
-        75% { transform: translateX(-2px); }
-        100% { transform: translateX(0); }
-      }
-    </style>
-  </head>
-  <body>
-    <h1 id="name" class="vt323-regular">
-      <a href = https://www.linkedin.com/in/akilan-rammohan-950818219/>Akil Rammohan</a>
-    </h1>
-    <!-- Wrap the vibrating text in a draggable container -->
-    <div id="draggable">
-      <p id="bouncer">work in progress !</p>
+  <div id="middle">
+    <img src="headshot.jpg" alt="Headshot" id="headshot">
+    <div id="links">
+      <a href="https://github.com/akilrammohan" id="github">GitHub.</a>
+      <a href="https://www.linkedin.com/in/akilan-rammohan-950818219/" id="linkedin">LinkedIn.</a>
+      <a href="resume.pdf" id="resume">Resume.</a>
+      <a href="https://open.spotify.com/user/akster213" id="spotify">Spotify.</a>
+      <a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" id="goodreads">Goodreads.</a>
     </div>
+  </div>
 
-    <script>
-      const draggable = document.getElementById("draggable");
+  <!-- Bio line 1 -->
+  <div id="bio">
+    Junior at the University of Wisconsin double majoring in computer science and data science.
+  </div>
 
-      // Function to set a random position within the window bounds (50px margin)
-      function setRandomPosition() {
-        const bound = 50; // minimum margin in pixels from each window edge
-        const sw = window.innerWidth;
-        const sh = window.innerHeight;
-        const containerWidth = draggable.offsetWidth;
-        const containerHeight = draggable.offsetHeight;
-        
-        // Calculate maximum allowed left/top positions
-        const maxX = sw - containerWidth - bound;
-        const maxY = sh - containerHeight - bound;
+  <!-- Bio line 2 -->
+  <div id="bio2">
+    Passionate about deep learning and natural language processing, interested in compilers/PL.
+  </div>
 
-        // Random left position between "bound" and "maxX"
-        const randomX = Math.floor(Math.random() * (maxX - bound + 1)) + bound;
-        // Random top position between "bound" and "maxY"
-        const randomY = Math.floor(Math.random() * (maxY - bound + 1)) + bound;
-        
-        draggable.style.left = randomX + "px";
-        draggable.style.top = randomY + "px";
-      }
+  <!-- Bio line 3 -->
+  <div id="bio3">
+    Reach out at arammohan [at] wisc [dot] edu.
+  </div>
 
-      // Set a random starting position on page load
-      setRandomPosition();
-
-      let offsetX = 0;
-      let offsetY = 0;
-      let isDragging = false;
-
-      draggable.addEventListener("mousedown", (e) => {
-        isDragging = true;
-        offsetX = e.clientX - draggable.offsetLeft;
-        offsetY = e.clientY - draggable.offsetTop;
-        draggable.style.cursor = "grabbing";
-      });
-
-      document.addEventListener("mousemove", (e) => {
-        if (!isDragging) return;
-        let newX = e.clientX - offsetX;
-        let newY = e.clientY - offsetY;
-        draggable.style.left = newX + "px";
-        draggable.style.top = newY + "px";
-      });
-
-      document.addEventListener("mouseup", () => {
-        isDragging = false;
-        draggable.style.cursor = "grab";
-      });
-    </script>
-  </body>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const headshot = document.getElementById('headshot');
+      if (Math.random() < 0.25) headshot.src = 'Subject.png';
+    });
+  </script>
+</body>
 </html>
 

@@ -2,143 +2,162 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Akilan "Akil" Rammohan | Personal Website</title>
-  <!-- Import Chango font -->
-  <link href="https://fonts.googleapis.com/css2?family=Chango&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Akilan "Akil" Rammohan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
   <style>
-    body {
+    /*––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+    /*  Variables – easy to tweak site‐wide settings in one place   */
+    /*––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+    :root {
+      /* change this to any serif font you like */
+      --main-font: 'Crimson Text', Georgia, serif;
+      /* light cream (closer to beige than white) */
+      --bg-color: #f5f0e1;
+    }
+
+    /*––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+    /*  Base styles                                                  */
+    /*––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: Georgia, Cambria, "Palatino Linotype", "Book Antiqua", serif;
-      background: #ffffff;
-      color: #000000;
-      position: relative;
+    }
+
+    body {
+      font-family: var(--main-font);
+      background-color: var(--bg-color);
+      color: #333;
+      line-height: 1.6;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
       min-height: 100vh;
-    }
-    /* Title spans horizontally at top with Chango font */
-    #title {
-      position: absolute;
-      top: 5%;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 2%;
-      box-sizing: border-box;
-      font-family: 'Chango', cursive;
-      font-size: 3rem;
-      font-weight: 400;
-      text-transform: uppercase;
-    }
-    #title span { display: inline-block; }
-    @media (max-width: 600px) {
-      #title { display: block; text-align: center; padding: 20px 0; }
-      #title span { display: inline; }
-    }
-    /* Middle container to evenly space headshot and links */
-    #middle {
-      position: absolute;
-      top: 10%;        /* just below the title */
-      bottom: 60px;    /* just above the first bio line */
-      left: 0;
-      width: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: space-evenly;
-      align-items: center;
-      box-sizing: border-box;
-      padding: 0 2%;
+      justify-content: center;
     }
-    #headshot {
-      position: static;
-      width: 200px;
-      height: 200px;
-      border-radius: 4px;
-      object-fit: cover;
+
+    p {
+      margin-bottom: 1rem;
     }
-    #links {
-      position: static;
+
+    /*––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+    /*  Title                                                        */
+    /*––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+    h1 {
+      font-size: 2em; /* 2× body size */
       text-align: center;
+      margin-bottom: 1.5rem;
+      font-weight: normal;
     }
-    #links a {
-      display: block;
-      margin: 10px 0;
-      font-size: 1rem;
+
+    /*––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+    /*  Bio + Photo layout                                           */
+    /*––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+    .bio-container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .bio-container p {
+      flex: 1;
+      max-width: 300px;
+    }
+
+    .profile-photo {
+      width: 225px;
+      height: 225px;
+      object-fit: cover;
+      border-radius: 50%; /* makes it a circle */
+      flex-shrink: 0;
+    }
+
+    /*––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+    /*  Links list                                                   */
+    /*––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+    .links {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+    }
+
+    .links li {
+      /* spacing around each link */
+      margin: 0 0.5rem;
+    }
+
+
+
+    .links a {
       text-decoration: none;
       color: inherit;
+      font-weight: bold;
     }
-    #links a:hover { text-decoration: underline; }
-    /* Bio lines: simple centered block text */
-    #bio, #bio2, #bio3 {
-      position: absolute;
-      left: 50%;
-      width: 90%;
-      transform: translateX(-50%);
-      font-size: 1rem;
-      font-family: Georgia, Cambria, "Palatino Linotype", "Book Antiqua", serif;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-      white-space: normal;
+
+    .links a:hover {
+      text-decoration: underline;
     }
-    #bio { bottom: 60px; }
-    #bio2 { bottom: 40px; }
-    #bio3 { bottom: 20px; }
-    @media (max-width: 600px) {
-      #middle, #links, #bio, #bio2, #bio3 {
-        position: static;
-        width: 100%;
-        margin: 10px auto;
-        display: block;
-        text-align: center;
-        padding: 0;
-        transform: none;
-      }
-      #headshot {
-        margin: 20px auto;
-      }
+
+    /* Make all links black like normal text */
+    a {
+      color: inherit;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:visited {
+      color: inherit;
+    }
+
+    a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <div id="title">
-    <span>A</span><span>k</span><span>i</span><span>l</span><span>a</span><span>n</span><span> </span>
-    <span>R</span><span>a</span><span>m</span><span>m</span><span>o</span><span>h</span><span>a</span><span>n</span>
+
+  <!-- Title -->
+  <h1>Akilan "Akil" Rammohan</h1>
+
+  <!-- Bio + Profile Photo -->
+  <div class="bio-container">
+    <p>
+      <!-- Replace with your actual bio -->
+      Hi, I’m Akil (UH-kill) Rammohan. I’m a rising senior at the University of Wisconsin–Madison, majoring in Computer Science and Data Science. My interests include deep learning, natural language processing, and compiler design/PL. Feel free to reach out at akilan [dot] rammohan [at] gmail [dot] com.
+    </p>
+    <img src="mifflin25_cropped.jpg" alt="Profile Photo" class="profile-photo">
   </div>
 
-  <div id="middle">
-    <img src="headshot.jpg" alt="Headshot" id="headshot">
-    <div id="links">
-      <a href="https://github.com/akilrammohan" id="github">GitHub.</a>
-      <a href="https://www.linkedin.com/in/akilan-rammohan-950818219/" id="linkedin">LinkedIn.</a>
-      <a href="resume.pdf" id="resume">Resume.</a>
-      <a href="https://open.spotify.com/user/akster213" id="spotify">Spotify.</a>
-      <a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" id="goodreads">Goodreads.</a>
-    </div>
-  </div>
+  <!-- Additional paragraph -->
+  <p>
+    I'm currently a member of the inaugural <a href="https://cdis.wisc.edu/apply-to-sail-a-hands-on-ai-summer-program/" target="_blank" rel="noopener noreferrer">Summer AI Lab (SAIL)</a> at UW-Madison, run by the <a href="https://nplus1.wisc.edu" target="_blank" rel="noopener noreferrer">N+1 Institute</a> on campus. I'm also an intern at <a href="https://www.appfaktors.com" target="_blank" rel="noopener noreferrer">AppFaktors</a>, an architecture as code startup where I'm working on implementing a RAG pipeline to both help generate architecture representations from company documents and answer questions about unstructured data relating to application architecture.
+  </p>
 
-  <!-- Bio line 1 -->
-  <div id="bio">
-    Junior at the University of Wisconsin double majoring in computer science and data science.
-  </div>
+  <p>
+    Previously I was an undergraduate researcher at the <a href="https://neuroergolab.org/" target="_blank" rel="noopener noreferrer">NeuroErgonomics Lab</a>, where I worked on the LEARNER project under Drs. Ranjana Mehta and Ronak Mohanty, aiming to improve law enforcement training using LLM-enabled conversational NPCs in immersive XR environments.
+  </p>
 
-  <!-- Bio line 2 -->
-  <div id="bio2">
-    Passionate about deep learning and natural language processing, interested in compilers/PL.
-  </div>
+  <!-- Horizontal Links with dashes -->
+  <ul class="links">
+    <li><a href="https://github.com/akilrammohan" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+    <li>—</li>
+    <li><a href="https://www.linkedin.com/in/akilan-rammohan-950818219/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+    <li>—</li>
+    <li><a href="resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a></li>
+    <li>—</li>
+    <li><a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" target="_blank" rel="noopener noreferrer">Goodreads</a></li>
+    <li>—</li>
+    <li><a href="https://open.spotify.com/user/akster213" target="_blank" rel="noopener noreferrer">Spotify</a></li>
+  </ul>
 
-  <!-- Bio line 3 -->
-  <div id="bio3">
-    Reach out at arammohan [at] wisc [dot] edu.
-  </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const headshot = document.getElementById('headshot');
-      if (Math.random() < 0.25) headshot.src = 'Subject.png';
-    });
-  </script>
 </body>
 </html>
 

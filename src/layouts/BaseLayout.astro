@@ -17,7 +17,7 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
     <title>{title}</title>
   </head>
   <body>
@@ -31,22 +31,25 @@ const { title } = Astro.props;
     </div>
     <script is:inline>
       const colors = [
-        '--color-tri-1', '--color-tri-2', '--color-tri-3',
-        '--color-tri-4', '--color-tri-5', '--color-tri-6'
+        '--color-tet-1', '--color-tet-2', '--color-tet-3',
+        '--color-tet-4', '--color-tet-5', '--color-tet-6'
       ];
-      // Links in lists: cycle with random offset
-      document.querySelectorAll('ul, ol, nav').forEach(list => {
-        const offset = Math.floor(Math.random() * 6);
-        const links = list.querySelectorAll(':scope > li > a');
-        links.forEach((link, i) => {
-          link.style.color = `var(${colors[(i + offset) % 6]})`;
-        });
-      });
-      // Standalone links (not in lists): random color each
-      document.querySelectorAll('a').forEach(link => {
-        if (!link.closest('li')) {
-          link.style.color = `var(${colors[Math.floor(Math.random() * 6)]})`;
+
+      // Fisher-Yates shuffle to create random color order
+      function shuffle(array) {
+        const arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
         }
+        return arr;
+      }
+
+      const shuffledColors = shuffle(colors);
+
+      // Select all links in DOM order and apply cycling colors
+      document.querySelectorAll('a').forEach((link, i) => {
+        link.style.color = `var(${shuffledColors[i % 6]})`;
       });
     </script>
   </body>

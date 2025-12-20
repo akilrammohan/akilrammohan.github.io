@@ -1,0 +1,100 @@
+---
+import Navigation from '../components/Navigation.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <Navigation />
+      </aside>
+      <main class="content">
+        <slot />
+      </main>
+    </div>
+    <script is:inline>
+      const colors = [
+        '--color-tri-1', '--color-tri-2', '--color-tri-3',
+        '--color-tri-4', '--color-tri-5', '--color-tri-6'
+      ];
+      // Links in lists: cycle with random offset
+      document.querySelectorAll('ul, ol, nav').forEach(list => {
+        const offset = Math.floor(Math.random() * 6);
+        const links = list.querySelectorAll(':scope > li > a');
+        links.forEach((link, i) => {
+          link.style.color = `var(${colors[(i + offset) % 6]})`;
+        });
+      });
+      // Standalone links (not in lists): random color each
+      document.querySelectorAll('a').forEach(link => {
+        if (!link.closest('li')) {
+          link.style.color = `var(${colors[Math.floor(Math.random() * 6)]})`;
+        }
+      });
+    </script>
+  </body>
+</html>
+
+<style>
+  .layout {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 25%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .content {
+    width: 75%;
+    margin-left: 25%;
+    padding: 3rem 4rem;
+    max-width: 600px;
+  }
+
+  /* Responsive: stack on mobile */
+  @media (max-width: 768px) {
+    .layout {
+      flex-direction: column;
+    }
+
+    .sidebar {
+      position: relative;
+      width: 100%;
+      height: auto;
+      padding: 1.5rem;
+      justify-content: flex-start;
+    }
+
+    .content {
+      width: 100%;
+      margin-left: 0;
+      padding: 1.5rem;
+      max-width: none;
+    }
+  }
+</style>

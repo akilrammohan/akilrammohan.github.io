@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Akil Rammohan">
+  <h1>Akil Rammohan</h1>
+
+  <p>
+    I'm a senior at the University of Wisconsin, majoring in CS and Data Science and starting a career in software/AI.
+  </p>
+
+  <p>
+  I've worked on VR research, agentic systems, and RAG pipelines. I hope I'll be able to build software to help people use AI intentionally and meaningfully, without making them dumber. Please refer to my <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">resume</a> for more about my work history.
+  </p>
+
+  <p>
+    I've already found today's (cognitively simple) AI helpful for learning, and as models improve I'm sure the impact on education will be enormous. I'm currently working on something to bridge today's AI with our failing education system, so if you want to chat about that please reach out!
+  </p>
+
+  <p>
+    In my free time I love reading, playing tennis, lifting weights, and playing games.
+  </p>
+
+
+  <ul class="external-links">
+    <li><a href="https://github.com/akilrammohan" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+    <li class="separator">-</li>
+    <li><a href="https://www.linkedin.com/in/akilan-rammohan-950818219/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+    <li class="separator">-</li>
+    <li><a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" target="_blank" rel="noopener noreferrer">Goodreads</a></li>
+    <li class="separator">-</li>
+    <li><a href="https://open.spotify.com/user/akster213" target="_blank" rel="noopener noreferrer">Spotify</a></li>
+  </ul>
+</BaseLayout>
+
+<style>
+  :global(.content) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 768px) {
+    :global(.content) {
+      min-height: auto;
+      justify-content: flex-start;
+    }
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: normal;
+    margin-bottom: 1.5rem;
+  }
+
+  .external-links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #ddd;
+  }
+
+  .external-links a:hover {
+    text-decoration: underline;
+  }
+
+  .separator {
+    color: var(--text-muted);
+  }
+</style>

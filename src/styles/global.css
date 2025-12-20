@@ -1,0 +1,79 @@
+/* Color Palette */
+:root {
+  --color-tri-1: #8d03f9;
+  --color-tri-1-contrast: #fff;
+  --color-tri-2: #500099;
+  --color-tri-2-contrast: #fff;
+  --color-tri-3: #ed3600;
+  --color-tri-3-contrast: #000;
+  --color-tri-4: #ff9f88;
+  --color-tri-4-contrast: #000;
+  --color-tri-5: #00af22;
+  --color-tri-5-contrast: #000;
+  --color-tri-6: #007d5a;
+  --color-tri-6-contrast: #fff;
+
+  --bg-warm: #faf8f5;
+  --text-color: #333;
+  --text-muted: #666;
+
+  --font-main: 'Crimson Text', Georgia, serif;
+  --font-heading: 'Abril Fatface', serif;
+}
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-main);
+  background-color: var(--bg-warm);
+  color: var(--text-color);
+}
+
+body {
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* Typography */
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+/* Links - Rainbow colors (assigned by JS with random offset) */
+a {
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--color-tri-1); /* Fallback for no-JS */
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Utility Classes */
+.text-muted {
+  color: var(--text-muted);
+}

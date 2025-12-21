@@ -1,66 +1,71 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
-// Placeholder book data - will be replaced with Goodreads API integration
-const books = [
-  {
-    title: "The Design of Everyday Things",
-    author: "Don Norman",
-    rating: 5,
-    cover: "https://covers.openlibrary.org/b/id/8091016-M.jpg",
-    review: "A foundational book on human-centered design. Changed how I think about interfaces.",
-  },
-  {
-    title: "Thinking, Fast and Slow",
-    author: "Daniel Kahneman",
-    rating: 4,
-    cover: "https://covers.openlibrary.org/b/id/8256533-M.jpg",
-    review: "Fascinating exploration of cognitive biases and decision-making.",
-  },
-  {
-    title: "The Pragmatic Programmer",
-    author: "David Thomas & Andrew Hunt",
-    rating: 5,
-    cover: "https://covers.openlibrary.org/b/id/10361834-M.jpg",
-    review: "Essential reading for any software developer. Timeless advice.",
-  },
-];
+// Fetch both Goodreads collections
+const favoriteBooks = await getCollection('favoriteBooks');
+const readBooks = await getCollection('readBooks');
 
-function renderStars(rating: number) {
-  return Array(5).fill(0).map((_, i) => i < rating ? 'filled' : 'empty');
-}
+// Create set of favorite book IDs to exclude from "other read" section
+const favoriteIds = new Set(favoriteBooks.map(book => book.data.book_id));
+
+// Filter out favorites from read books
+const otherReadBooks = readBooks.filter(book => !favoriteIds.has(book.data.book_id));
 ---
 
-<BaseLayout title="Bookshelf | Akil Rammohan">
+<BaseLayout title="Bookshelf | Akil Rammohan" fullWidth={true}>
   <h1>Bookshelf</h1>
 
   <p class="intro">
-    Books I've been reading. Eventually this will pull from my <a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" target="_blank" rel="noopener noreferrer">Goodreads</a> account.
+    Books from my <a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" target="_blank" rel="noopener noreferrer">Goodreads</a> library.
   </p>
 
-  <div class="book-grid">
-    {books.map(book => (
-      <article class="book-card">
-        <img src={book.cover} alt={`Cover of ${book.title}`} class="book-cover" />
-        <div class="book-info">
-          <h2 class="book-title">{book.title}</h2>
-          <p class="book-author">{book.author}</p>
-          <div class="book-rating">
-            {renderStars(book.rating).map(star => (
-              <span class={`star ${star}`}>&#9733;</span>
-            ))}
-          </div>
-          <p class="book-review">{book.review}</p>
-        </div>
-      </article>
-    ))}
-  </div>
+  {favoriteBooks.length > 0 && (
+    <section class="favorites-section">
+      <h2>Favorites</h2>
+      <div class="favorites-grid">
+        {favoriteBooks.map(book => (
+          <a href={book.data.link} target="_blank" rel="noopener noreferrer" class="favorite-cover-link">
+            <img
+              src={book.data.book_large_image_url || '/placeholder-cover.svg'}
+              alt={`Cover of ${book.data.title}`}
+              class="favorite-cover"
+              loading="lazy"
+            />
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {otherReadBooks.length > 0 && (
+    <section class="read-section">
+      <h2>Other Books I've Read</h2>
+      <p class="section-note">I signed up for Goodreads significantly later than I began reading, so I had to remember back to add books from the past. Due to that this is likely an incomplete list, and it is absolutely not in chronological order.</p>
+      <div class="read-grid">
+        {otherReadBooks.map(book => (
+          <a href={book.data.link} target="_blank" rel="noopener noreferrer" class="read-cover-link">
+            <img
+              src={book.data.book_large_image_url || '/placeholder-cover.svg'}
+              alt={`Cover of ${book.data.title}`}
+              class="read-cover"
+              loading="lazy"
+            />
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {favoriteBooks.length === 0 && otherReadBooks.length === 0 && (
+    <p class="empty-state">No books found. Check back later!</p>
+  )}
 </BaseLayout>
 
 <style>
   h1 {
     font-size: 2rem;
-    font-weight: normal;
+    font-weight: 400;
     margin-bottom: 1rem;
   }
 
@@ -69,77 +74,102 @@ function renderStars(rating: number) {
     color: var(--text-muted);
   }
 
-  .book-grid {
-    display: flex;
-    flex-direction: column;
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+  }
+
+  /* === Favorites Section === */
+  .favorites-section {
+    margin-bottom: 3rem;
+  }
+
+  .favorites-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
   }
 
-  .book-card {
-    display: flex;
-    gap: 1.5rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #eee;
+  .favorite-cover-link {
+    display: block;
   }
 
-  .book-card:last-child {
-    border-bottom: none;
-  }
-
-  .book-cover {
-    width: 100px;
-    height: 150px;
+  .favorite-cover {
+    width: 100%;
+    aspect-ratio: 2/3;
     object-fit: cover;
     border-radius: 4px;
-    flex-shrink: 0;
+    transition: transform 0.2s ease;
   }
 
-  .book-info {
-    flex: 1;
+  .favorite-cover-link:hover .favorite-cover {
+    transform: scale(1.03);
   }
 
-  .book-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
+  /* === Read Books Section === */
+  .read-section {
+    margin-bottom: 2rem;
   }
 
-  .book-author {
+  .section-note {
     color: var(--text-muted);
-    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
   }
 
-  .book-rating {
-    margin-bottom: 0.5rem;
+  .read-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
   }
 
-  .star {
-    font-size: 1rem;
+  .read-cover-link {
+    display: block;
   }
 
-  .star.filled {
-    color: var(--color-tri-4);
+  .read-cover {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    border-radius: 4px;
+    transition: transform 0.2s ease;
   }
 
-  .star.empty {
-    color: #ddd;
+  .read-cover-link:hover .read-cover {
+    transform: scale(1.03);
   }
 
-  .book-review {
-    font-size: 0.95rem;
-    line-height: 1.5;
+  /* === Empty State === */
+  .empty-state {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  /* === Responsive Design === */
+  @media (max-width: 1024px) {
+    .favorites-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .read-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .favorites-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .read-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   @media (max-width: 480px) {
-    .book-card {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .book-cover {
-      width: 120px;
-      height: 180px;
+    .read-grid {
+      gap: 1rem;
     }
   }
 </style>

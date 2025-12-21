@@ -17,7 +17,7 @@
   --text-color: #333;
   --text-muted: #666;
 
-  --font-main: 'Istok Web', sans-serif;
+  --font-main: 'Exo 2', sans-serif;
   --font-heading: 'Abril Fatface', serif;
 }
 
@@ -47,6 +47,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
+  font-family: "BBH Bogle", sans-serif;
+  font-weight: 400;
   font-size: 2rem;
   margin-bottom: 1rem;
 }

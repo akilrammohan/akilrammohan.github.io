@@ -34,21 +34,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
-  :global(.content) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 100vh;
-    box-sizing: border-box;
-  }
-
-  @media (max-width: 768px) {
-    :global(.content) {
-      min-height: auto;
-      justify-content: flex-start;
-    }
-  }
-
   h1 {
     font-size: 2rem;
     font-weight: normal;

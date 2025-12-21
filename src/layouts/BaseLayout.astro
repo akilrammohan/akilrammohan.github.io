@@ -18,7 +18,7 @@ const { title, fullWidth = false } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=BBH+Bogle&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
     <title>{title}</title>
   </head>
   <body>
@@ -76,8 +76,8 @@ const { title, fullWidth = false } = Astro.props;
   .content {
     width: 75%;
     margin-left: 25%;
-    padding: 3rem 4rem;
-    max-width: 600px;
+    padding: calc(50vh - 250px) 4rem 3rem;
+    max-width: 800px;
   }
 
   .content--full-width {
@@ -102,6 +102,7 @@ const { title, fullWidth = false } = Astro.props;
       width: 100%;
       margin-left: 0;
       padding: 1.5rem;
+      padding-top: 1.5rem;
       max-width: none;
     }
   }

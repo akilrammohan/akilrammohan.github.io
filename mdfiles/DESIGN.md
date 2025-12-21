@@ -1,9 +1,9 @@
 # Design Guidelines
 
 ## Typography
-- **Headings (h1, h2, h3)**: Abril Fatface, 400 weight
-- **Body text**: Crimson Text, 400/600/700 weights available
-- Both fonts loaded from Google Fonts in BaseLayout.astro
+- **Headings (h1-h6)**: Istok Web, 700 weight (bold)
+- **Body text**: Istok Web, 400/700 weights available (regular and italic)
+- Fonts loaded from Google Fonts in BaseLayout.astro
 
 ## Links
 - All links are bold (font-weight: 600) with colored text from the rainbow palette
@@ -13,12 +13,30 @@
 - On hover: underline appears
 
 ## Color Scheme
-- `--color-tri-1`: #8d03f9 (link hover)
-- `--color-tri-2`: #500099
-- `--color-tri-3`: #ed3600
-- `--color-tri-4`: #ff9f88
-- `--color-tri-5`: #00af22
-- `--color-tri-6`: #007d5a
+- `--color-tet-1`: oklch(69% 0.22 143) - green
+- `--color-tet-2`: oklch(79% 0.198 233) - blue
+- `--color-tet-3`: oklch(54% 0.132 233) - medium blue
+- `--color-tet-4`: oklch(74% 0.209 323) - pink
+- `--color-tet-5`: oklch(89% 0.176 53) - light orange
+- `--color-tet-6`: oklch(44% 0.242 53) - brown
 - `--bg-warm`: #faf8f5 (background)
 - `--text-color`: #333
 - `--text-muted`: #666
+
+## Bookshelf Page
+
+### Layout
+- Full-width mode (no max-width constraint)
+- Favorites: 2-column grid
+- Other Read Books: 4-column grid (covers only)
+
+### Book Covers
+- Linked to Goodreads book page
+- Subtle scale transform on hover (1.03x)
+- Lazy loading enabled
+- Fallback to placeholder for missing covers
+
+### Ratings
+- Star color: `--color-tet-4` (pink)
+- Display 5 stars, filled/empty based on user rating
+- Only shown for ratings > 0

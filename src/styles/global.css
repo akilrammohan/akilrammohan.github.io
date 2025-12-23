@@ -4,18 +4,18 @@
   --color-tet-1-contrast: #000;
   --color-tet-2: oklch(79% 0.198 233);
   --color-tet-2-contrast: #000;
-  --color-tet-3: oklch(54% 0.132 233);
+  --color-tet-3: oklch(48% 0.132 240);
   --color-tet-3-contrast: #fff;
   --color-tet-4: oklch(74% 0.209 323);
   --color-tet-4-contrast: #000;
-  --color-tet-5: oklch(89% 0.176 53);
+  --color-tet-5: oklch(85% 0.176 53);
   --color-tet-5-contrast: #000;
-  --color-tet-6: oklch(44% 0.242 53);
+  --color-tet-6: oklch(52% 0.242 53);
   --color-tet-6-contrast: #fff;
 
-  --bg-warm: #faf8f5;
-  --text-color: #333;
-  --text-muted: #666;
+  --bg-warm: #1e2021;
+  --text-color: #faf8f5;
+  --text-muted: #faf8f5;
 
   --font-main: 'Exo 2', sans-serif;
   --font-heading: 'Abril Fatface', serif;

@@ -15,10 +15,10 @@
 ## Color Scheme
 - `--color-tet-1`: oklch(69% 0.22 143) - green
 - `--color-tet-2`: oklch(79% 0.198 233) - blue
-- `--color-tet-3`: oklch(54% 0.132 233) - medium blue
+- `--color-tet-3`: oklch(48% 0.132 240) - navy blue
 - `--color-tet-4`: oklch(74% 0.209 323) - pink
-- `--color-tet-5`: oklch(89% 0.176 53) - light orange
-- `--color-tet-6`: oklch(44% 0.242 53) - brown
+- `--color-tet-5`: oklch(85% 0.176 53) - light orange
+- `--color-tet-6`: oklch(52% 0.242 53) - red
 - `--bg-warm`: #faf8f5 (background)
 - `--text-color`: #333
 - `--text-muted`: #666

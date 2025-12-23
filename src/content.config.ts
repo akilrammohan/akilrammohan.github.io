@@ -20,12 +20,12 @@ const favoriteBooks = defineCollection({
   schema: BookSchema,
 });
 
-const readBooks = defineCollection({
+const siteBooks = defineCollection({
   loader: goodreadsLoader({
-    url: "https://www.goodreads.com/review/list/109135301?shelf=read",
+    url: "https://www.goodreads.com/review/list/109135301?shelf=site",
     refreshIntervalDays: 1,
   }),
   schema: BookSchema,
 });
 
-export const collections = { writing, favoriteBooks, readBooks };
+export const collections = { writing, favoriteBooks, siteBooks };

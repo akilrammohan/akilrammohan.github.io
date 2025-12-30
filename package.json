@@ -1,15 +1,28 @@
 {
-  "name": "dimensional-disk",
-  "type": "module",
-  "version": "0.0.1",
+  "name": "personal-website",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "dev": "next dev",
+    "build": "contentlayer build && next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "astro": "^5.16.5",
-    "astro-loader-goodreads": "^1.2.1"
+    "contentlayer": "^0.3.4",
+    "date-fns": "^4.1.0",
+    "next": "^14.2.0",
+    "next-contentlayer": "^0.3.4",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "rss-parser": "^3.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.1.1",
+    "typescript": "^5"
   }
 }

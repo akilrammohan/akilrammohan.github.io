@@ -1,1 +1,1 @@
-personal website w astro
+personal website w next.js

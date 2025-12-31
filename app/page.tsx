@@ -1,7 +1,7 @@
 import { fetchShelf } from '@/lib/goodreads';
 import { getRecentTracks } from '@/lib/lastfm';
 
-export const revalidate = 3600; // ISR: revalidate hourly
+export const dynamic = 'force-dynamic'; // Fetch fresh data on every request
 
 export default async function HomePage() {
   const [siteBooks, initialTrack] = await Promise.all([

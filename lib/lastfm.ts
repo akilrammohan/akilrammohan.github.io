@@ -25,7 +25,9 @@ export async function getRecentTracks(): Promise<LastFmTrack | null> {
       limit: '1',
     });
 
-    const response = await fetch(`${BASE_URL}?${params.toString()}`);
+    const response = await fetch(`${BASE_URL}?${params.toString()}`, {
+      cache: 'no-store',
+    });
 
     if (!response.ok) {
       throw new Error(`Last.fm API error: ${response.status}`);

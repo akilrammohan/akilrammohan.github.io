@@ -63,7 +63,7 @@ export default async function BookshelfPage() {
         <section className="read-section">
           <h2>Other Books I've Read</h2>
           <p className="section-note">
-            Like most people, I began reading way before I signed up for Goodreads. Due to that I had to remember back to add books from the past, so this list is likely incomplete. I also excluded series I read as a kid, like Harry Potter, Rick Riordan books, Hunger Games, etc. Ordered by rating descending.
+            This list is likely incomplete, but I tried my best to remember books I've read when I signed up for Goodreads. I also excluded a lot of books from series I read as a kid. Ordered by rating descending.
           </p>
           <div className="read-grid">
             {otherSiteBooks.map(book => (

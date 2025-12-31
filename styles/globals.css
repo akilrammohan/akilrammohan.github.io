@@ -147,13 +147,13 @@ a:hover {
 .favorites-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+  gap: 1.5rem;
+  justify-items: center;
 }
 
 .favorite-cover {
-  width: 100%;
-  aspect-ratio: 2/3;
-  object-fit: cover;
+  width: auto !important;
+  height: 280px !important;
   border-radius: 4px;
   transition: transform 0.2s ease;
 }
@@ -174,12 +174,12 @@ a:hover {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
+  justify-items: center;
 }
 
 .read-cover {
-  width: 100%;
-  aspect-ratio: 2/3;
-  object-fit: cover;
+  width: auto !important;
+  height: 240px !important;
   border-radius: 4px;
   transition: transform 0.2s ease;
 }
@@ -257,4 +257,13 @@ nav a.active {
   .read-grid {
     gap: 1rem;
   }
+
+  .favorite-cover {
+    height: 200px !important;
+  }
+
+  .read-cover {
+    height: 180px !important;
+  }
 }
+

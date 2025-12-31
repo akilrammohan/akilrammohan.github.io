@@ -23,6 +23,24 @@
 - `--text-color`: #333
 - `--text-muted`: #666
 
+## Last Listened To (Last.fm)
+
+### Implementation
+- Inline text paragraph on homepage
+- Format: "I last listened to [Song] by [Artist] from the album [Album]."
+- Server-side rendering with ISR (revalidates hourly)
+
+### Links
+- Song title → Last.fm track page
+- Artist name → Last.fm artist page
+- Album name → Last.fm album page
+- All links styled per site conventions (bold, randomly colored)
+
+### Data Source
+- Last.fm API via `getRecentTracks()`
+- Fetched server-side during page render
+- Cached via Next.js ISR
+
 ## Bookshelf Page
 
 ### Layout

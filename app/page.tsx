@@ -1,9 +1,13 @@
 import { fetchShelf } from '@/lib/goodreads';
+import { getRecentTracks } from '@/lib/lastfm';
 
 export const revalidate = 3600; // ISR: revalidate hourly
 
 export default async function HomePage() {
-  const siteBooks = await fetchShelf('site');
+  const [siteBooks, initialTrack] = await Promise.all([
+    fetchShelf('site'),
+    getRecentTracks(),
+  ]);
 
   const recentlyReadBook = siteBooks.sort((a, b) => {
     const dateA = a.user_read_at ? new Date(a.user_read_at).getTime() : 0;
@@ -48,6 +52,26 @@ export default async function HomePage() {
           <> (most recently read <em>{recentlyReadBook.title}</em>)</>
         )}, playing tennis, lifting weights, and playing games.
       </p>
+
+      {initialTrack && (
+        <p>
+          I last listened to{' '}
+          <a href={initialTrack.trackUrl} target="_blank" rel="noopener noreferrer">
+            {initialTrack.title}
+          </a>{' '}
+          by{' '}
+          <a href={initialTrack.artistUrl} target="_blank" rel="noopener noreferrer">
+            {initialTrack.artist}
+          </a>,
+          {initialTrack.album && initialTrack.albumUrl && (
+            <>{' '}from the album{' '}
+              <a href={initialTrack.albumUrl} target="_blank" rel="noopener noreferrer">
+                {initialTrack.album}
+              </a>
+            </>
+          )}.
+        </p>
+      )}
 
       <ul className="external-links">
         <li><a href="https://github.com/akilrammohan" target="_blank" rel="noopener noreferrer">GitHub</a></li>

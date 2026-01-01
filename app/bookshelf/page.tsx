@@ -23,7 +23,7 @@ export default async function BookshelfPage() {
       <h1>Bookshelf</h1>
 
       <p className="intro">
-        Books from my{' '}
+        Books from Akil's{' '}
         <a
           href="https://www.goodreads.com/user/show/109135301-akil-rammohan"
           target="_blank"
@@ -61,9 +61,9 @@ export default async function BookshelfPage() {
 
       {otherSiteBooks.length > 0 && (
         <section className="read-section">
-          <h2>Other Books I've Read</h2>
+          <h2>Other Books He's Read</h2>
           <p className="section-note">
-            This list is likely incomplete, but I tried my best to remember books I've read when I signed up for Goodreads. I also excluded a lot of books from series I read as a kid. Ordered by rating descending.
+            This is a non-exhaustive list. He also excluded books from series he read as a kid. Ordered by rating descending.
           </p>
           <div className="read-grid">
             {otherSiteBooks.map(book => (

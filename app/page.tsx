@@ -20,11 +20,11 @@ export default async function HomePage() {
       <h1>Akil Rammohan</h1>
 
       <p>
-        I'm a senior at the University of Wisconsin, majoring in CS and Data Science. My name is pronounced UH-kill (<span className="ipa">/əˈkɪl/</span> if you want to be precise).
+        Akil Rammohan is a computer science student at the University of Wisconsin. His name is pronounced UH-kill (<span className="ipa">/ˈʌkɪl/</span> to be precise).
       </p>
 
       <p>
-        I've worked on AI in VR research at the{' '}
+        He's worked on AI in VR research at the{' '}
         <a href="https://neuroergolab.org/" target="_blank" rel="noopener noreferrer">
           NeuroErgonomics Lab
         </a>, agentic AI with the{' '}
@@ -34,44 +34,21 @@ export default async function HomePage() {
         <a href="https://www.fastersmarter.io" target="_blank" rel="noopener noreferrer">
           Think Fast Talk Smart
         </a>, a business communication podcast.
-        For more on my work experience, see my{' '}
-        <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">resume</a>.
+        Check out his{' '}
+        <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">resume</a> for more.
       </p>
 
       <p>
-        My interests include agentic AI, edtech, and information retrieval/recommender systems. I hope to build software that helps people use AI intentionally, without making them dumber.
+        Interests include reading{recentlyReadBook && (
+          <> (most recently, <em>{recentlyReadBook.title}</em>)</>
+        )}; music{initialTrack && (
+          <> (most recently, <a href={initialTrack.trackUrl} target="_blank" rel="noopener noreferrer">{initialTrack.title}</a> by <a href={initialTrack.artistUrl} target="_blank" rel="noopener noreferrer">{initialTrack.artist}</a>)</>
+        )}; <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a>; <a href="https://github.com/akilrammohan/lifecal-ios-shortcut" target="_blank" rel="noopener noreferrer">vibe coding</a>; and agentic AI in edtech (<a href="#">link soon</a>).
       </p>
 
       <p>
-        I've already found today's AI immensely helpful for learning, and as models improve I'm sure the impact on education will be enormous. I'm currently working on something to bridge today's AI with our failing education system, so if you want to chat about that please reach out!
+        He is currently building something to apply AI to the failing, fragmented education system. If that sounds interesting, reach out to him at akilan[dot]rammohan[at]gmail[dot]com.
       </p>
-
-      <p>
-        In my free time I love reading
-        {recentlyReadBook && (
-          <> (most recently read <em>{recentlyReadBook.title}</em>)</>
-        )}, playing tennis, lifting weights, and playing games.
-      </p>
-
-      {initialTrack && (
-        <p>
-          I last listened to{' '}
-          <a href={initialTrack.trackUrl} target="_blank" rel="noopener noreferrer">
-            {initialTrack.title}
-          </a>{' '}
-          by{' '}
-          <a href={initialTrack.artistUrl} target="_blank" rel="noopener noreferrer">
-            {initialTrack.artist}
-          </a>,
-          {initialTrack.album && initialTrack.albumUrl && (
-            <>{' '}from the album{' '}
-              <a href={initialTrack.albumUrl} target="_blank" rel="noopener noreferrer">
-                {initialTrack.album}
-              </a>
-            </>
-          )}.
-        </p>
-      )}
 
       <ul className="external-links">
         <li><a href="https://github.com/akilrammohan" target="_blank" rel="noopener noreferrer">GitHub</a></li>

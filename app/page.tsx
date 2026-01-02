@@ -53,6 +53,8 @@ export default async function HomePage() {
       <ul className="external-links">
         <li><a href="https://github.com/akilrammohan" target="_blank" rel="noopener noreferrer">GitHub</a></li>
         <li className="separator">-</li>
+        <li><a href="https://x.com/kilrmcgee" target="_blank" rel="noopener noreferrer">X</a></li>
+        <li className="separator">-</li>
         <li><a href="https://www.linkedin.com/in/akilrammohan/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
         <li className="separator">-</li>
         <li><a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" target="_blank" rel="noopener noreferrer">Goodreads</a></li>

@@ -89,8 +89,8 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
   // Track document size (not just viewport)
   useEffect(() => {
     const updateViewportSize = () => {
-      // Use clientWidth to exclude scrollbar width (prevents horizontal scroll)
-      const width = document.documentElement.clientWidth;
+      // Use innerWidth for full viewport coverage (rings extend to edge)
+      const width = window.innerWidth;
       const contentHeight = getContentHeight();
       setViewport({ width, height: contentHeight });
       updateAllBounds();
@@ -107,7 +107,7 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
   // Also observe body to catch scrollbar appearing/disappearing
   useEffect(() => {
     const updateViewportAndBounds = () => {
-      const width = document.documentElement.clientWidth;
+      const width = window.innerWidth;
       const contentHeight = getContentHeight();
       setViewport({ width, height: contentHeight });
       updateAllBounds();
@@ -185,7 +185,7 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
 
     // Force bounds and viewport update after expansion/collapse
     const updateAll = () => {
-      const width = document.documentElement.clientWidth;
+      const width = window.innerWidth;
       const contentHeight = getContentHeight();
       setViewport({ width, height: contentHeight });
       updateAllBounds();

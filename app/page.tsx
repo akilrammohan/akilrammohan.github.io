@@ -40,8 +40,6 @@ export default async function HomePage() {
 
         <ExpandableSection label="interests">
           <p>
-            reading<br />
-            music<br />
             <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a><br />
             edtech<br />
             <a href="https://github.com/akilrammohan/bmarxs" target="_blank" rel="noopener noreferrer">clis for agents</a><br />

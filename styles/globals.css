@@ -105,7 +105,6 @@ a:hover {
   width: 75%;
   margin-left: 25%;
   padding: calc(50vh - 250px) 4rem 3rem;
-  max-width: 800px;
 }
 
 .content--full-width {
@@ -118,9 +117,7 @@ a:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #ddd;
+  margin-top: 0.75rem;
 }
 
 .external-links a:hover {
@@ -267,48 +264,38 @@ nav a.active {
   }
 }
 
-/* Sections Grid */
-.sections-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-
-.sections-column {
-  display: flex;
-  flex-direction: column;
-}
-
-@media (max-width: 768px) {
-  .sections-grid {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-}
-
 /* Expandable Sections */
+.sections-container {
+  width: fit-content;
+}
+
 .expandable-section {
   margin-bottom: 0.75rem;
+  border: 1px solid var(--text-color);
+  padding: 0.75rem;
+  opacity: 0.8;
+  cursor: pointer;
+  width: 100%;
 }
 
 .expandable-label {
-  background: none;
-  border: none;
-  padding: 0;
-  font-family: inherit;
-  font-size: inherit;
   font-weight: 600;
   color: var(--text-color);
-  cursor: pointer;
 }
 
-.expandable-label:hover {
+.expandable-section:hover .expandable-label {
   text-decoration: underline;
 }
 
 .expandable-content {
-  margin-top: 0.5rem;
+  height: 0;
+  overflow: hidden;
   line-height: 1.6;
+}
+
+.expandable-section.expanded .expandable-content {
+  height: auto;
+  margin-top: 0.5rem;
 }
 
 .expandable-content p {

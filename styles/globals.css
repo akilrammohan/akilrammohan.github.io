@@ -267,6 +267,25 @@ nav a.active {
   }
 }
 
+/* Sections Grid */
+.sections-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.sections-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .sections-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
 /* Expandable Sections */
 .expandable-section {
   margin-bottom: 0.75rem;

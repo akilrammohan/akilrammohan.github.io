@@ -1,8 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function ClientColorizer() {
+  const pathname = usePathname();
+
   useEffect(() => {
     const colors = [
       '--color-tet-1', '--color-tet-2', '--color-tet-3',
@@ -19,13 +22,18 @@ export default function ClientColorizer() {
       return arr;
     }
 
-    const shuffledColors = shuffle(colors);
+    // Small delay to ensure DOM is updated after navigation
+    const timeoutId = setTimeout(() => {
+      const shuffledColors = shuffle(colors);
 
-    // Select all links in DOM order and apply cycling colors
-    document.querySelectorAll('a').forEach((link, i) => {
-      link.style.color = `var(${shuffledColors[i % 6]})`;
-    });
-  }, []);
+      // Select all links in DOM order and apply cycling colors
+      document.querySelectorAll('a').forEach((link, i) => {
+        link.style.color = `var(${shuffledColors[i % 6]})`;
+      });
+    }, 0);
+
+    return () => clearTimeout(timeoutId);
+  }, [pathname]); // Re-run on route change
 
   return null;
 }

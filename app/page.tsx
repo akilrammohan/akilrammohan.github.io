@@ -1,6 +1,7 @@
 import { fetchShelf } from '@/lib/goodreads';
 import { getTopAlbumWeekly } from '@/lib/lastfm';
 import { ExpandableSection } from '@/components/ExpandableSection';
+import { SocialLinks } from '@/components/SocialLinks';
 
 export const dynamic = 'force-dynamic'; // Fetch fresh data on every request
 
@@ -18,8 +19,9 @@ export default async function HomePage() {
 
   return (
     <>
-      <h1>Akil Rammohan</h1>
+      <h1 className="floating-title">Akil Rammohan</h1>
 
+      <div className="main-content-column">
       <div className="sections-container">
         <ExpandableSection label="bio">
           <p>
@@ -67,17 +69,8 @@ export default async function HomePage() {
         </ExpandableSection>
       </div>
 
-      <ul className="external-links">
-        <li><a href="https://github.com/akilrammohan" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-        <li className="separator">-</li>
-        <li><a href="https://x.com/kilrmcgee" target="_blank" rel="noopener noreferrer">X</a></li>
-        <li className="separator">-</li>
-        <li><a href="https://www.linkedin.com/in/akilrammohan/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-        <li className="separator">-</li>
-        <li><a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" target="_blank" rel="noopener noreferrer">Goodreads</a></li>
-        <li className="separator">-</li>
-        <li><a href="https://open.spotify.com/user/akster213" target="_blank" rel="noopener noreferrer">Spotify</a></li>
-      </ul>
+      <SocialLinks />
+      </div>
     </>
   );
 }

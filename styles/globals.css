@@ -39,6 +39,7 @@ html {
 body {
   min-height: 100vh;
   line-height: 1.6;
+  position: relative;
 }
 
 /* Typography */
@@ -53,6 +54,16 @@ h1 {
   font-weight: 400;
   font-size: 2rem;
   margin-bottom: 1rem;
+}
+
+/* Floating title - sits above concentric rings */
+.floating-title {
+  position: relative;
+  z-index: 10;
+  background: var(--bg-warm);
+  padding: 0.25rem 0.5rem;
+  margin-left: -0.5rem;
+  width: fit-content;
 }
 
 h2 {
@@ -113,20 +124,29 @@ a:hover {
 }
 
 /* Home page styles */
-.external-links {
+.main-content-column {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  min-width: 340px;
+}
+
+.social-links {
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  justify-content: space-between;
   margin-top: 0.75rem;
+  position: relative;
+  z-index: 1;
+  width: 100%; /* Fill the parent width */
 }
 
-.external-links a:hover {
+.social-link-item {
+  padding: 0.25rem 0.5rem;
+}
+
+.social-links a:hover {
   text-decoration: underline;
-}
-
-.separator {
-  color: var(--text-muted);
 }
 
 /* Bookshelf page styles */
@@ -202,6 +222,12 @@ nav li {
   margin-bottom: 1rem;
 }
 
+.nav-item {
+  padding: 0.25rem 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
 nav a {
   font-size: 1.2rem;
 }
@@ -267,16 +293,18 @@ nav a.active {
 
 /* Expandable Sections */
 .sections-container {
-  width: fit-content;
+  width: 100%; /* Fill parent width */
+  position: relative;
+  z-index: 1;
 }
 
 .expandable-section {
   margin-bottom: 0.75rem;
-  border: 1px solid var(--text-color);
   padding: 0.75rem;
-  opacity: 0.8;
   cursor: pointer;
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .expandable-label {

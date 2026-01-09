@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const navLinks = [
+const navLinks: { href: string; label: string; external?: boolean }[] = [
   { href: '/', label: 'Home' },
   { href: '/bookshelf', label: 'Bookshelf' },
-  { href: '/writing', label: 'Writing' },
+  // { href: '/writing', label: 'Writing' },
+  { href: '/resume.pdf', label: 'Resume', external: true },
 ];
 
 export default function Navigation() {
@@ -23,12 +24,22 @@ export default function Navigation() {
       <ul>
         {navLinks.map(link => (
           <li key={link.href}>
-            <Link
-              href={link.href}
-              className={isActive(link.href) ? 'active' : ''}
-            >
-              {link.label}
-            </Link>
+            {link.external ? (
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                href={link.href}
+                className={isActive(link.href) ? 'active' : ''}
+              >
+                {link.label}
+              </Link>
+            )}
           </li>
         ))}
       </ul>

@@ -79,8 +79,6 @@ export default async function HomePage() {
         <li><a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" target="_blank" rel="noopener noreferrer">Goodreads</a></li>
         <li className="separator">-</li>
         <li><a href="https://open.spotify.com/user/akster213" target="_blank" rel="noopener noreferrer">Spotify</a></li>
-        <li className="separator">-</li>
-        <li><a href="/resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a></li>
       </ul>
     </>
   );

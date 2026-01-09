@@ -176,7 +176,7 @@ a:hover {
 
 .read-cover {
   width: auto !important;
-  height: 240px !important;
+  height: 280px !important;
   border-radius: 4px;
   transition: transform 0.2s ease;
 }
@@ -260,7 +260,7 @@ nav a.active {
   }
 
   .read-cover {
-    height: 180px !important;
+    height: 200px !important;
   }
 }
 

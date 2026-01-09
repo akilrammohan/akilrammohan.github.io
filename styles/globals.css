@@ -149,10 +149,6 @@ a:hover {
 }
 
 /* Bookshelf page styles */
-.bookshelf-full-width {
-  max-width: none !important;
-}
-
 .intro {
   margin-bottom: 2rem;
 }
@@ -229,10 +225,6 @@ nav li {
 
 nav a {
   font-size: 1.2rem;
-}
-
-nav a.active {
-  font-weight: 700;
 }
 
 /* Responsive Design */

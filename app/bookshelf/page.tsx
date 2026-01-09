@@ -20,7 +20,7 @@ export default async function BookshelfPage() {
     .sort((a, b) => b.user_rating - a.user_rating);
 
   return (
-    <div className="bookshelf-full-width">
+    <>
       <h1 className="floating-title">Bookshelf</h1>
 
       <div className="sections-container">
@@ -90,6 +90,6 @@ export default async function BookshelfPage() {
           <p className="empty-state">No books found. Check back later!</p>
         )}
       </div>
-    </div>
+    </>
   );
 }

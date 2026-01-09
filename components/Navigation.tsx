@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { useRef, useEffect } from 'react';
 import { useConcentricContext } from '@/contexts/ConcentricContext';
 
@@ -12,13 +11,7 @@ const navLinks: { href: string; label: string; external?: boolean }[] = [
   { href: '/resume.pdf', label: 'resume', external: true },
 ];
 
-const NavItem = ({
-  link,
-  isActive,
-}: {
-  link: { href: string; label: string; external?: boolean };
-  isActive: boolean;
-}) => {
+const NavItem = ({ link }: { link: { href: string; label: string; external?: boolean } }) => {
   const elementRef = useRef<HTMLLIElement>(null);
   const { registerElement, unregisterElement } = useConcentricContext();
   const id = `nav-${link.label.toLowerCase()}`;
@@ -35,28 +28,18 @@ const NavItem = ({
           {link.label}
         </a>
       ) : (
-        <Link href={link.href} className={isActive ? 'active' : ''}>
-          {link.label}
-        </Link>
+        <Link href={link.href}>{link.label}</Link>
       )}
     </li>
   );
 };
 
 export default function Navigation() {
-  const pathname = usePathname();
-
-  const isActive = (href: string) => {
-    if (!pathname) return false;
-    if (href === '/') return pathname === '/';
-    return pathname.startsWith(href);
-  };
-
   return (
     <nav>
       <ul>
         {navLinks.map((link) => (
-          <NavItem key={link.href} link={link} isActive={isActive(link.href)} />
+          <NavItem key={link.href} link={link} />
         ))}
       </ul>
     </nav>

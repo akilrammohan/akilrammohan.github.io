@@ -1,13 +1,13 @@
 import { fetchShelf } from '@/lib/goodreads';
-import { getRecentTracks } from '@/lib/lastfm';
+import { getTopAlbumWeekly } from '@/lib/lastfm';
 import { ExpandableSection } from '@/components/ExpandableSection';
 
 export const dynamic = 'force-dynamic'; // Fetch fresh data on every request
 
 export default async function HomePage() {
-  const [siteBooks, initialTrack] = await Promise.all([
+  const [siteBooks, topAlbum] = await Promise.all([
     fetchShelf('site'),
-    getRecentTracks(),
+    getTopAlbumWeekly(),
   ]);
 
   const recentlyReadBook = siteBooks.sort((a, b) => {
@@ -22,7 +22,7 @@ export default async function HomePage() {
 
       <ExpandableSection label="bio">
         <p>
-          senior at u of wisconsin; computer science & data science; name pronounced UH-kill (<span className="ipa">/ˈʌkɪl/</span>)
+          senior at u of wisconsin; computer science & data science; los altos, ca; name pronounced UH-kill (<span className="ipa">/ˈʌkɪl/</span>)
         </p>
       </ExpandableSection>
 
@@ -35,10 +35,10 @@ export default async function HomePage() {
       <ExpandableSection label="interests">
         <p>
           reading{recentlyReadBook && (
-            <> (<em>{recentlyReadBook.title}</em>)</>
-          )}; music{initialTrack && (
-            <> (<a href={initialTrack.trackUrl} target="_blank" rel="noopener noreferrer">{initialTrack.title}</a> by <a href={initialTrack.artistUrl} target="_blank" rel="noopener noreferrer">{initialTrack.artist}</a>)</>
-          )}; <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a>; <a href="https://github.com/akilrammohan/lifecal-ios-shortcut" target="_blank" rel="noopener noreferrer">vibe coding</a>; edtech
+            <> (<a href={recentlyReadBook.link} target="_blank" rel="noopener noreferrer">{recentlyReadBook.title}</a> by <a href={`https://www.goodreads.com/search?q=${encodeURIComponent(recentlyReadBook.author_name)}&search_type=authors`} target="_blank" rel="noopener noreferrer">{recentlyReadBook.author_name}</a>)</>
+          )}; music{topAlbum && (
+            <> (<a href={topAlbum.albumUrl} target="_blank" rel="noopener noreferrer">{topAlbum.name}</a> by <a href={topAlbum.artistUrl} target="_blank" rel="noopener noreferrer">{topAlbum.artist}</a>)</>
+          )}; <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a>; <a href="https://github.com/akilrammohan/lifecal-ios-shortcut" target="_blank" rel="noopener noreferrer">short-lived personal software</a>; edtech
         </p>
       </ExpandableSection>
 

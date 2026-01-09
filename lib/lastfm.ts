@@ -2,6 +2,15 @@ const API_KEY = process.env.LASTFM_API_KEY;
 const USERNAME = process.env.LASTFM_USERNAME;
 const BASE_URL = 'http://ws.audioscrobbler.com/2.0/';
 
+export interface LastFmAlbum {
+  name: string;
+  artist: string;
+  playcount: number;
+  albumUrl: string;
+  artistUrl: string;
+  imageUrl: string;
+}
+
 export interface LastFmTrack {
   isPlaying: boolean;
   title: string;
@@ -74,6 +83,54 @@ export async function getRecentTracks(): Promise<LastFmTrack | null> {
     };
   } catch (error) {
     console.error('Error fetching Last.fm data:', error);
+    return null;
+  }
+}
+
+export async function getTopAlbumWeekly(): Promise<LastFmAlbum | null> {
+  try {
+    const params = new URLSearchParams({
+      method: 'user.gettopalbums',
+      user: USERNAME!,
+      api_key: API_KEY!,
+      format: 'json',
+      period: '7day',
+      limit: '1',
+    });
+
+    const response = await fetch(`${BASE_URL}?${params.toString()}`, {
+      cache: 'no-store',
+    });
+
+    if (!response.ok) {
+      throw new Error(`Last.fm API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (!data.topalbums?.album || data.topalbums.album.length === 0) {
+      return null;
+    }
+
+    const album = data.topalbums.album[0];
+
+    const images = album.image || [];
+    const imageUrl = images.find((img: any) => img.size === 'large')?.['#text'] ||
+                     images.find((img: any) => img.size === 'extralarge')?.['#text'] ||
+                     images[images.length - 1]?.['#text'] || '';
+
+    const artistName = album.artist?.name || album.artist;
+
+    return {
+      name: album.name,
+      artist: artistName,
+      playcount: parseInt(album.playcount) || 0,
+      albumUrl: album.url,
+      artistUrl: `https://www.last.fm/music/${encodeURIComponent(artistName)}`,
+      imageUrl,
+    };
+  } catch (error) {
+    console.error('Error fetching Last.fm top album:', error);
     return null;
   }
 }

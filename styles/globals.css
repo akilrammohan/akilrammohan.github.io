@@ -267,3 +267,32 @@ nav a.active {
   }
 }
 
+/* Expandable Sections */
+.expandable-section {
+  margin-bottom: 0.75rem;
+}
+
+.expandable-label {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.expandable-label:hover {
+  text-decoration: underline;
+}
+
+.expandable-content {
+  margin-top: 0.5rem;
+  line-height: 1.6;
+}
+
+.expandable-content p {
+  margin-bottom: 0;
+}
+

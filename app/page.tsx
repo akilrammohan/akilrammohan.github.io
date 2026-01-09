@@ -1,5 +1,6 @@
 import { fetchShelf } from '@/lib/goodreads';
 import { getRecentTracks } from '@/lib/lastfm';
+import { ExpandableSection } from '@/components/ExpandableSection';
 
 export const dynamic = 'force-dynamic'; // Fetch fresh data on every request
 
@@ -19,36 +20,33 @@ export default async function HomePage() {
     <>
       <h1>Akil Rammohan</h1>
 
-      <p>
-        Akil Rammohan is a computer science student at the University of Wisconsin. His name is pronounced UH-kill (<span className="ipa">/ˈʌkɪl/</span> to be precise).
-      </p>
+      <ExpandableSection label="bio">
+        <p>
+          senior at u of wisconsin; computer science & data science; name pronounced UH-kill (<span className="ipa">/ˈʌkɪl/</span>)
+        </p>
+      </ExpandableSection>
 
-      <p>
-        He's worked on AI in VR research at the{' '}
-        <a href="https://neuroergolab.org/" target="_blank" rel="noopener noreferrer">
-          NeuroErgonomics Lab
-        </a>, agentic AI with the{' '}
-        <a href="https://nplus1.wisc.edu" target="_blank" rel="noopener noreferrer">
-          N+1 Institute
-        </a>, and data analytics at{' '}
-        <a href="https://www.fastersmarter.io" target="_blank" rel="noopener noreferrer">
-          Think Fast Talk Smart
-        </a>, a business communication podcast.
-        Check out his{' '}
-        <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">resume</a> for more.
-      </p>
+      <ExpandableSection label="experience">
+        <p>
+          AI in VR research (<a href="https://neuroergolab.org/" target="_blank" rel="noopener noreferrer">NeuroErgonomics Lab</a>); agentic AI (<a href="https://nplus1.wisc.edu" target="_blank" rel="noopener noreferrer">N+1 Institute</a>); data analytics (<a href="https://www.fastersmarter.io" target="_blank" rel="noopener noreferrer">Think Fast Talk Smart</a>); <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">resume</a>
+        </p>
+      </ExpandableSection>
 
-      <p>
-        Interests include reading{recentlyReadBook && (
-          <> (most recently, <em>{recentlyReadBook.title}</em>)</>
-        )}; music{initialTrack && (
-          <> (most recently, <a href={initialTrack.trackUrl} target="_blank" rel="noopener noreferrer">{initialTrack.title}</a> by <a href={initialTrack.artistUrl} target="_blank" rel="noopener noreferrer">{initialTrack.artist}</a>)</>
-        )}; <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a>; <a href="https://github.com/akilrammohan/lifecal-ios-shortcut" target="_blank" rel="noopener noreferrer">vibe coding</a>; and agentic AI in edtech (<a href="#">link soon</a>).
-      </p>
+      <ExpandableSection label="interests">
+        <p>
+          reading{recentlyReadBook && (
+            <> (<em>{recentlyReadBook.title}</em>)</>
+          )}; music{initialTrack && (
+            <> (<a href={initialTrack.trackUrl} target="_blank" rel="noopener noreferrer">{initialTrack.title}</a> by <a href={initialTrack.artistUrl} target="_blank" rel="noopener noreferrer">{initialTrack.artist}</a>)</>
+          )}; <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a>; <a href="https://github.com/akilrammohan/lifecal-ios-shortcut" target="_blank" rel="noopener noreferrer">vibe coding</a>; edtech
+        </p>
+      </ExpandableSection>
 
-      <p>
-        He is currently building something to apply AI to the failing, fragmented education system. If that sounds interesting, reach out to him at akilan[dot]rammohan[at]gmail[dot]com.
-      </p>
+      <ExpandableSection label="currently">
+        <p>
+          building edtech with AI; reach out: akilan[dot]rammohan[at]gmail[dot]com
+        </p>
+      </ExpandableSection>
 
       <ul className="external-links">
         <li><a href="https://github.com/akilrammohan" target="_blank" rel="noopener noreferrer">GitHub</a></li>

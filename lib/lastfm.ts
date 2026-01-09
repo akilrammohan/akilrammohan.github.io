@@ -1,6 +1,6 @@
 const API_KEY = process.env.LASTFM_API_KEY;
 const USERNAME = process.env.LASTFM_USERNAME;
-const BASE_URL = 'http://ws.audioscrobbler.com/2.0/';
+const BASE_URL = 'https://ws.audioscrobbler.com/2.0/';
 
 export interface LastFmAlbum {
   name: string;
@@ -89,13 +89,17 @@ export async function getRecentTracks(): Promise<LastFmTrack | null> {
 
 export async function getTopAlbumWeekly(): Promise<LastFmAlbum | null> {
   try {
+    // Use weekly album chart with custom time range (last 7 days)
+    const now = Math.floor(Date.now() / 1000);
+    const sevenDaysAgo = now - 604800; // 7 days in seconds
+
     const params = new URLSearchParams({
-      method: 'user.gettopalbums',
+      method: 'user.getweeklyalbumchart',
       user: USERNAME!,
       api_key: API_KEY!,
       format: 'json',
-      period: '7day',
-      limit: '1',
+      from: sevenDaysAgo.toString(),
+      to: now.toString(),
     });
 
     const response = await fetch(`${BASE_URL}?${params.toString()}`, {
@@ -108,24 +112,44 @@ export async function getTopAlbumWeekly(): Promise<LastFmAlbum | null> {
 
     const data = await response.json();
 
-    if (!data.topalbums?.album || data.topalbums.album.length === 0) {
+    if (!data.weeklyalbumchart?.album || data.weeklyalbumchart.album.length === 0) {
       return null;
     }
 
-    const album = data.topalbums.album[0];
+    // Albums are already sorted by playcount, first one is most listened
+    const album = data.weeklyalbumchart.album[0];
 
-    const images = album.image || [];
-    const imageUrl = images.find((img: any) => img.size === 'large')?.['#text'] ||
-                     images.find((img: any) => img.size === 'extralarge')?.['#text'] ||
-                     images[images.length - 1]?.['#text'] || '';
+    // Weekly chart doesn't include images, so we need to fetch album info separately
+    const artistName = album.artist?.['#text'] || album.artist?.name || album.artist;
+    const albumName = album.name;
 
-    const artistName = album.artist?.name || album.artist;
+    // Fetch album info to get the image
+    const infoParams = new URLSearchParams({
+      method: 'album.getinfo',
+      artist: artistName,
+      album: albumName,
+      api_key: API_KEY!,
+      format: 'json',
+    });
+
+    const infoResponse = await fetch(`${BASE_URL}?${infoParams.toString()}`, {
+      cache: 'no-store',
+    });
+
+    let imageUrl = '';
+    if (infoResponse.ok) {
+      const infoData = await infoResponse.json();
+      const images = infoData.album?.image || [];
+      imageUrl = images.find((img: any) => img.size === 'large')?.['#text'] ||
+                 images.find((img: any) => img.size === 'extralarge')?.['#text'] ||
+                 images[images.length - 1]?.['#text'] || '';
+    }
 
     return {
-      name: album.name,
+      name: albumName,
       artist: artistName,
       playcount: parseInt(album.playcount) || 0,
-      albumUrl: album.url,
+      albumUrl: album.url || `https://www.last.fm/music/${encodeURIComponent(artistName)}/${encodeURIComponent(albumName)}`,
       artistUrl: `https://www.last.fm/music/${encodeURIComponent(artistName)}`,
       imageUrl,
     };

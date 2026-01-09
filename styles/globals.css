@@ -33,6 +33,7 @@ html {
   font-family: var(--font-main);
   background-color: var(--bg-warm);
   color: var(--text-color);
+  scrollbar-gutter: stable;
 }
 
 body {

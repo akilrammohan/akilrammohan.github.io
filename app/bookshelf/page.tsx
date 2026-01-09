@@ -21,7 +21,7 @@ export default async function BookshelfPage() {
 
   return (
     <div className="bookshelf-full-width">
-      <h1>Bookshelf</h1>
+      <h1 className="floating-title">Bookshelf</h1>
 
       <div className="sections-container">
         <ExpandableSection label="about">

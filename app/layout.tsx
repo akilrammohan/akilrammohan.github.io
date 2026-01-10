@@ -2,6 +2,7 @@ import { abrilFatface, exo2, istokWeb } from '@/lib/fonts';
 import Navigation from '@/components/Navigation';
 import ClientColorizer from '@/components/ClientColorizer';
 import { ConcentricWrapper } from '@/components/ConcentricWrapper';
+import { ContentWrapper } from '@/components/ContentWrapper';
 import '@/styles/globals.css';
 
 export const metadata = {
@@ -37,9 +38,9 @@ export default function RootLayout({
             <aside className="sidebar">
               <Navigation />
             </aside>
-            <main className="content">
+            <ContentWrapper>
               {children}
-            </main>
+            </ContentWrapper>
           </div>
           <ClientColorizer />
         </ConcentricWrapper>

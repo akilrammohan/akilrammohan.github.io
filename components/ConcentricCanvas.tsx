@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { useConcentricContext } from '@/contexts/ConcentricContext';
-import { calculateTerritories, generateAllRings, type Ring } from '@/lib/territoryCalculator';
+import { calculateTerritories, generateAllRings, type Ring, type Territory } from '@/lib/territoryCalculator';
 
 interface ConcentricCanvasProps {
   gap?: number;
@@ -19,15 +19,36 @@ export const ConcentricCanvas = ({
   strokeWidth = 1,
   strokeOpacity = 0.3,
 }: ConcentricCanvasProps) => {
-  const { elements, viewport } = useConcentricContext();
+  const { elements, dragOffsets, viewport } = useConcentricContext();
 
   const { navRings, contentRings } = useMemo(() => {
-    if (elements.size === 0 || viewport.width === 0) {
+    if (elements.size === 0 || viewport.layoutWidth === 0) {
       return { navRings: new Map<string, Ring[]>(), contentRings: new Map<string, Ring[]>() };
     }
 
+    // Calculate territories from original element positions (fixed)
     const territories = calculateTerritories(elements, viewport, gap);
-    const allRings = generateAllRings(territories, spacing);
+
+    // Apply drag offsets to element bounds for ring generation
+    const territoriesWithOffsets: Territory[] = territories.map((territory) => {
+      const offset = dragOffsets.get(territory.id);
+      if (!offset) return territory;
+
+      // Create new element bounds with offset applied
+      const offsetBounds = new DOMRect(
+        territory.elementBounds.x + offset.x,
+        territory.elementBounds.y + offset.y,
+        territory.elementBounds.width,
+        territory.elementBounds.height
+      );
+
+      return {
+        ...territory,
+        elementBounds: offsetBounds,
+      };
+    });
+
+    const allRings = generateAllRings(territoriesWithOffsets, spacing);
 
     // Separate nav rings from content rings
     const navRings = new Map<string, Ring[]>();
@@ -42,9 +63,9 @@ export const ConcentricCanvas = ({
     });
 
     return { navRings, contentRings };
-  }, [elements, viewport, gap, spacing]);
+  }, [elements, dragOffsets, viewport, gap, spacing]);
 
-  if (viewport.width === 0 || viewport.height === 0) {
+  if (viewport.layoutWidth === 0 || viewport.height === 0) {
     return null;
   }
 
@@ -70,7 +91,7 @@ export const ConcentricCanvas = ({
       {/* Fixed layer for nav elements */}
       <svg
         className="concentric-canvas-nav"
-        width={viewport.width}
+        width={viewport.visibleWidth}
         height="100vh"
         style={{
           position: 'fixed',
@@ -86,7 +107,7 @@ export const ConcentricCanvas = ({
       {/* Absolute layer for scrolling content */}
       <svg
         className="concentric-canvas-content"
-        width={viewport.width}
+        width={viewport.visibleWidth}
         height={viewport.height}
         style={{
           position: 'absolute',

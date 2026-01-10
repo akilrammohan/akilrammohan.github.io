@@ -33,12 +33,14 @@ html {
   font-family: var(--font-main);
   background-color: var(--bg-warm);
   color: var(--text-color);
+  overflow-x: hidden;
 }
 
 body {
   min-height: 100vh;
   line-height: 1.6;
   position: relative;
+  overflow-x: hidden;
 }
 
 /* Typography */
@@ -105,7 +107,7 @@ a:hover {
   position: fixed;
   top: 0;
   left: 0;
-  width: 25%;
+  width: 25vw;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -113,8 +115,8 @@ a:hover {
 }
 
 .content {
-  width: 75%;
-  margin-left: 25%;
+  width: 75vw;
+  margin-left: 25vw;
   padding: calc(50vh - 250px) 4rem 3rem;
 }
 

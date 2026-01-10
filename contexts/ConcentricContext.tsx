@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
+import { calculateTerritories } from '@/lib/territoryCalculator';
 
 export type ElementType = 'nav' | 'section' | 'social';
 
@@ -32,6 +33,7 @@ interface ConcentricContextValue {
   updateBounds: (id: string, bounds: DOMRect) => void;
   setExpanded: (id: string, expanded: boolean) => void;
   setDragOffset: (id: string, offset: DragOffset | null) => void;
+  resetRandomOffsets: () => void;
   viewport: Viewport;
 }
 
@@ -51,14 +53,20 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
   const [viewport, setViewport] = useState<Viewport>({ layoutWidth: 0, visibleWidth: 0, height: 0, scrollbarCompensation: 0 });
   const observerRef = useRef<ResizeObserver | null>(null);
   const elementRefs = useRef<Map<string, HTMLElement>>(new Map());
-  // Keep a ref to current dragOffsets so callbacks can access it
+  // Keep refs to current state so callbacks can access latest values
   const dragOffsetsRef = useRef<Map<string, DragOffset>>(dragOffsets);
   dragOffsetsRef.current = dragOffsets;
+  const elementsRef = useRef<Map<string, ElementData>>(elements);
+  elementsRef.current = elements;
+  const viewportRef = useRef<Viewport>(viewport);
+  viewportRef.current = viewport;
   // Track last known innerWidth to detect actual window resizes vs scrollbar changes
   const lastInnerWidthRef = useRef<number>(0);
   // RAF-based viewport update batching to prevent flicker
   const pendingViewportRef = useRef<Viewport | null>(null);
   const rafIdRef = useRef<number | null>(null);
+  // Track whether random offsets have been generated for this "session"
+  const randomOffsetsGeneratedRef = useRef(false);
 
   // Calculate content height from actual elements (not scrollHeight which includes SVG)
   // Uses base positions (without drag transforms) for consistent height calculation
@@ -126,7 +134,14 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
 
           if (data.type === 'nav') {
             // Nav elements are fixed, keep viewport-relative bounds
-            next.set(id, { ...data, bounds: rect });
+            // Subtract offset to get base position (getBoundingClientRect includes transforms)
+            const navRect = new DOMRect(
+              rect.x - (offset?.x ?? 0),
+              rect.y - (offset?.y ?? 0),
+              rect.width,
+              rect.height
+            );
+            next.set(id, { ...data, bounds: navRect });
           } else {
             // Calculate current X position (for first-time capture or after window resize)
             const currentX = rect.x + scrollX - (offset?.x ?? 0);
@@ -277,6 +292,43 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
     });
   }, []);
 
+  // Clamp existing offsets to their current territory bounds
+  // Called after layout changes (expand/collapse) to keep elements within bounds
+  // Uses refs to always get latest state values
+  const clampOffsetsToTerritories = useCallback(() => {
+    const currentElements = elementsRef.current;
+    const currentViewport = viewportRef.current;
+
+    if (currentElements.size === 0 || currentViewport.layoutWidth === 0) return;
+
+    const territories = calculateTerritories(currentElements, currentViewport, 8);
+
+    setDragOffsets((prev) => {
+      const next = new Map(prev);
+
+      territories.forEach((territory) => {
+        const offset = next.get(territory.id);
+        if (!offset) return;
+
+        const { elementBounds, territoryBounds } = territory;
+
+        // Calculate valid offset range
+        const maxLeft = elementBounds.left - territoryBounds.left;
+        const maxRight = territoryBounds.right - (elementBounds.left + elementBounds.width);
+        const maxUp = elementBounds.top - territoryBounds.top;
+        const maxDown = territoryBounds.bottom - (elementBounds.top + elementBounds.height);
+
+        // Clamp offset to valid range
+        const clampedX = Math.max(-maxLeft, Math.min(maxRight, offset.x));
+        const clampedY = Math.max(-maxUp, Math.min(maxDown, offset.y));
+
+        next.set(territory.id, { x: clampedX, y: clampedY });
+      });
+
+      return next;
+    });
+  }, []);
+
   const setExpanded = useCallback((id: string, expanded: boolean) => {
     setElements((prev) => {
       const next = new Map(prev);
@@ -324,7 +376,12 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
     updateFrames.forEach((delay) => {
       setTimeout(updateAll, delay * 16);
     });
-  }, [updateAllBounds, getContentHeight, scheduleViewportUpdate]);
+
+    // Clamp offsets after layout has settled (after final bounds update)
+    setTimeout(() => {
+      clampOffsetsToTerritories();
+    }, 35 * 16); // After the last bounds update
+  }, [updateAllBounds, getContentHeight, scheduleViewportUpdate, clampOffsetsToTerritories]);
 
   const setDragOffset = useCallback((id: string, offset: DragOffset | null) => {
     setDragOffsets((prev) => {
@@ -338,6 +395,61 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
     });
   }, []);
 
+  // Generate random offsets for all elements, constrained to their territories
+  const generateRandomOffsets = useCallback(() => {
+    if (elements.size === 0 || viewport.layoutWidth === 0) return;
+
+    const territories = calculateTerritories(elements, viewport, 8);
+    const newOffsets = new Map<string, DragOffset>();
+
+    territories.forEach((territory) => {
+      const { elementBounds, territoryBounds } = territory;
+
+      // Calculate max offset range in each direction
+      const maxLeft = elementBounds.left - territoryBounds.left;
+      const maxRight = territoryBounds.right - (elementBounds.left + elementBounds.width);
+      const maxUp = elementBounds.top - territoryBounds.top;
+      const maxDown = territoryBounds.bottom - (elementBounds.top + elementBounds.height);
+
+      // Random offset within bounds
+      const randomX = Math.random() * (maxLeft + maxRight) - maxLeft;
+      const randomY = Math.random() * (maxUp + maxDown) - maxUp;
+
+      newOffsets.set(territory.id, { x: randomX, y: randomY });
+    });
+
+    setDragOffsets(newOffsets);
+  }, [elements, viewport]);
+
+  // Reset random offsets to trigger regeneration on navigation
+  const resetRandomOffsets = useCallback(() => {
+    randomOffsetsGeneratedRef.current = false;
+    setDragOffsets(new Map());
+  }, []);
+
+  // Generate random offsets once territories are ready
+  useEffect(() => {
+    if (randomOffsetsGeneratedRef.current) return;
+    if (elements.size === 0 || viewport.layoutWidth === 0) return;
+
+    // Check for valid bounds
+    let hasValidBounds = false;
+    elements.forEach((el) => {
+      if (el.bounds && el.bounds.width > 0) hasValidBounds = true;
+    });
+    if (!hasValidBounds) return;
+
+    // Use RAF to ensure layout is settled
+    const rafId = requestAnimationFrame(() => {
+      if (!randomOffsetsGeneratedRef.current) {
+        generateRandomOffsets();
+        randomOffsetsGeneratedRef.current = true;
+      }
+    });
+
+    return () => cancelAnimationFrame(rafId);
+  }, [elements, viewport, generateRandomOffsets]);
+
   return (
     <ConcentricContext.Provider
       value={{
@@ -348,6 +460,7 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
         updateBounds,
         setExpanded,
         setDragOffset,
+        resetRandomOffsets,
         viewport,
       }}
     >

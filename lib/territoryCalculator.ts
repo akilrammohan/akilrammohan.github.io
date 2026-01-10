@@ -28,7 +28,7 @@ interface Viewport {
 /**
  * Groups elements by their type and sorts them by position
  */
-export const groupAndSortElements = (elements: Map<string, ElementData>) => {
+const groupAndSortElements = (elements: Map<string, ElementData>) => {
   const nav: ElementData[] = [];
   const sections: ElementData[] = [];
   const social: ElementData[] = [];
@@ -209,7 +209,7 @@ export const calculateTerritories = (
 /**
  * Generates concentric rings for a territory with constant spacing
  */
-export const generateRings = (
+const generateRings = (
   territory: Territory,
   spacing: number = 12
 ): Ring[] => {

@@ -28,7 +28,7 @@ export const useDraggable = (elementId: string): UseDraggableResult => {
   const territoryBounds = useMemo(() => {
     if (elements.size === 0 || viewport.layoutWidth === 0) return null;
 
-    const territories = calculateTerritories(elements, viewport);
+    const territories = calculateTerritories(elements, viewport, 8);
     const territory = territories.find((t) => t.id === elementId);
     return territory?.territoryBounds ?? null;
   }, [elements, viewport, elementId]);

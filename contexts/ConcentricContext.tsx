@@ -395,31 +395,10 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
     });
   }, []);
 
-  // Generate random offsets for all elements, constrained to their territories
+  // Generate random offsets (disabled - all elements start at default positions)
   const generateRandomOffsets = useCallback(() => {
-    if (elements.size === 0 || viewport.layoutWidth === 0) return;
-
-    const territories = calculateTerritories(elements, viewport, 8);
-    const newOffsets = new Map<string, DragOffset>();
-
-    territories.forEach((territory) => {
-      const { elementBounds, territoryBounds } = territory;
-
-      // Calculate max offset range in each direction
-      const maxLeft = elementBounds.left - territoryBounds.left;
-      const maxRight = territoryBounds.right - (elementBounds.left + elementBounds.width);
-      const maxUp = elementBounds.top - territoryBounds.top;
-      const maxDown = territoryBounds.bottom - (elementBounds.top + elementBounds.height);
-
-      // Random offset within bounds
-      const randomX = Math.random() * (maxLeft + maxRight) - maxLeft;
-      const randomY = Math.random() * (maxUp + maxDown) - maxUp;
-
-      newOffsets.set(territory.id, { x: randomX, y: randomY });
-    });
-
-    setDragOffsets(newOffsets);
-  }, [elements, viewport]);
+    // No-op: randomization disabled
+  }, []);
 
   // Reset random offsets to trigger regeneration on navigation
   const resetRandomOffsets = useCallback(() => {

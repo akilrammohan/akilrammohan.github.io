@@ -56,6 +56,9 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
   dragOffsetsRef.current = dragOffsets;
   // Track last known innerWidth to detect actual window resizes vs scrollbar changes
   const lastInnerWidthRef = useRef<number>(0);
+  // RAF-based viewport update batching to prevent flicker
+  const pendingViewportRef = useRef<Viewport | null>(null);
+  const rafIdRef = useRef<number | null>(null);
 
   // Calculate content height from actual elements (not scrollHeight which includes SVG)
   // Uses base positions (without drag transforms) for consistent height calculation
@@ -77,6 +80,29 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
 
     // Always at least viewport height (fills screen), extends when content grows
     return Math.max(window.innerHeight, maxBottom + 32);
+  }, []);
+
+  // Batch viewport AND bounds updates into a single frame to prevent flicker
+  // Multiple rapid updates (from ResizeObservers, setTimeouts) get coalesced
+  // Both setViewport and setElements happen in same RAF callback = React batches them
+  const scheduleViewportUpdate = useCallback((newViewport: Viewport, boundsUpdater: () => void) => {
+    pendingViewportRef.current = newViewport;
+
+    // Cancel any pending RAF
+    if (rafIdRef.current !== null) {
+      cancelAnimationFrame(rafIdRef.current);
+    }
+
+    // Schedule update for next frame - both viewport and bounds together
+    rafIdRef.current = requestAnimationFrame(() => {
+      if (pendingViewportRef.current) {
+        setViewport(pendingViewportRef.current);
+        pendingViewportRef.current = null;
+      }
+      // Update bounds in same frame so React batches both state updates
+      boundsUpdater();
+      rafIdRef.current = null;
+    });
   }, []);
 
   // Function to update ALL element bounds
@@ -146,8 +172,7 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
       }
 
       lastInnerWidthRef.current = layoutWidth;
-      setViewport({ layoutWidth, visibleWidth, height: contentHeight, scrollbarCompensation });
-      updateAllBounds();
+      scheduleViewportUpdate({ layoutWidth, visibleWidth, height: contentHeight, scrollbarCompensation }, updateAllBounds);
     };
 
     handleWindowResize();
@@ -155,7 +180,7 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
     return () => {
       window.removeEventListener('resize', handleWindowResize);
     };
-  }, [updateAllBounds, getContentHeight]);
+  }, [updateAllBounds, getContentHeight, scheduleViewportUpdate]);
 
   // Setup ResizeObserver - when ANY element resizes, update bounds and viewport
   // Also observe body to catch scrollbar appearing/disappearing
@@ -170,17 +195,8 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
       // Check if this is a true layout change or just scrollbar appearing
       const isScrollbarChange = currentInnerWidth === lastInnerWidthRef.current;
 
-      if (isScrollbarChange) {
-        // Only scrollbar changed - update visibleWidth, height, and compensation
-        // baseX stays locked, preventing horizontal shift
-        setViewport((prev) => ({
-          ...prev,
-          visibleWidth,
-          height: contentHeight,
-          scrollbarCompensation,
-        }));
-      } else {
-        // Actual layout change - clear baseX and update everything
+      if (!isScrollbarChange) {
+        // Actual layout change - clear baseX
         setElements((prev) => {
           const next = new Map(prev);
           next.forEach((data, id) => {
@@ -189,14 +205,15 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
           return next;
         });
         lastInnerWidthRef.current = currentInnerWidth;
-        setViewport({
-          layoutWidth: currentInnerWidth,
-          visibleWidth,
-          height: contentHeight,
-          scrollbarCompensation,
-        });
       }
-      updateAllBounds();
+
+      // Schedule batched viewport AND bounds update (uses RAF to prevent flicker)
+      scheduleViewportUpdate({
+        layoutWidth: lastInnerWidthRef.current,
+        visibleWidth,
+        height: contentHeight,
+        scrollbarCompensation,
+      }, updateAllBounds);
     };
 
     observerRef.current = new ResizeObserver(() => {
@@ -213,7 +230,7 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
       observerRef.current?.disconnect();
       bodyObserver.disconnect();
     };
-  }, [updateAllBounds, getContentHeight]);
+  }, [updateAllBounds, getContentHeight, scheduleViewportUpdate]);
 
   const registerElement = useCallback((id: string, type: ElementType, element: HTMLElement | null) => {
     if (!element) return;
@@ -281,15 +298,7 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
       // Check if this is a true layout change or just scrollbar appearing
       const isScrollbarChange = currentInnerWidth === lastInnerWidthRef.current;
 
-      if (isScrollbarChange) {
-        // Only scrollbar changed - baseX stays locked
-        setViewport((prev) => ({
-          ...prev,
-          visibleWidth,
-          height: contentHeight,
-          scrollbarCompensation,
-        }));
-      } else {
+      if (!isScrollbarChange) {
         // Actual layout change - clear baseX
         setElements((prev) => {
           const next = new Map(prev);
@@ -299,14 +308,15 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
           return next;
         });
         lastInnerWidthRef.current = currentInnerWidth;
-        setViewport({
-          layoutWidth: currentInnerWidth,
-          visibleWidth,
-          height: contentHeight,
-          scrollbarCompensation,
-        });
       }
-      updateAllBounds();
+
+      // Schedule batched viewport AND bounds update (uses RAF to prevent flicker)
+      scheduleViewportUpdate({
+        layoutWidth: lastInnerWidthRef.current,
+        visibleWidth,
+        height: contentHeight,
+        scrollbarCompensation,
+      }, updateAllBounds);
     };
 
     // Use multiple frames to catch the full layout change
@@ -314,7 +324,7 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
     updateFrames.forEach((delay) => {
       setTimeout(updateAll, delay * 16);
     });
-  }, [updateAllBounds, getContentHeight]);
+  }, [updateAllBounds, getContentHeight, scheduleViewportUpdate]);
 
   const setDragOffset = useCallback((id: string, offset: DragOffset | null) => {
     setDragOffsets((prev) => {

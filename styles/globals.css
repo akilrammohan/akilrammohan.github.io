@@ -4,14 +4,18 @@
   --color-tet-1-contrast: #000;
   --color-tet-2: oklch(79% 0.198 233);
   --color-tet-2-contrast: #000;
-  --color-tet-3: oklch(48% 0.132 240);
+  --color-tet-3: #7B30FF;
   --color-tet-3-contrast: #fff;
   --color-tet-4: oklch(74% 0.209 323);
   --color-tet-4-contrast: #000;
-  --color-tet-5: oklch(85% 0.176 53);
+  --color-tet-5: #FFD035;
   --color-tet-5-contrast: #000;
   --color-tet-6: oklch(52% 0.242 53);
   --color-tet-6-contrast: #fff;
+  --color-tet-7: #2850E8;
+  --color-tet-7-contrast: #fff;
+  --color-tet-8: #FF6B00;
+  --color-tet-8-contrast: #000;
 
   --bg-warm: #1e2021;
   --text-color: #faf8f5;

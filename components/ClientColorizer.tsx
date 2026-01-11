@@ -8,8 +8,8 @@ export default function ClientColorizer() {
 
   useEffect(() => {
     const colors = [
-      '--color-tet-1', '--color-tet-2', '--color-tet-3',
-      '--color-tet-4', '--color-tet-5', '--color-tet-6'
+      '--color-tet-1', '--color-tet-2', '--color-tet-3', '--color-tet-4',
+      '--color-tet-5', '--color-tet-6', '--color-tet-7', '--color-tet-8'
     ];
 
     // Fisher-Yates shuffle to create random color order
@@ -28,7 +28,7 @@ export default function ClientColorizer() {
 
       // Select all links in DOM order and apply cycling colors
       document.querySelectorAll('a').forEach((link, i) => {
-        link.style.color = `var(${shuffledColors[i % 6]})`;
+        link.style.color = `var(${shuffledColors[i % colors.length]})`;
       });
     }, 0);
 

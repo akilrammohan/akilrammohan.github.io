@@ -54,7 +54,7 @@ h1 {
   font-family: var(--font-heading);
   font-weight: 400;
   font-size: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
 }
 
 /* Floating title - sits above concentric rings */
@@ -62,8 +62,8 @@ h1 {
   position: relative;
   z-index: 10;
   background: var(--bg-warm);
-  padding: 0.25rem 0.5rem;
-  margin-left: -0.5rem;
+  padding: 0;
+  margin-top: 0.5rem;
   width: fit-content;
 }
 
@@ -109,12 +109,15 @@ a:hover {
   max-width: none;
 }
 
-/* Home page styles */
+/* Home page styles - Fixed bottom-left */
 .main-content-column {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
   display: flex;
   flex-direction: column;
   width: fit-content;
-  min-width: 340px;
+  z-index: 10;
 }
 
 /* Bookshelf page styles */
@@ -175,29 +178,23 @@ a:hover {
   font-style: italic;
 }
 
-/* Navigation styles */
+/* Navigation styles - Single column, left-aligned */
 .nav-container {
-  width: 100%;
-  margin-top: 0.75rem;
-  margin-bottom: 0.75rem;
+  width: fit-content;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
   position: relative;
-  z-index: 1;
-  width: 100%;
-}
-
-.nav-links:last-child {
-  margin-bottom: 0;
+  z-index: 10;
 }
 
 .nav-link-item {
-  padding: 0.25rem 0.5rem;
+  padding: 0;
 }
 
 .nav-links a:hover {

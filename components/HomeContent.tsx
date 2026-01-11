@@ -25,8 +25,8 @@ interface HomeContentProps {
 export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) => {
   return (
     <div className="main-content-column">
-      <h1 className="floating-title">Akil Rammohan</h1>
       <Navigation />
+      <h1 className="floating-title">Akil Rammohan</h1>
 
       <GroupedSections>
         <ExpandableSection label="bio">

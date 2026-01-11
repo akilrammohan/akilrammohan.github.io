@@ -1,27 +1,27 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { useConcentricContext } from '@/contexts/ConcentricContext';
 
-const navLinks = [
+const allLinks = [
   { href: '/', label: 'home' },
   { href: '/bookshelf', label: 'bookshelf' },
+  { href: 'https://www.linkedin.com/in/akilrammohan/', label: 'linkedin', external: true },
   { href: '/resume.pdf', label: 'resume', external: true },
+  { href: 'https://github.com/akilrammohan', label: 'github', external: true },
+  { href: 'https://x.com/kilrmcgee', label: 'x', external: true },
+  { href: 'https://open.spotify.com/user/akster213', label: 'spotify', external: true },
+  { href: 'https://www.goodreads.com/user/show/109135301-akil-rammohan', label: 'goodreads', external: true },
 ];
 
-const NavLink = ({ href, label, external }: { href: string; label: string; external?: boolean }) => {
-  const elementRef = useRef<HTMLLIElement>(null);
-  const { registerElement, unregisterElement } = useConcentricContext();
-  const id = `nav-${label.toLowerCase()}`;
+interface NavLinkProps {
+  href: string;
+  label: string;
+  external?: boolean;
+}
 
-  useEffect(() => {
-    registerElement(id, 'nav', elementRef.current);
-    return () => unregisterElement(id);
-  }, [id, registerElement, unregisterElement]);
-
+const NavLink = ({ href, label, external }: NavLinkProps) => {
   return (
-    <li ref={elementRef} className="nav-link-item">
+    <li className="nav-link-item floating">
       {external ? (
         <a href={href} target="_blank" rel="noopener noreferrer">
           {label}
@@ -35,10 +35,12 @@ const NavLink = ({ href, label, external }: { href: string; label: string; exter
 
 export default function Navigation() {
   return (
-    <ul className="nav-links">
-      {navLinks.map((link) => (
-        <NavLink key={link.label} {...link} />
-      ))}
-    </ul>
+    <nav className="nav-container">
+      <ul className="nav-links floating">
+        {allLinks.map((link) => (
+          <NavLink key={link.label} {...link} />
+        ))}
+      </ul>
+    </nav>
   );
 }

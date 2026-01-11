@@ -22,7 +22,7 @@ export const ConcentricCanvas = ({
   const { elements, viewport } = useConcentricContext();
 
   const rings = useMemo(() => {
-    if (elements.size === 0 || viewport.layoutWidth === 0) {
+    if (elements.size === 0 || viewport.width === 0) {
       return new Map<string, Ring[]>();
     }
 
@@ -30,21 +30,23 @@ export const ConcentricCanvas = ({
     return generateAllRings(territories, spacing);
   }, [elements, viewport, gap, spacing]);
 
-  if (viewport.layoutWidth === 0 || viewport.height === 0) {
+  if (viewport.width === 0 || viewport.height === 0) {
     return null;
   }
 
   return (
     <svg
       className="concentric-canvas"
-      width={viewport.visibleWidth}
+      width={viewport.width}
       height={viewport.height}
+      viewBox={`0 0 ${viewport.width} ${viewport.height}`}
       style={{
-        position: 'absolute',
+        position: 'fixed',
         top: 0,
         left: 0,
         pointerEvents: 'none',
         zIndex: 0,
+        overflow: 'hidden',
       }}
     >
       {Array.from(rings.entries()).map(([id, ringList]) =>

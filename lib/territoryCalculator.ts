@@ -20,8 +20,7 @@ export interface Ring {
 }
 
 interface Viewport {
-  layoutWidth: number;  // innerWidth - stable, for territory calculations
-  visibleWidth: number; // clientWidth - for right edge clamping
+  width: number;
   height: number;
 }
 
@@ -63,7 +62,7 @@ const groupAndSortElements = (elements: Map<string, ElementData>) => {
  * Calculates territories for all elements based on midpoint rules
  * Nav and social are horizontal rows at top/bottom
  * Sections are vertical stack in the middle
- * All territories extend to viewport left edge
+ * All territories extend to viewport edges
  */
 export const calculateTerritories = (
   elements: Map<string, ElementData>,
@@ -72,18 +71,9 @@ export const calculateTerritories = (
 ): Territory[] => {
   const { nav, sections, social } = groupAndSortElements(elements);
   const territories: Territory[] = [];
-  const { layoutWidth, visibleWidth, height } = viewport;
+  const { width, height } = viewport;
 
-  if (layoutWidth === 0 || height === 0) return territories;
-
-  // Helper to clamp right edge for viewport-touching territories
-  const clampRightEdge = (rightEdge: number): number => {
-    const layoutEdge = layoutWidth - gap / 2;
-    if (Math.abs(rightEdge - layoutEdge) < 1) {
-      return visibleWidth - gap / 2;
-    }
-    return rightEdge;
-  };
+  if (width === 0 || height === 0) return territories;
 
   // Find vertical boundaries between nav, sections, and social
   let navBottom = 0;
@@ -127,7 +117,7 @@ export const calculateTerritories = (
       : (nav[i - 1].bounds!.right + el.bounds.left) / 2;
 
     const right = i === nav.length - 1
-      ? layoutWidth
+      ? width
       : (el.bounds.right + nav[i + 1].bounds!.left) / 2;
 
     territories.push({
@@ -136,7 +126,7 @@ export const calculateTerritories = (
       elementBounds: el.bounds,
       territoryBounds: {
         top: gap / 2,
-        right: clampRightEdge(right - gap / 2),
+        right: right - gap / 2,
         bottom: navSectionsMidpoint - gap / 2,
         left: left + gap / 2,
       },
@@ -144,17 +134,19 @@ export const calculateTerritories = (
   });
 
   // Process section elements (vertical stack in middle)
+  // Territory spans full viewport width and height
   sections.forEach((el, i) => {
     if (!el.bounds) return;
 
-    // First section starts at nav-sections midpoint (or top if no nav)
-    const top = i === 0
-      ? navSectionsMidpoint
-      : (sections[i - 1].bounds!.bottom + el.bounds.top) / 2;
+    // When no nav elements, territory starts at top
+    const top = nav.length > 0
+      ? (i === 0 ? navSectionsMidpoint : (sections[i - 1].bounds!.bottom + el.bounds.top) / 2)
+      : 0;
 
-    const bottom = i === sections.length - 1
-      ? sectionsSocialMidpoint
-      : (el.bounds.bottom + sections[i + 1].bounds!.top) / 2;
+    // When no social elements, territory ends at bottom
+    const bottom = social.length > 0
+      ? (i === sections.length - 1 ? sectionsSocialMidpoint : (el.bounds.bottom + sections[i + 1].bounds!.top) / 2)
+      : height;
 
     territories.push({
       id: el.id,
@@ -162,7 +154,7 @@ export const calculateTerritories = (
       elementBounds: el.bounds,
       territoryBounds: {
         top: top + gap / 2,
-        right: clampRightEdge(layoutWidth - gap / 2),
+        right: width - gap / 2,
         bottom: bottom - gap / 2,
         left: gap / 2,
       },
@@ -178,7 +170,7 @@ export const calculateTerritories = (
       : (social[i - 1].bounds!.right + el.bounds.left) / 2;
 
     const right = i === social.length - 1
-      ? layoutWidth
+      ? width
       : (el.bounds.right + social[i + 1].bounds!.left) / 2;
 
     territories.push({
@@ -187,7 +179,7 @@ export const calculateTerritories = (
       elementBounds: el.bounds,
       territoryBounds: {
         top: sectionsSocialMidpoint + gap / 2,
-        right: clampRightEdge(right - gap / 2),
+        right: right - gap / 2,
         bottom: height - gap / 2,
         left: left + gap / 2,
       },
@@ -219,7 +211,13 @@ const generateRings = (
   rings.push({ ...currentRing });
 
   let iteration = 0;
-  const maxIterations = 100; // Safety limit
+  // Calculate max iterations based on max distance from element to any territory edge
+  const distanceToLeft = elementBounds.left - territoryBounds.left;
+  const distanceToRight = territoryBounds.right - (elementBounds.left + elementBounds.width);
+  const distanceToTop = elementBounds.top - territoryBounds.top;
+  const distanceToBottom = territoryBounds.bottom - (elementBounds.top + elementBounds.height);
+  const maxDistance = Math.max(distanceToLeft, distanceToRight, distanceToTop, distanceToBottom, 0);
+  const maxIterations = Math.ceil(maxDistance / spacing) + 10; // Add buffer
 
   while (iteration < maxIterations) {
     // Expand the ring outward by constant spacing

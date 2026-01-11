@@ -33,14 +33,14 @@ html {
   font-family: var(--font-main);
   background-color: var(--bg-warm);
   color: var(--text-color);
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 body {
-  min-height: 100vh;
+  height: 100vh;
   line-height: 1.6;
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 /* Typography */
@@ -117,24 +117,6 @@ a:hover {
   min-width: 340px;
 }
 
-.social-links {
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 0.75rem;
-  position: relative;
-  z-index: 1;
-  width: 100%; /* Fill the parent width */
-}
-
-.social-link-item {
-  padding: 0.25rem 0.5rem;
-}
-
-.social-links a:hover {
-  text-decoration: underline;
-}
-
 /* Bookshelf page styles */
 .intro {
   margin-bottom: 2rem;
@@ -193,16 +175,25 @@ a:hover {
   font-style: italic;
 }
 
-/* Navigation styles - mirrors social links */
+/* Navigation styles */
+.nav-container {
+  width: 100%;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
 .nav-links {
   list-style: none;
   display: flex;
   justify-content: space-between;
-  margin-top: 0.75rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   position: relative;
   z-index: 1;
   width: 100%;
+}
+
+.nav-links:last-child {
+  margin-bottom: 0;
 }
 
 .nav-link-item {
@@ -256,12 +247,6 @@ a:hover {
 }
 
 /* Expandable Sections */
-.sections-container {
-  width: 100%; /* Fill parent width */
-  position: relative;
-  z-index: 1;
-}
-
 .expandable-section {
   margin-bottom: 0.75rem;
   padding: 0.75rem;
@@ -293,5 +278,39 @@ a:hover {
 
 .expandable-content p {
   margin-bottom: 0;
+}
+
+/* Grouped Sections - Fixed top-right with internal scroll */
+.grouped-sections {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  width: 340px;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  padding: 0.5rem;
+  z-index: 1;
+}
+
+/* Hide scrollbar but keep functionality */
+.grouped-sections::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.grouped-sections {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Floating styles for nav links */
+.nav-links.floating {
+  z-index: 10;
+}
+
+.nav-link-item.floating {
+  position: relative;
+  z-index: 10;
+  background: var(--bg-warm);
 }
 

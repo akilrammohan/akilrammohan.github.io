@@ -43,6 +43,8 @@ Key CSS classes:
 - `.nav-links` / `.social-links` - evenly spaced via justify-content: space-between
 - `.nav-link-item.floating` / `.social-link-item.floating` - float above rings
 - `.grouped-sections` - single box wrapper for expandable sections
+- `.expandable-section` - individual section (no padding, 0.5rem margin-bottom)
+- `.expandable-label` / `.expandable-content` - right-aligned text
 
 ## APIs
 

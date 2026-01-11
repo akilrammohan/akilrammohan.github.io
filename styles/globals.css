@@ -245,8 +245,8 @@ a:hover {
 
 /* Expandable Sections */
 .expandable-section {
-  margin-bottom: 0.75rem;
-  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  padding: 0;
   cursor: pointer;
   width: 100%;
   position: relative;
@@ -256,6 +256,8 @@ a:hover {
 .expandable-label {
   font-weight: 600;
   color: var(--text-color);
+  text-align: right;
+  display: block;
 }
 
 .expandable-section:hover .expandable-label {
@@ -266,6 +268,7 @@ a:hover {
   height: 0;
   overflow: hidden;
   line-height: 1.6;
+  text-align: right;
 }
 
 .expandable-section.expanded .expandable-content {

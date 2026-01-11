@@ -132,7 +132,7 @@ a:hover {
 .favorites-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  gap: 0.5rem;
   justify-items: center;
 }
 
@@ -253,6 +253,10 @@ a:hover {
   z-index: 1;
 }
 
+.expandable-section:last-child {
+  margin-bottom: 0;
+}
+
 .expandable-label {
   font-weight: 600;
   color: var(--text-color);
@@ -280,6 +284,15 @@ a:hover {
   margin-bottom: 0;
 }
 
+/* Dividing lines between sections */
+.expandable-section:not(:last-child)::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background-color: var(--text-color);
+  margin: 0.5rem 0.5rem 0 0.5rem;
+}
+
 /* Grouped Sections - Fixed top-right with internal scroll */
 .grouped-sections {
   position: fixed;
@@ -290,6 +303,12 @@ a:hover {
   overflow-y: auto;
   padding: 0.5rem;
   z-index: 1;
+}
+
+/* Bookshelf variant - wider for book covers */
+.grouped-sections.bookshelf {
+  width: auto;
+  max-width: 900px;
 }
 
 /* Hide scrollbar but keep functionality */

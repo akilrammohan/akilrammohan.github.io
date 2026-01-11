@@ -1,5 +1,6 @@
 import { fetchShelf } from '@/lib/goodreads';
 import { ExpandableSection } from '@/components/ExpandableSection';
+import { GroupedSections } from '@/components/GroupedSections';
 import Navigation from '@/components/Navigation';
 import Image from 'next/image';
 
@@ -22,10 +23,10 @@ export default async function BookshelfPage() {
 
   return (
     <div className="main-content-column">
-      <h1 className="floating-title">Bookshelf</h1>
       <Navigation />
+      <h1 className="floating-title">Akil's Bookshelf</h1>
 
-      <div className="sections-container">
+      <GroupedSections className="bookshelf">
         <ExpandableSection label="about">
           <p>
             books from my{' '}
@@ -36,7 +37,7 @@ export default async function BookshelfPage() {
             >
               goodreads
             </a>{' '}
-            lib. mostly literary fiction with some scifi, fantasy, and nonfic.
+            lib. mostly literary fiction with some scifi, fantasy, and nonfic
           </p>
         </ExpandableSection>
 
@@ -66,32 +67,28 @@ export default async function BookshelfPage() {
 
         {otherSiteBooks.length > 0 && (
           <ExpandableSection label="other (ordered by rating descending)">
-            <div className="read-grid">
-              {otherSiteBooks.map(book => (
-                <a
-                  key={book.book_id}
-                  href={book.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Image
-                    src={book.book_large_image_url || '/placeholder-cover.svg'}
-                    alt={`Cover of ${book.title}`}
-                    width={200}
-                    height={300}
-                    className="read-cover"
-                    loading="lazy"
-                  />
-                </a>
+            <p>
+              {otherSiteBooks.map((book, index) => (
+                <span key={book.book_id}>
+                  <a
+                    href={book.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {book.title}
+                  </a>
+                  {' '}by {book.author_name}
+                  {index < otherSiteBooks.length - 1 && <br />}
+                </span>
               ))}
-            </div>
+            </p>
           </ExpandableSection>
         )}
 
         {favoriteBooks.length === 0 && otherSiteBooks.length === 0 && (
           <p className="empty-state">No books found. Check back later!</p>
         )}
-      </div>
+      </GroupedSections>
     </div>
   );
 }

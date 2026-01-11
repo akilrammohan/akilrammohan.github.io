@@ -5,9 +5,10 @@ import { useConcentricContext } from '@/contexts/ConcentricContext';
 
 interface GroupedSectionsProps {
   children: React.ReactNode;
+  className?: string;
 }
 
-export const GroupedSections = ({ children }: GroupedSectionsProps) => {
+export const GroupedSections = ({ children, className }: GroupedSectionsProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { registerElement, unregisterElement } = useConcentricContext();
   const id = 'grouped-sections';
@@ -17,8 +18,10 @@ export const GroupedSections = ({ children }: GroupedSectionsProps) => {
     return () => unregisterElement(id);
   }, [registerElement, unregisterElement]);
 
+  const classes = className ? `grouped-sections ${className}` : 'grouped-sections';
+
   return (
-    <div ref={containerRef} className="grouped-sections">
+    <div ref={containerRef} className={classes}>
       {children}
     </div>
   );

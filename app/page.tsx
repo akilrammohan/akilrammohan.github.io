@@ -2,6 +2,7 @@ import { fetchShelf } from '@/lib/goodreads';
 import { getTopAlbumWeekly } from '@/lib/lastfm';
 import { ExpandableSection } from '@/components/ExpandableSection';
 import { SocialLinks } from '@/components/SocialLinks';
+import Navigation from '@/components/Navigation';
 
 export const dynamic = 'force-dynamic'; // Fetch fresh data on every request
 
@@ -18,10 +19,10 @@ export default async function HomePage() {
   })[0];
 
   return (
-    <>
+    <div className="main-content-column">
       <h1 className="floating-title">Akil Rammohan</h1>
+      <Navigation />
 
-      <div className="main-content-column">
       <div className="sections-container">
         <ExpandableSection label="bio">
           <p>
@@ -70,7 +71,6 @@ export default async function HomePage() {
       </div>
 
       <SocialLinks />
-      </div>
-    </>
+    </div>
   );
 }

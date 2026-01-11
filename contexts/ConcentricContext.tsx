@@ -1,7 +1,6 @@
 'use client';
 
 import { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
-import { calculateTerritories } from '@/lib/territoryCalculator';
 
 export type ElementType = 'nav' | 'section' | 'social';
 
@@ -13,11 +12,6 @@ export interface ElementData {
   isExpanded?: boolean;
 }
 
-export interface DragOffset {
-  x: number;
-  y: number;
-}
-
 interface Viewport {
   layoutWidth: number;  // innerWidth - stable, for territory calculations
   visibleWidth: number; // clientWidth - for right edge clamping (scrollbar-aware)
@@ -27,13 +21,10 @@ interface Viewport {
 
 interface ConcentricContextValue {
   elements: Map<string, ElementData>;
-  dragOffsets: Map<string, DragOffset>;
   registerElement: (id: string, type: ElementType, element: HTMLElement | null) => void;
   unregisterElement: (id: string) => void;
   updateBounds: (id: string, bounds: DOMRect) => void;
   setExpanded: (id: string, expanded: boolean) => void;
-  setDragOffset: (id: string, offset: DragOffset | null) => void;
-  resetRandomOffsets: () => void;
   viewport: Viewport;
 }
 
@@ -49,13 +40,10 @@ export const useConcentricContext = () => {
 
 export const ConcentricProvider = ({ children }: { children: React.ReactNode }) => {
   const [elements, setElements] = useState<Map<string, ElementData>>(new Map());
-  const [dragOffsets, setDragOffsets] = useState<Map<string, DragOffset>>(new Map());
   const [viewport, setViewport] = useState<Viewport>({ layoutWidth: 0, visibleWidth: 0, height: 0, scrollbarCompensation: 0 });
   const observerRef = useRef<ResizeObserver | null>(null);
   const elementRefs = useRef<Map<string, HTMLElement>>(new Map());
   // Keep refs to current state so callbacks can access latest values
-  const dragOffsetsRef = useRef<Map<string, DragOffset>>(dragOffsets);
-  dragOffsetsRef.current = dragOffsets;
   const elementsRef = useRef<Map<string, ElementData>>(elements);
   elementsRef.current = elements;
   const viewportRef = useRef<Viewport>(viewport);
@@ -65,23 +53,17 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
   // RAF-based viewport update batching to prevent flicker
   const pendingViewportRef = useRef<Viewport | null>(null);
   const rafIdRef = useRef<number | null>(null);
-  // Track whether random offsets have been generated for this "session"
-  const randomOffsetsGeneratedRef = useRef(false);
 
   // Calculate content height from actual elements (not scrollHeight which includes SVG)
-  // Uses base positions (without drag transforms) for consistent height calculation
   const getContentHeight = useCallback(() => {
     const scrollY = window.scrollY;
     let maxBottom = 0;
-    const currentOffsets = dragOffsetsRef.current;
 
     // Find the bottom-most element (excluding nav which is fixed)
     elementRefs.current.forEach((element, id) => {
       if (!id.startsWith('nav-')) {
         const rect = element.getBoundingClientRect();
-        const offset = currentOffsets.get(id);
-        // Subtract drag offset to get base position
-        const bottom = rect.bottom + scrollY - (offset?.y ?? 0);
+        const bottom = rect.bottom + scrollY;
         maxBottom = Math.max(maxBottom, bottom);
       }
     });
@@ -114,15 +96,11 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
   }, []);
 
   // Function to update ALL element bounds
-  // Nav elements stay viewport-relative (they're position: fixed)
-  // Other elements use document-relative coordinates
-  // IMPORTANT: We subtract drag offsets to get "base" bounds (without CSS transform)
-  // because getBoundingClientRect() includes transforms
+  // All elements use document-relative coordinates
   // IMPORTANT: X position is locked to baseX to prevent scrollbar-induced horizontal shift
   const updateAllBounds = useCallback(() => {
     const scrollX = window.scrollX;
     const scrollY = window.scrollY;
-    const currentOffsets = dragOffsetsRef.current;
 
     setElements((prev) => {
       const next = new Map(prev);
@@ -130,35 +108,22 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
         const data = next.get(id);
         if (data) {
           const rect = element.getBoundingClientRect();
-          const offset = currentOffsets.get(id);
 
-          if (data.type === 'nav') {
-            // Nav elements are fixed, keep viewport-relative bounds
-            // Subtract offset to get base position (getBoundingClientRect includes transforms)
-            const navRect = new DOMRect(
-              rect.x - (offset?.x ?? 0),
-              rect.y - (offset?.y ?? 0),
-              rect.width,
-              rect.height
-            );
-            next.set(id, { ...data, bounds: navRect });
-          } else {
-            // Calculate current X position (for first-time capture or after window resize)
-            const currentX = rect.x + scrollX - (offset?.x ?? 0);
-            // Use locked baseX if available, otherwise capture current X
-            const baseX = data.baseX ?? currentX;
+          // Calculate current X position (for first-time capture or after window resize)
+          const currentX = rect.x + scrollX;
+          // Use locked baseX if available, otherwise capture current X
+          const baseX = data.baseX ?? currentX;
 
-            // Convert viewport-relative to document-relative coordinates
-            // Use baseX for horizontal position (prevents scrollbar-induced shift)
-            // Use current values for Y, width, height (these should update normally)
-            const docRect = new DOMRect(
-              baseX,
-              rect.y + scrollY - (offset?.y ?? 0),
-              rect.width,
-              rect.height
-            );
-            next.set(id, { ...data, bounds: docRect, baseX });
-          }
+          // Convert viewport-relative to document-relative coordinates
+          // Use baseX for horizontal position (prevents scrollbar-induced shift)
+          // Use current values for Y, width, height (these should update normally)
+          const docRect = new DOMRect(
+            baseX,
+            rect.y + scrollY,
+            rect.width,
+            rect.height
+          );
+          next.set(id, { ...data, bounds: docRect, baseX });
         }
       });
       return next;
@@ -292,43 +257,6 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
     });
   }, []);
 
-  // Clamp existing offsets to their current territory bounds
-  // Called after layout changes (expand/collapse) to keep elements within bounds
-  // Uses refs to always get latest state values
-  const clampOffsetsToTerritories = useCallback(() => {
-    const currentElements = elementsRef.current;
-    const currentViewport = viewportRef.current;
-
-    if (currentElements.size === 0 || currentViewport.layoutWidth === 0) return;
-
-    const territories = calculateTerritories(currentElements, currentViewport, 8);
-
-    setDragOffsets((prev) => {
-      const next = new Map(prev);
-
-      territories.forEach((territory) => {
-        const offset = next.get(territory.id);
-        if (!offset) return;
-
-        const { elementBounds, territoryBounds } = territory;
-
-        // Calculate valid offset range
-        const maxLeft = elementBounds.left - territoryBounds.left;
-        const maxRight = territoryBounds.right - (elementBounds.left + elementBounds.width);
-        const maxUp = elementBounds.top - territoryBounds.top;
-        const maxDown = territoryBounds.bottom - (elementBounds.top + elementBounds.height);
-
-        // Clamp offset to valid range
-        const clampedX = Math.max(-maxLeft, Math.min(maxRight, offset.x));
-        const clampedY = Math.max(-maxUp, Math.min(maxDown, offset.y));
-
-        next.set(territory.id, { x: clampedX, y: clampedY });
-      });
-
-      return next;
-    });
-  }, []);
-
   const setExpanded = useCallback((id: string, expanded: boolean) => {
     setElements((prev) => {
       const next = new Map(prev);
@@ -376,70 +304,16 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
     updateFrames.forEach((delay) => {
       setTimeout(updateAll, delay * 16);
     });
-
-    // Clamp offsets after layout has settled (after final bounds update)
-    setTimeout(() => {
-      clampOffsetsToTerritories();
-    }, 35 * 16); // After the last bounds update
-  }, [updateAllBounds, getContentHeight, scheduleViewportUpdate, clampOffsetsToTerritories]);
-
-  const setDragOffset = useCallback((id: string, offset: DragOffset | null) => {
-    setDragOffsets((prev) => {
-      const next = new Map(prev);
-      if (offset === null) {
-        next.delete(id);
-      } else {
-        next.set(id, offset);
-      }
-      return next;
-    });
-  }, []);
-
-  // Generate random offsets (disabled - all elements start at default positions)
-  const generateRandomOffsets = useCallback(() => {
-    // No-op: randomization disabled
-  }, []);
-
-  // Reset random offsets to trigger regeneration on navigation
-  const resetRandomOffsets = useCallback(() => {
-    randomOffsetsGeneratedRef.current = false;
-    setDragOffsets(new Map());
-  }, []);
-
-  // Generate random offsets once territories are ready
-  useEffect(() => {
-    if (randomOffsetsGeneratedRef.current) return;
-    if (elements.size === 0 || viewport.layoutWidth === 0) return;
-
-    // Check for valid bounds
-    let hasValidBounds = false;
-    elements.forEach((el) => {
-      if (el.bounds && el.bounds.width > 0) hasValidBounds = true;
-    });
-    if (!hasValidBounds) return;
-
-    // Use RAF to ensure layout is settled
-    const rafId = requestAnimationFrame(() => {
-      if (!randomOffsetsGeneratedRef.current) {
-        generateRandomOffsets();
-        randomOffsetsGeneratedRef.current = true;
-      }
-    });
-
-    return () => cancelAnimationFrame(rafId);
-  }, [elements, viewport, generateRandomOffsets]);
+  }, [updateAllBounds, getContentHeight, scheduleViewportUpdate]);
 
   return (
     <ConcentricContext.Provider
       value={{
         elements,
-        dragOffsets,
         registerElement,
         unregisterElement,
         updateBounds,
         setExpanded,
-        setDragOffset,
-        resetRandomOffsets,
         viewport,
       }}
     >

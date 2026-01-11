@@ -49,11 +49,11 @@ const groupAndSortElements = (elements: Map<string, ElementData>) => {
     }
   });
 
-  // Sort nav and sections by vertical position (top)
-  nav.sort((a, b) => (a.bounds?.top ?? 0) - (b.bounds?.top ?? 0));
+  // Sort nav by horizontal position (left) - horizontal row at top
+  nav.sort((a, b) => (a.bounds?.left ?? 0) - (b.bounds?.left ?? 0));
+  // Sort sections by vertical position (top)
   sections.sort((a, b) => (a.bounds?.top ?? 0) - (b.bounds?.top ?? 0));
-
-  // Sort social by horizontal position (left)
+  // Sort social by horizontal position (left) - horizontal row at bottom
   social.sort((a, b) => (a.bounds?.left ?? 0) - (b.bounds?.left ?? 0));
 
   return { nav, sections, social };
@@ -61,8 +61,9 @@ const groupAndSortElements = (elements: Map<string, ElementData>) => {
 
 /**
  * Calculates territories for all elements based on midpoint rules
- * Uses layoutWidth for stable territory calculations
- * Uses visibleWidth only for right edges that touch viewport (scrollbar-aware clamping)
+ * Nav and social are horizontal rows at top/bottom
+ * Sections are vertical stack in the middle
+ * All territories extend to viewport left edge
  */
 export const calculateTerritories = (
   elements: Map<string, ElementData>,
@@ -75,28 +76,8 @@ export const calculateTerritories = (
 
   if (layoutWidth === 0 || height === 0) return territories;
 
-  // Calculate the horizontal boundary between nav and content
-  // This is the midpoint between the rightmost nav element and leftmost content element
-  let navRightEdge = 0;
-  let contentLeftEdge = layoutWidth;
-
-  nav.forEach((el) => {
-    if (el.bounds) {
-      navRightEdge = Math.max(navRightEdge, el.bounds.right);
-    }
-  });
-
-  [...sections, ...social].forEach((el) => {
-    if (el.bounds) {
-      contentLeftEdge = Math.min(contentLeftEdge, el.bounds.left);
-    }
-  });
-
-  const horizontalMidpoint = (navRightEdge + contentLeftEdge) / 2;
-
   // Helper to clamp right edge for viewport-touching territories
   const clampRightEdge = (rightEdge: number): number => {
-    // If this right edge touches the layout viewport edge, clamp to visible width
     const layoutEdge = layoutWidth - gap / 2;
     if (Math.abs(rightEdge - layoutEdge) < 1) {
       return visibleWidth - gap / 2;
@@ -104,40 +85,23 @@ export const calculateTerritories = (
     return rightEdge;
   };
 
-  // Process nav elements (vertical stack on left)
-  nav.forEach((el, i) => {
-    if (!el.bounds) return;
-
-    const top = i === 0
-      ? 0
-      : (nav[i - 1].bounds!.bottom + el.bounds.top) / 2;
-
-    const bottom = i === nav.length - 1
-      ? height
-      : (el.bounds.bottom + nav[i + 1].bounds!.top) / 2;
-
-    territories.push({
-      id: el.id,
-      type: el.type,
-      elementBounds: el.bounds,
-      territoryBounds: {
-        top: top + gap / 2,
-        right: horizontalMidpoint - gap / 2, // Nav doesn't touch right edge
-        bottom: bottom - gap / 2,
-        left: gap / 2,
-      },
-    });
+  // Find vertical boundaries between nav, sections, and social
+  let navBottom = 0;
+  nav.forEach((el) => {
+    if (el.bounds) {
+      navBottom = Math.max(navBottom, el.bounds.bottom);
+    }
   });
 
-  // Find the bottom of sections to determine where social links start
+  let sectionsTop = height;
   let sectionsBottom = 0;
   sections.forEach((el) => {
     if (el.bounds) {
+      sectionsTop = Math.min(sectionsTop, el.bounds.top);
       sectionsBottom = Math.max(sectionsBottom, el.bounds.bottom);
     }
   });
 
-  // Find the top of social links
   let socialTop = height;
   social.forEach((el) => {
     if (el.bounds) {
@@ -145,24 +109,52 @@ export const calculateTerritories = (
     }
   });
 
-  const sectionsSocialMidpoint = social.length > 0
-    ? (sectionsBottom + socialTop) / 2
-    : height;
+  // Calculate midpoints between vertical groups
+  const navSectionsMidpoint = nav.length > 0 && sections.length > 0
+    ? (navBottom + sectionsTop) / 2
+    : (nav.length > 0 ? navBottom + gap : 0);
 
-  // Process section elements (vertical stack in center-right)
+  const sectionsSocialMidpoint = social.length > 0 && sections.length > 0
+    ? (sectionsBottom + socialTop) / 2
+    : (social.length > 0 ? socialTop - gap : height);
+
+  // Process nav elements (horizontal row at top)
+  nav.forEach((el, i) => {
+    if (!el.bounds) return;
+
+    const left = i === 0
+      ? 0
+      : (nav[i - 1].bounds!.right + el.bounds.left) / 2;
+
+    const right = i === nav.length - 1
+      ? layoutWidth
+      : (el.bounds.right + nav[i + 1].bounds!.left) / 2;
+
+    territories.push({
+      id: el.id,
+      type: el.type,
+      elementBounds: el.bounds,
+      territoryBounds: {
+        top: gap / 2,
+        right: clampRightEdge(right - gap / 2),
+        bottom: navSectionsMidpoint - gap / 2,
+        left: left + gap / 2,
+      },
+    });
+  });
+
+  // Process section elements (vertical stack in middle)
   sections.forEach((el, i) => {
     if (!el.bounds) return;
 
+    // First section starts at nav-sections midpoint (or top if no nav)
     const top = i === 0
-      ? 0
+      ? navSectionsMidpoint
       : (sections[i - 1].bounds!.bottom + el.bounds.top) / 2;
 
     const bottom = i === sections.length - 1
       ? sectionsSocialMidpoint
       : (el.bounds.bottom + sections[i + 1].bounds!.top) / 2;
-
-    // Sections go to viewport right edge (will be clamped for scrollbar)
-    const rightBound = layoutWidth - gap / 2;
 
     territories.push({
       id: el.id,
@@ -170,22 +162,21 @@ export const calculateTerritories = (
       elementBounds: el.bounds,
       territoryBounds: {
         top: top + gap / 2,
-        right: clampRightEdge(rightBound),
+        right: clampRightEdge(layoutWidth - gap / 2),
         bottom: bottom - gap / 2,
-        left: horizontalMidpoint + gap / 2,
+        left: gap / 2,
       },
     });
   });
 
-  // Process social elements (horizontal row, full-height columns)
+  // Process social elements (horizontal row at bottom)
   social.forEach((el, i) => {
     if (!el.bounds) return;
 
     const left = i === 0
-      ? horizontalMidpoint
+      ? 0
       : (social[i - 1].bounds!.right + el.bounds.left) / 2;
 
-    // Last social element touches right edge (will be clamped for scrollbar)
     const right = i === social.length - 1
       ? layoutWidth
       : (el.bounds.right + social[i + 1].bounds!.left) / 2;

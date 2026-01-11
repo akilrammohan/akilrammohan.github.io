@@ -1,5 +1,4 @@
 import { abrilFatface, exo2, istokWeb } from '@/lib/fonts';
-import Navigation from '@/components/Navigation';
 import ClientColorizer from '@/components/ClientColorizer';
 import { ConcentricWrapper } from '@/components/ConcentricWrapper';
 import { ContentWrapper } from '@/components/ContentWrapper';
@@ -34,14 +33,9 @@ export default function RootLayout({
       </head>
       <body>
         <ConcentricWrapper>
-          <div className="layout">
-            <aside className="sidebar">
-              <Navigation />
-            </aside>
-            <ContentWrapper>
-              {children}
-            </ContentWrapper>
-          </div>
+          <ContentWrapper>
+            {children}
+          </ContentWrapper>
           <ClientColorizer />
         </ConcentricWrapper>
       </body>

@@ -1,5 +1,6 @@
 import { fetchShelf } from '@/lib/goodreads';
 import { ExpandableSection } from '@/components/ExpandableSection';
+import Navigation from '@/components/Navigation';
 import Image from 'next/image';
 
 export const revalidate = 3600; // ISR: revalidate hourly
@@ -20,8 +21,9 @@ export default async function BookshelfPage() {
     .sort((a, b) => b.user_rating - a.user_rating);
 
   return (
-    <>
+    <div className="main-content-column">
       <h1 className="floating-title">Bookshelf</h1>
+      <Navigation />
 
       <div className="sections-container">
         <ExpandableSection label="about">
@@ -90,6 +92,6 @@ export default async function BookshelfPage() {
           <p className="empty-state">No books found. Check back later!</p>
         )}
       </div>
-    </>
+    </div>
   );
 }

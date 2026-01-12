@@ -273,19 +273,18 @@ a:hover {
 }
 
 .expandable-content {
-  height: 0;
-  overflow: hidden;
   line-height: 1.6;
   text-align: right;
 }
 
-.expandable-section.expanded .expandable-content {
-  height: auto;
+.expandable-lines {
+  display: flex;
+  flex-direction: column;
   margin-top: 0.5rem;
 }
 
-.expandable-content p {
-  margin-bottom: 0;
+.expandable-line {
+  /* Lines appear/disappear instantly - no transitions */
 }
 
 /* Dividing lines between sections */
@@ -309,7 +308,7 @@ a:hover {
   z-index: 1;
 }
 
-/* Bookshelf variant - wider for book covers */
+/* Bookshelf variant */
 .grouped-sections.bookshelf {
   width: auto;
   max-width: 900px;

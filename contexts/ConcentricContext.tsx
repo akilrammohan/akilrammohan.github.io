@@ -21,6 +21,7 @@ interface ConcentricContextValue {
   registerElement: (id: string, type: ElementType, element: HTMLElement | null) => void;
   unregisterElement: (id: string) => void;
   setExpanded: (id: string, expanded: boolean) => void;
+  triggerUpdate: () => void;
   viewport: Viewport;
 }
 
@@ -158,6 +159,14 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
     });
   }, [scheduleUpdate]);
 
+  // Trigger updates without tracking a specific element's expanded state
+  const triggerUpdate = useCallback(() => {
+    const delays = [0, 16, 32, 64, 128, 256];
+    delays.forEach((delay) => {
+      setTimeout(scheduleUpdate, delay);
+    });
+  }, [scheduleUpdate]);
+
   return (
     <ConcentricContext.Provider
       value={{
@@ -165,6 +174,7 @@ export const ConcentricProvider = ({ children }: { children: React.ReactNode }) 
         registerElement,
         unregisterElement,
         setExpanded,
+        triggerUpdate,
         viewport,
       }}
     >

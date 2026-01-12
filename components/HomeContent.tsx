@@ -29,50 +29,55 @@ export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) =>
       <h1 className="floating-title">Akil Rammohan</h1>
 
       <GroupedSections>
-        <ExpandableSection label="bio">
-          <p>
-            senior at u of wisconsin<br />
-            computer science & data science<br />
-            bay area, ca<br />
-            name pronounced UH-kill (<span className="ipa">/ˈʌkɪl/</span>)
-          </p>
-        </ExpandableSection>
+        <ExpandableSection
+          label="bio"
+          lines={[
+            'senior at u of wisconsin',
+            'computer science & data science',
+            'bay area, ca',
+            <>name pronounced UH-kill (<span className="ipa">/ˈʌkɪl/</span>)</>,
+          ]}
+        />
 
-        <ExpandableSection label="experience">
-          <p>
-            AI in VR research (<a href="https://neuroergolab.org/" target="_blank" rel="noopener noreferrer">NeuroErgonomics Lab</a>)<br />
-            agentic AI (<a href="https://nplus1.wisc.edu" target="_blank" rel="noopener noreferrer">N+1 Institute</a>)<br />
-            data analytics (<a href="https://www.fastersmarter.io" target="_blank" rel="noopener noreferrer">Think Fast Talk Smart</a>)<br />
-          </p>
-        </ExpandableSection>
+        <ExpandableSection
+          label="experience"
+          lines={[
+            <>AI in VR research (<a href="https://neuroergolab.org/" target="_blank" rel="noopener noreferrer">NeuroErgonomics Lab</a>)</>,
+            <>agentic AI (<a href="https://nplus1.wisc.edu" target="_blank" rel="noopener noreferrer">N+1 Institute</a>)</>,
+            <>data analytics (<a href="https://www.fastersmarter.io" target="_blank" rel="noopener noreferrer">Think Fast Talk Smart</a>)</>,
+          ]}
+        />
 
-        <ExpandableSection label="interests">
-          <p>
-            <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a><br />
-            edtech<br />
-            <a href="https://github.com/akilrammohan/bmarxs" target="_blank" rel="noopener noreferrer">clis for agents</a><br />
-            tennis + lifting weights<br />
-            <a href="https://github.com/akilrammohan/lifecal-ios-shortcut" target="_blank" rel="noopener noreferrer">short-lived personal software</a>
-          </p>
-        </ExpandableSection>
+        <ExpandableSection
+          label="interests"
+          lines={[
+            <><a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a></>,
+            'edtech',
+            <><a href="https://github.com/akilrammohan/bmarxs" target="_blank" rel="noopener noreferrer">clis for agents</a></>,
+            'tennis + lifting weights',
+            <><a href="https://github.com/akilrammohan/lifecal-ios-shortcut" target="_blank" rel="noopener noreferrer">short-lived personal software</a></>,
+          ]}
+        />
 
-        <ExpandableSection label="currently">
-          <p>
-            building edtech with AI<br />
-            reach out: akilan[dot]rammohan[at]gmail[dot]com
-          </p>
-        </ExpandableSection>
+        <ExpandableSection
+          label="currently"
+          lines={[
+            'building edtech with AI',
+            'reach out: akilan[dot]rammohan[at]gmail[dot]com',
+          ]}
+        />
 
-        <ExpandableSection label="recently">
-          <p>
-            {recentlyReadBook && (
-              <>finished reading <a href={recentlyReadBook.link} target="_blank" rel="noopener noreferrer">{recentlyReadBook.title}</a> by <a href={`https://www.goodreads.com/search?q=${encodeURIComponent(recentlyReadBook.author_name)}&search_type=authors`} target="_blank" rel="noopener noreferrer">{recentlyReadBook.author_name}</a><br /></>
-            )}
-            {topAlbum && (
+        <ExpandableSection
+          label="recently"
+          lines={[
+            recentlyReadBook && (
+              <>finished reading <a href={recentlyReadBook.link} target="_blank" rel="noopener noreferrer">{recentlyReadBook.title}</a> by <a href={`https://www.goodreads.com/search?q=${encodeURIComponent(recentlyReadBook.author_name)}&search_type=authors`} target="_blank" rel="noopener noreferrer">{recentlyReadBook.author_name}</a></>
+            ),
+            topAlbum && (
               <>listened to <a href={topAlbum.albumUrl} target="_blank" rel="noopener noreferrer">{topAlbum.name}</a> by <a href={topAlbum.artistUrl} target="_blank" rel="noopener noreferrer">{topAlbum.artist}</a></>
-            )}
-          </p>
-        </ExpandableSection>
+            ),
+          ]}
+        />
       </GroupedSections>
     </div>
   );

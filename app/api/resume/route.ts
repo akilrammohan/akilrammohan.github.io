@@ -3,7 +3,7 @@ export const runtime = 'edge';
 export async function GET() {
   try {
     const response = await fetch(
-      'https://github.com/akilrammohan/resume/raw/main/basic-resume/main.pdf'
+      'https://github.com/akilrammohan/resume/raw/main/basic-resume/Akil_Rammohan_Resume_Public.pdf'
     );
 
     if (!response.ok) {

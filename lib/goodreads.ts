@@ -35,7 +35,9 @@ async function fetchShelfRaw(shelfUrl: string): Promise<GoodreadsBook[]> {
 
       return {
         book_id: bookId,
-        title: (item.title || '').replace(/\s*\([^,]+,\s*#\d+\)$/, ''),
+        title: (item.title || '')
+          .replace(/\s*\([^,]+,\s*#\d+\)$/, '') // Remove series notation like "(Series, #1)"
+          .replace(/:\s.*$/, ''), // Remove subtitle after colon
         author_name: (item as any).author_name || '',
         book_large_image_url: (item as any).book_large_image_url || '',
         link: item.link || '',

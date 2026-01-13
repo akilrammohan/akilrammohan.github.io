@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useConcentricContext } from '@/contexts/ConcentricContext';
 
 interface ExpandableSectionProps {
@@ -12,12 +12,60 @@ type AnimationState = 'collapsed' | 'expanding' | 'expanded' | 'collapsing';
 
 const LINE_DELAY = 120; // ms between each line
 
+const COLORS = [
+  '--color-tet-1', '--color-tet-2', '--color-tet-3', '--color-tet-4',
+  '--color-tet-5', '--color-tet-6', '--color-tet-7', '--color-tet-8'
+];
+
+const shuffle = (array: string[]): string[] => {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
+
+// Recursively traverse React children and apply colors to <a> elements
+const colorizeLinks = (
+  node: React.ReactNode,
+  colors: string[],
+  indexRef: { current: number }
+): React.ReactNode => {
+  return React.Children.map(node, (child) => {
+    if (!React.isValidElement(child)) {
+      return child;
+    }
+
+    // If it's an <a> element, apply color
+    if (child.type === 'a') {
+      const color = colors[indexRef.current % colors.length];
+      indexRef.current++;
+      return React.cloneElement(child, {
+        ...child.props,
+        style: { ...child.props.style, color: `var(${color})` },
+      });
+    }
+
+    // If it has children, recurse
+    if (child.props.children) {
+      return React.cloneElement(child, {
+        ...child.props,
+        children: colorizeLinks(child.props.children, colors, indexRef),
+      });
+    }
+
+    return child;
+  });
+};
+
 export const ExpandableSection = ({
   label,
   lines,
 }: ExpandableSectionProps) => {
   const [animationState, setAnimationState] = useState<AnimationState>('collapsed');
   const [visibleLineCount, setVisibleLineCount] = useState(0);
+  const [colorSequence, setColorSequence] = useState<string[]>(() => shuffle(COLORS));
   const { triggerUpdate } = useConcentricContext();
   const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -74,7 +122,8 @@ export const ExpandableSection = ({
     }
 
     if (animationState === 'collapsed' || animationState === 'collapsing') {
-      // Start expanding
+      // Start expanding - shuffle colors for this expansion
+      setColorSequence(shuffle(COLORS));
       setAnimationState('expanding');
       animateLine(visibleLineCount, lineCount, 'expand');
     } else {
@@ -99,8 +148,14 @@ export const ExpandableSection = ({
 
   const isExpanded = animationState === 'expanded' || animationState === 'expanding';
 
+  // Apply colors to all lines (color index continues across lines)
+  const colorIndexRef = { current: 0 };
+  const colorizedLines = validLines.map((line) =>
+    colorizeLinks(line, colorSequence, colorIndexRef)
+  );
+
   // Bottom-to-top: reverse lines, slice first N, reverse again to maintain visual order
-  const reversedLines = [...validLines].reverse();
+  const reversedLines = [...colorizedLines].reverse();
   const visibleLines = reversedLines.slice(0, visibleLineCount).reverse();
 
   return (

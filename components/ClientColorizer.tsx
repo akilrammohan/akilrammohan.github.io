@@ -26,8 +26,8 @@ export default function ClientColorizer() {
     const timeoutId = setTimeout(() => {
       const shuffledColors = shuffle(colors);
 
-      // Select all links in DOM order and apply cycling colors
-      document.querySelectorAll('a').forEach((link, i) => {
+      // Select all links EXCEPT those inside expandable sections (they handle their own colors)
+      document.querySelectorAll<HTMLAnchorElement>('a:not(.expandable-section a)').forEach((link, i) => {
         link.style.color = `var(${shuffledColors[i % colors.length]})`;
       });
     }, 0);

@@ -2,7 +2,7 @@
 
 import { ExpandableSection } from '@/components/ExpandableSection';
 import { GroupedSections } from '@/components/GroupedSections';
-import Navigation from '@/components/Navigation';
+import Navigation, { InternalNav } from '@/components/Navigation';
 
 interface Book {
   title: string;
@@ -24,9 +24,11 @@ interface HomeContentProps {
 
 export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) => {
   return (
-    <div className="main-content-column">
-      <Navigation />
-      <h1 className="floating-title">Akil Rammohan</h1>
+    <>
+      <InternalNav />
+      <div className="main-content-column">
+        <Navigation />
+        <h1 className="floating-title">Akil Rammohan</h1>
 
       <GroupedSections>
         <ExpandableSection
@@ -79,6 +81,7 @@ export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) =>
           ]}
         />
       </GroupedSections>
-    </div>
+      </div>
+    </>
   );
 };

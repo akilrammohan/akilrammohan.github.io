@@ -1,7 +1,7 @@
 import { fetchShelf } from '@/lib/goodreads';
 import { ExpandableSection } from '@/components/ExpandableSection';
 import { GroupedSections } from '@/components/GroupedSections';
-import Navigation from '@/components/Navigation';
+import Navigation, { InternalNav } from '@/components/Navigation';
 
 export const revalidate = 3600; // ISR: revalidate hourly
 
@@ -21,11 +21,13 @@ export default async function BookshelfPage() {
     .sort((a, b) => b.user_rating - a.user_rating);
 
   return (
-    <div className="main-content-column">
-      <Navigation />
-      <h1 className="floating-title">Akil's Bookshelf</h1>
+    <>
+      <InternalNav />
+      <div className="main-content-column">
+        <Navigation />
+        <h1 className="floating-title">Akil's Bookshelf</h1>
 
-      <GroupedSections className="bookshelf">
+        <GroupedSections className="bookshelf">
         <ExpandableSection
           label="about"
           lines={[
@@ -81,7 +83,8 @@ export default async function BookshelfPage() {
         {favoriteBooks.length === 0 && otherSiteBooks.length === 0 && (
           <p className="empty-state">No books found. Check back later!</p>
         )}
-      </GroupedSections>
-    </div>
+        </GroupedSections>
+      </div>
+    </>
   );
 }

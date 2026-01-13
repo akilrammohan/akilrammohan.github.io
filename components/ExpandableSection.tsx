@@ -122,8 +122,10 @@ export const ExpandableSection = ({
     }
 
     if (animationState === 'collapsed' || animationState === 'collapsing') {
-      // Start expanding - shuffle colors for this expansion
-      setColorSequence(shuffle(COLORS));
+      // Only shuffle colors when expanding from fully collapsed state
+      if (visibleLineCount === 0) {
+        setColorSequence(shuffle(COLORS));
+      }
       setAnimationState('expanding');
       animateLine(visibleLineCount, lineCount, 'expand');
     } else {

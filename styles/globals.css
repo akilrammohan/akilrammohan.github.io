@@ -1,29 +1,38 @@
 /* Color Palette */
 :root {
+  /* Light mode default */
+  --bg-warm: #faf8f5;
+  --text-color: #1e2021;
+  --text-muted: #1e2021;
+
+  /* Accent colors - same in both modes */
   --color-tet-1: oklch(69% 0.22 143);
   --color-tet-1-contrast: #000;
   --color-tet-2: oklch(79% 0.198 233);
   --color-tet-2-contrast: #000;
-  --color-tet-3: #7B30FF;
+  --color-tet-3: oklch(50% 0.30 303);
   --color-tet-3-contrast: #fff;
   --color-tet-4: oklch(74% 0.209 323);
   --color-tet-4-contrast: #000;
-  --color-tet-5: #FFD035;
+  --color-tet-5: oklch(82% 0.18 90);
   --color-tet-5-contrast: #000;
   --color-tet-6: oklch(52% 0.242 53);
   --color-tet-6-contrast: #fff;
-  --color-tet-7: #2850E8;
+  --color-tet-7: oklch(52% 0.25 260);
   --color-tet-7-contrast: #fff;
-  --color-tet-8: #FF6B00;
+  --color-tet-8: oklch(70% 0.20 50);
   --color-tet-8-contrast: #000;
-
-  --bg-warm: #1e2021;
-  --text-color: #faf8f5;
-  --text-muted: #faf8f5;
 
   --font-main: var(--font-exo2), 'Exo 2', sans-serif;
   --font-heading: 'BBH Bogle', sans-serif;
   --font-ipa: var(--font-istok), 'Istok Web', serif;
+}
+
+/* Dark mode overrides */
+[data-theme="dark"] {
+  --bg-warm: #1e2021;
+  --text-color: #faf8f5;
+  --text-muted: #faf8f5;
 }
 
 /* Reset */
@@ -341,6 +350,18 @@ a:hover {
 .nav-link-item.floating {
   position: relative;
   z-index: 10;
+  background: var(--bg-warm);
+}
+
+/* Theme toggle */
+.theme-toggle-wrapper.floating {
+  position: relative;
+  z-index: 10;
+  background: var(--bg-warm);
+  width: fit-content;
+}
+
+.theme-toggle {
   background: var(--bg-warm);
 }
 

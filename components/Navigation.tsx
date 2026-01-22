@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const internalLinks = [
   { href: '/', label: 'home' },
@@ -45,6 +46,9 @@ export const InternalNav = () => {
           <NavLink key={link.label} {...link} />
         ))}
       </ul>
+      <div className="theme-toggle-wrapper floating" style={{ marginTop: '0.5rem' }}>
+        <ThemeToggle />
+      </div>
     </nav>
   );
 };

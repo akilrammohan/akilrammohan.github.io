@@ -31,7 +31,7 @@ export const HomeContent = ({ recentlyReadBook, topAlbum, visitorCount }: HomeCo
       <InternalNav />
       <div className="main-content-column">
         <Navigation />
-        <h1 className="floating-title">Akil Rammohan<VisitorCounter count={visitorCount} /></h1>
+        <h1 className="floating-title">Akil Rammohan</h1>
 
       <GroupedSections>
         <ExpandableSection
@@ -85,6 +85,7 @@ export const HomeContent = ({ recentlyReadBook, topAlbum, visitorCount }: HomeCo
         />
       </GroupedSections>
       </div>
+      <VisitorCounter count={visitorCount} />
     </>
   );
 };

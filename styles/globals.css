@@ -80,13 +80,14 @@ h1 {
   width: fit-content;
 }
 
-/* Visitor counter - inline with title */
+/* Visitor counter - fixed bottom-right, tracks below grouped-sections */
 .visitor-counter {
+  position: fixed;
+  right: 1rem;
   font-family: var(--font-main);
   font-size: 0.875rem;
   font-weight: 400;
   color: #888;
-  margin-left: 0.5rem;
 }
 
 h2 {

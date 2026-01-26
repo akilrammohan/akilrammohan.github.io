@@ -1,8 +1,10 @@
 'use client';
 
+import Link from 'next/link';
 import { ExpandableSection } from '@/components/ExpandableSection';
 import { GroupedSections } from '@/components/GroupedSections';
 import Navigation, { InternalNav } from '@/components/Navigation';
+import { VisitorCounter } from '@/components/VisitorCounter';
 
 interface Book {
   title: string;
@@ -20,15 +22,16 @@ interface Album {
 interface HomeContentProps {
   recentlyReadBook: Book | null;
   topAlbum: Album | null;
+  visitorCount: number | null;
 }
 
-export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) => {
+export const HomeContent = ({ recentlyReadBook, topAlbum, visitorCount }: HomeContentProps) => {
   return (
     <>
       <InternalNav />
       <div className="main-content-column">
         <Navigation />
-        <h1 className="floating-title">Akil Rammohan</h1>
+        <h1 className="floating-title">Akil Rammohan<VisitorCounter count={visitorCount} /></h1>
 
       <GroupedSections>
         <ExpandableSection
@@ -55,9 +58,9 @@ export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) =>
           lines={[
             <><a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a></>,
             'edtech',
-            <><a href="https://github.com/akilrammohan/bmarxs" target="_blank" rel="noopener noreferrer">clis for agents</a></>,
-            'tennis + lifting weights',
-            <><a href="https://github.com/akilrammohan/lifecal-ios-shortcut" target="_blank" rel="noopener noreferrer">short-lived personal software</a></>,
+            <><Link href="/bookshelf">reading fiction</Link></>,
+            'tennis',
+            'lifting weights'
           ]}
         />
 

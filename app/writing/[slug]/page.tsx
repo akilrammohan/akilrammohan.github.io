@@ -3,6 +3,10 @@ import { notFound } from 'next/navigation';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import Link from 'next/link';
 import Navigation from '@/components/Navigation';
+import { incrementVisitorCount } from '@/lib/visitor';
+import { VisitorCounter } from '@/components/VisitorCounter';
+
+export const dynamic = 'force-dynamic';
 
 export async function generateStaticParams() {
   return allPosts
@@ -15,16 +19,17 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   return { title: post?.title };
 }
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
+export default async function BlogPost({ params }: { params: { slug: string } }) {
   const post = allPosts.find(p => p.slug === params.slug);
 
   if (!post) notFound();
 
+  const visitorCount = await incrementVisitorCount();
   const MDXContent = useMDXComponent(post.body.code);
 
   return (
     <div className="main-content-column">
-      <h1 className="floating-title">{post.title}</h1>
+      <h1 className="floating-title">{post.title}<VisitorCounter count={visitorCount} /></h1>
       <Navigation />
       <article>
         <Link href="/writing">← Back to Writing</Link>

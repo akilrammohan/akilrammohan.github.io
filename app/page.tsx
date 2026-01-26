@@ -1,13 +1,15 @@
 import { fetchShelf } from '@/lib/goodreads';
 import { getTopAlbumWeekly } from '@/lib/lastfm';
+import { incrementVisitorCount } from '@/lib/visitor';
 import { HomeContent } from '@/components/HomeContent';
 
 export const dynamic = 'force-dynamic'; // Fetch fresh data on every request
 
 export default async function HomePage() {
-  const [siteBooks, topAlbum] = await Promise.all([
+  const [siteBooks, topAlbum, visitorCount] = await Promise.all([
     fetchShelf('site'),
     getTopAlbumWeekly(),
+    incrementVisitorCount(),
   ]);
 
   const recentlyReadBook = siteBooks.sort((a, b) => {
@@ -24,6 +26,7 @@ export default async function HomePage() {
         link: recentlyReadBook.link,
       } : null}
       topAlbum={topAlbum}
+      visitorCount={visitorCount}
     />
   );
 }

@@ -46,6 +46,33 @@ Key CSS classes:
 - `.expandable-section` - individual section (no padding, 0.5rem margin-bottom)
 - `.expandable-label` / `.expandable-content` - right-aligned text
 
+## Color System
+
+Two separate color randomization systems:
+
+**Global links (`ClientColorizer.tsx`):**
+- Shuffles 8 accent colors (`--color-tet-1` to `--color-tet-8`) using Fisher-Yates
+- Applies to all `<a>` elements except those inside `.expandable-section`
+- Re-shuffles on route change
+
+**Expandable section links (`ExpandableSection.tsx`):**
+- Recursively traverses React children (not DOM) via `colorizeLinks()`
+- Assigns colors sequentially across all lines using a shared index ref
+- Only reshuffles when expanding from fully collapsed state
+
+## Theme System
+
+- Light/dark mode via `data-theme` attribute on `<html>`
+- Theme state managed in `ThemeContext.tsx`, persisted to sessionStorage
+- All themed elements have `transition: 0.3s ease` for smooth fade between modes
+- Colors: white `#f0eee7` (RGB 240,238,231), gray `#1f1e1d` (RGB 31,30,29)
+
+## CSS Variables
+
+- `--content-box-width: 340px` - base width for grouped sections (both pages)
+- `--bg-warm` / `--text-color` - theme colors (swap in dark mode)
+- `--color-tet-1` to `--color-tet-8` - accent colors (oklch)
+
 ## APIs
 
 - Goodreads RSS → recently read books

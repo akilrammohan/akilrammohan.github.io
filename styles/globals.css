@@ -1,9 +1,9 @@
 /* Color Palette */
 :root {
   /* Light mode default */
-  --bg-warm: #faf8f5;
-  --text-color: #1e2021;
-  --text-muted: #1e2021;
+  --bg-warm: #f0eee7;
+  --text-color: #1f1e1d;
+  --text-muted: #1f1e1d;
 
   /* Accent colors - same in both modes */
   --color-tet-1: oklch(69% 0.22 143);
@@ -26,13 +26,15 @@
   --font-main: var(--font-exo2), 'Exo 2', sans-serif;
   --font-heading: 'BBH Bogle', sans-serif;
   --font-ipa: var(--font-istok), 'Istok Web', serif;
+
+  --content-box-width: 340px;
 }
 
 /* Dark mode overrides */
 [data-theme="dark"] {
-  --bg-warm: #1e2021;
-  --text-color: #faf8f5;
-  --text-muted: #faf8f5;
+  --bg-warm: #1f1e1d;
+  --text-color: #f0eee7;
+  --text-muted: #f0eee7;
 }
 
 /* Reset */
@@ -47,6 +49,7 @@ html {
   background-color: var(--bg-warm);
   color: var(--text-color);
   overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
@@ -78,6 +81,7 @@ h1 {
   padding: 0;
   margin-top: 0.5rem;
   width: fit-content;
+  transition: background-color 0.3s ease;
 }
 
 h2 {
@@ -283,6 +287,7 @@ a:hover {
   color: var(--text-color);
   text-align: right;
   display: block;
+  transition: color 0.3s ease;
 }
 
 .expandable-section:hover .expandable-label {
@@ -311,6 +316,7 @@ a:hover {
   height: 1px;
   background-color: var(--text-color);
   margin: 0.5rem 0.5rem 0 0.5rem;
+  transition: background-color 0.3s ease;
 }
 
 /* Grouped Sections - Fixed top-right with internal scroll */
@@ -318,7 +324,7 @@ a:hover {
   position: fixed;
   top: 1rem;
   right: 1rem;
-  width: 340px;
+  width: var(--content-box-width);
   max-height: calc(100vh - 2rem);
   overflow-y: auto;
   padding: 0.5rem;
@@ -327,8 +333,13 @@ a:hover {
 
 /* Bookshelf variant */
 .grouped-sections.bookshelf {
-  width: auto;
+  width: fit-content;
+  min-width: var(--content-box-width);
   max-width: 900px;
+}
+
+.grouped-sections.bookshelf .expandable-line {
+  white-space: nowrap;
 }
 
 /* Hide scrollbar but keep functionality */
@@ -351,6 +362,7 @@ a:hover {
   position: relative;
   z-index: 10;
   background: var(--bg-warm);
+  transition: background-color 0.3s ease;
 }
 
 /* Theme toggle */
@@ -359,9 +371,11 @@ a:hover {
   z-index: 10;
   background: var(--bg-warm);
   width: fit-content;
+  transition: background-color 0.3s ease;
 }
 
 .theme-toggle {
   background: var(--bg-warm);
+  transition: background-color 0.3s ease;
 }
 

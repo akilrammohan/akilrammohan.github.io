@@ -55,8 +55,9 @@ export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) =>
           label="interests"
           lines={[
             <><a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a></>,
-            'edtech',
             <><Link href="/bookshelf">reading fiction</Link></>,
+            'startups',
+            'edtech',
             'tennis',
             'lifting weights'
           ]}
@@ -74,7 +75,7 @@ export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) =>
           label="recently"
           lines={[
             recentlyReadBook && (
-              <>finished reading <a href={recentlyReadBook.link} target="_blank" rel="noopener noreferrer">{recentlyReadBook.title}</a> by <a href={`https://www.goodreads.com/search?q=${encodeURIComponent(recentlyReadBook.author_name)}&search_type=authors`} target="_blank" rel="noopener noreferrer">{recentlyReadBook.author_name}</a></>
+              <>read <a href={recentlyReadBook.link} target="_blank" rel="noopener noreferrer">{recentlyReadBook.title}</a> by <a href={`https://www.goodreads.com/search?q=${encodeURIComponent(recentlyReadBook.author_name)}&search_type=authors`} target="_blank" rel="noopener noreferrer">{recentlyReadBook.author_name}</a></>
             ),
             topAlbum && (
               <>listened to <a href={topAlbum.albumUrl} target="_blank" rel="noopener noreferrer">{topAlbum.name}</a> by <a href={topAlbum.artistUrl} target="_blank" rel="noopener noreferrer">{topAlbum.artist}</a></>

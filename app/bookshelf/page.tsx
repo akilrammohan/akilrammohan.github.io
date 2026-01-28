@@ -1,9 +1,7 @@
 import { fetchShelf } from '@/lib/goodreads';
-import { incrementVisitorCount } from '@/lib/visitor';
 import { ExpandableSection } from '@/components/ExpandableSection';
 import { GroupedSections } from '@/components/GroupedSections';
 import Navigation, { InternalNav } from '@/components/Navigation';
-import { VisitorCounter } from '@/components/VisitorCounter';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,10 +10,9 @@ export const metadata = {
 };
 
 export default async function BookshelfPage() {
-  const [favoriteBooks, siteBooks, visitorCount] = await Promise.all([
+  const [favoriteBooks, siteBooks] = await Promise.all([
     fetchShelf('favorites'),
     fetchShelf('site'),
-    incrementVisitorCount(),
   ]);
 
   const favoriteIds = new Set(favoriteBooks.map(book => book.book_id));
@@ -28,7 +25,7 @@ export default async function BookshelfPage() {
       <InternalNav />
       <div className="main-content-column">
         <Navigation />
-        <h1 className="floating-title">Akil's Bookshelf<VisitorCounter count={visitorCount} /></h1>
+        <h1 className="floating-title">Akil's Bookshelf</h1>
 
         <GroupedSections className="bookshelf">
         <ExpandableSection

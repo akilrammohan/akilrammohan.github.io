@@ -3,6 +3,7 @@ import ClientColorizer from '@/components/ClientColorizer';
 import { ConcentricWrapper } from '@/components/ConcentricWrapper';
 import { ContentWrapper } from '@/components/ContentWrapper';
 import { ThemeWrapper } from '@/components/ThemeWrapper';
+import { Analytics } from '@vercel/analytics/react';
 import '@/styles/globals.css';
 
 export const metadata = {
@@ -47,6 +48,7 @@ export default function RootLayout({
             <ClientColorizer />
           </ConcentricWrapper>
         </ThemeWrapper>
+        <Analytics />
       </body>
     </html>
   );

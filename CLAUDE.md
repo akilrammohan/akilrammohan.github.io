@@ -20,8 +20,6 @@ styles/        - globals.css
 - `contexts/ConcentricContext.tsx` - element position tracking
 - `lib/territoryCalculator.ts` - ring boundary math
 - `components/ConcentricCanvas.tsx` - SVG ring renderer
-- `lib/visitor.ts` - visitor counter logic (Vercel KV / Upstash Redis)
-- `components/VisitorCounter.tsx` - visitor count display
 
 ## Concentric Ring System
 
@@ -48,18 +46,7 @@ Key CSS classes:
 - `.expandable-section` - individual section (no padding, 0.5rem margin-bottom)
 - `.expandable-label` / `.expandable-content` - right-aligned text
 
-## Visitor Counter
-
-Server-side page view counter displayed inline with page title. Uses Upstash Redis via `@vercel/kv`.
-
-- Shared count across all pages, seeded at 42
-- Increments server-side on every page view (production only, `VERCEL_ENV=production`)
-- Bot filtering via user-agent patterns in `lib/visitor.ts`
-- Hidden if KV is unavailable (no error state shown)
-- Env vars (`KV_REST_API_URL`, `KV_REST_API_TOKEN`) set via Vercel Marketplace → Upstash
-
 ## APIs
 
 - Goodreads RSS → recently read books
 - Last.fm → weekly top album (getWeeklyAlbumChart)
-- Upstash Redis (via Vercel KV) → visitor count

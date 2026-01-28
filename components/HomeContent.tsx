@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { ExpandableSection } from '@/components/ExpandableSection';
 import { GroupedSections } from '@/components/GroupedSections';
 import Navigation, { InternalNav } from '@/components/Navigation';
-import { VisitorCounter } from '@/components/VisitorCounter';
 
 interface Book {
   title: string;
@@ -22,10 +21,9 @@ interface Album {
 interface HomeContentProps {
   recentlyReadBook: Book | null;
   topAlbum: Album | null;
-  visitorCount: number | null;
 }
 
-export const HomeContent = ({ recentlyReadBook, topAlbum, visitorCount }: HomeContentProps) => {
+export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) => {
   return (
     <>
       <InternalNav />
@@ -85,7 +83,6 @@ export const HomeContent = ({ recentlyReadBook, topAlbum, visitorCount }: HomeCo
         />
       </GroupedSections>
       </div>
-      <VisitorCounter count={visitorCount} />
     </>
   );
 };

@@ -338,6 +338,25 @@ a:hover {
   max-width: 900px;
 }
 
+/* Publications variant */
+.grouped-sections.publications {
+  width: fit-content;
+  overflow: visible;
+}
+
+.grouped-sections.publications .expandable-section {
+  overflow: visible;
+}
+
+.grouped-sections.publications .expandable-label {
+  white-space: nowrap;
+}
+
+.grouped-sections.publications .expandable-content {
+  width: 0;
+  min-width: 100%;
+}
+
 .grouped-sections.bookshelf .expandable-line {
   white-space: nowrap;
 }

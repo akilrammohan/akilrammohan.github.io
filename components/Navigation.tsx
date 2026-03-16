@@ -6,6 +6,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 const internalLinks = [
   { href: '/', label: 'home' },
   { href: '/bookshelf', label: 'bookshelf' },
+  { href: '/publications', label: 'publications' },
 ];
 
 const externalLinks = [

@@ -30,7 +30,6 @@ export default function RootLayout({
             __html: `(function(){var t=sessionStorage.getItem('theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;document.documentElement.setAttribute('data-theme',t||(d?'dark':'light'))})()`,
           }}
         />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         {/* BBH Bogle from Google Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

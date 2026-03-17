@@ -25,7 +25,7 @@ export default async function BookshelfPage() {
       <InternalNav />
       <div className="main-content-column">
         <Navigation />
-        <h1 className="floating-title">Akil's Bookshelf</h1>
+        <h1 className="floating-title">Akil Rammohan's Bookshelf</h1>
 
         <GroupedSections className="bookshelf">
         <ExpandableSection

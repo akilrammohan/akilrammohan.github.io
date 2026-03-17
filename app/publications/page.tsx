@@ -12,7 +12,7 @@ export default function PublicationsPage() {
       <InternalNav />
       <div className="main-content-column">
         <Navigation />
-        <h1 className="floating-title">Publications</h1>
+        <h1 className="floating-title">Akil Rammohan's Publications</h1>
 
         <GroupedSections className="publications">
           <ExpandableSection

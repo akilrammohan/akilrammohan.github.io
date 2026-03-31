@@ -1,43 +1,4 @@
-/* Color Palette */
-:root {
-  /* Light mode default */
-  --bg-warm: #f0eee7;
-  --text-color: #1f1e1d;
-  --text-muted: #1f1e1d;
-
-  /* Accent colors - same in both modes */
-  --color-tet-1: oklch(69% 0.22 143);
-  --color-tet-1-contrast: #000;
-  --color-tet-2: oklch(79% 0.198 233);
-  --color-tet-2-contrast: #000;
-  --color-tet-3: oklch(50% 0.30 303);
-  --color-tet-3-contrast: #fff;
-  --color-tet-4: oklch(74% 0.209 323);
-  --color-tet-4-contrast: #000;
-  --color-tet-5: oklch(82% 0.18 90);
-  --color-tet-5-contrast: #000;
-  --color-tet-6: oklch(52% 0.242 53);
-  --color-tet-6-contrast: #fff;
-  --color-tet-7: oklch(52% 0.25 260);
-  --color-tet-7-contrast: #fff;
-  --color-tet-8: oklch(70% 0.20 50);
-  --color-tet-8-contrast: #000;
-
-  --font-main: var(--font-exo2), 'Exo 2', sans-serif;
-  --font-heading: 'BBH Bogle', sans-serif;
-  --font-ipa: var(--font-istok), 'Istok Web', serif;
-
-  --content-box-width: 340px;
-}
-
-/* Dark mode overrides */
-[data-theme="dark"] {
-  --bg-warm: #1f1e1d;
-  --text-color: #f0eee7;
-  --text-muted: #f0eee7;
-}
-
-/* Reset */
+/* Minimal reset */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -45,356 +6,76 @@
 }
 
 html {
-  font-family: var(--font-main);
-  background-color: var(--bg-warm);
-  color: var(--text-color);
-  overflow: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-y: scroll;
 }
 
 body {
-  height: 100vh;
+  font-family: 'Times New Roman', Times, serif;
   line-height: 1.6;
-  position: relative;
-  overflow: hidden;
+  padding: 2rem;
 }
 
-/* Typography */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-main);
-  font-weight: 700;
-  line-height: 1.3;
+.container {
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 h1 {
-  font-family: var(--font-heading);
-  font-weight: 400;
-  font-size: 2rem;
-  margin-bottom: 0;
+  text-align: center;
+  margin-bottom: 0.5rem;
 }
 
-/* Floating title - sits above concentric rings */
-.floating-title {
-  position: relative;
-  z-index: 10;
-  background: var(--bg-warm);
-  padding: 0;
-  margin-top: 0.5rem;
-  width: fit-content;
-  transition: background-color 0.3s ease;
+nav {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+nav a {
+  margin: 0 0.5rem;
 }
 
 h2 {
-  font-size: 1.5rem;
-  margin-bottom: 0.75rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+ul {
+  padding-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.25rem;
 }
 
 p {
-  margin-bottom: 1rem;
-}
-
-/* Links - Rainbow colors (assigned by JS with random offset) */
-a {
-  text-decoration: none;
-  font-weight: 600;
-  color: var(--color-tet-1); /* Fallback for no-JS */
-  transition: color 0.2s ease;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* Utility Classes */
-.text-muted {
-  color: var(--text-muted);
-}
-
-.ipa {
-  font-family: var(--font-ipa);
-}
-
-/* Layout */
-.content {
-  min-height: 100vh;
-  padding: calc(50vh - 250px) 4rem 3rem;
-  margin-left: 25vw;
-  width: 75vw;
-}
-
-.content--full-width {
-  max-width: none;
-}
-
-/* Home page styles - Fixed bottom-left */
-.main-content-column {
-  position: fixed;
-  bottom: 1rem;
-  left: 1rem;
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
-  z-index: 10;
-}
-
-/* Bookshelf page styles */
-.intro {
-  margin-bottom: 2rem;
-}
-
-.favorites-section {
-  margin-bottom: 3rem;
-}
-
-.favorites-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.5rem;
-  justify-items: center;
-}
-
-.favorite-cover {
-  width: auto !important;
-  height: 280px !important;
-  border-radius: 4px;
-  transition: transform 0.2s ease;
-}
-
-.favorite-cover:hover {
-  transform: scale(1.03);
-}
-
-.read-section {
-  margin-bottom: 2rem;
-}
-
-.section-note {
-  margin-bottom: 1.5rem;
-}
-
-.read-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-  justify-items: center;
-}
-
-.read-cover {
-  width: auto !important;
-  height: 280px !important;
-  border-radius: 4px;
-  transition: transform 0.2s ease;
-}
-
-.read-cover:hover {
-  transform: scale(1.03);
-}
-
-.empty-state {
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-/* Internal navigation - Fixed top left */
-.internal-nav {
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  z-index: 10;
-}
-
-/* Navigation styles - Single column, left-aligned */
-.nav-container {
-  width: fit-content;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.5rem;
-  position: relative;
-  z-index: 10;
-}
-
-.nav-link-item {
-  padding: 0;
-}
-
-.nav-links a:hover {
-  text-decoration: underline;
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .favorites-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .read-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .content {
-    width: 100%;
-    margin-left: 0;
-    padding: 1.5rem;
-    padding-top: 3rem;
-  }
-
-  .favorites-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .read-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .read-grid {
-    gap: 1rem;
-  }
-
-  .favorite-cover {
-    height: 200px !important;
-  }
-
-  .read-cover {
-    height: 200px !important;
-  }
-}
-
-/* Expandable Sections */
-.expandable-section {
   margin-bottom: 0.5rem;
-  padding: 0;
-  cursor: pointer;
-  width: 100%;
-  position: relative;
-  z-index: 1;
 }
 
-.expandable-section:last-child {
-  margin-bottom: 0;
-}
-
-.expandable-label {
-  font-weight: 600;
-  color: var(--text-color);
-  text-align: right;
-  display: block;
-  transition: color 0.3s ease;
-}
-
-.expandable-section:hover .expandable-label {
-  text-decoration: underline;
-}
-
-.expandable-content {
-  line-height: 1.6;
-  text-align: right;
-}
-
-.expandable-lines {
-  display: flex;
-  flex-direction: column;
+p + p {
   margin-top: 0.5rem;
 }
 
-.expandable-line {
-  /* Lines appear/disappear instantly - no transitions */
+.paper-card {
+  border: 1px solid #ccc;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
 }
 
-/* Dividing lines between sections */
-.expandable-section:not(:last-child)::after {
-  content: '';
-  display: block;
-  height: 1px;
-  background-color: var(--text-color);
-  margin: 0.5rem 0.5rem 0 0.5rem;
-  transition: background-color 0.3s ease;
+.paper-card .paper-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
 }
 
-/* Grouped Sections - Fixed top-right with internal scroll */
-.grouped-sections {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  width: var(--content-box-width);
-  max-height: calc(100vh - 2rem);
-  overflow-y: auto;
-  padding: 0.5rem;
-  z-index: 1;
+.paper-card .paper-authors {
+  margin-bottom: 0.25rem;
 }
 
-/* Bookshelf variant */
-.grouped-sections.bookshelf {
-  width: fit-content;
-  min-width: var(--content-box-width);
-  max-width: 900px;
+.paper-card .paper-venue {
+  margin-bottom: 0.25rem;
 }
 
-/* Publications variant */
-.grouped-sections.publications {
-  width: fit-content;
-  overflow: visible;
+.paper-card .paper-links {
+  margin-bottom: 0;
+  font-size: 0.9rem;
 }
-
-.grouped-sections.publications .expandable-section {
-  overflow: visible;
-}
-
-.grouped-sections.publications .expandable-label {
-  white-space: nowrap;
-}
-
-.grouped-sections.publications .expandable-content {
-  width: 0;
-  min-width: 100%;
-}
-
-.grouped-sections.bookshelf .expandable-line {
-  white-space: nowrap;
-}
-
-/* Hide scrollbar but keep functionality */
-.grouped-sections::-webkit-scrollbar {
-  width: 0;
-  background: transparent;
-}
-
-.grouped-sections {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-/* Floating styles for nav links */
-.nav-links.floating {
-  z-index: 10;
-}
-
-.nav-link-item.floating {
-  position: relative;
-  z-index: 10;
-  background: var(--bg-warm);
-  transition: background-color 0.3s ease;
-}
-
-/* Theme toggle */
-.theme-toggle-wrapper.floating {
-  position: relative;
-  z-index: 10;
-  background: var(--bg-warm);
-  width: fit-content;
-  transition: background-color 0.3s ease;
-}
-
-.theme-toggle {
-  background: var(--bg-warm);
-  transition: background-color 0.3s ease;
-}
-

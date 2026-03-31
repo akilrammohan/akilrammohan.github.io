@@ -7,10 +7,11 @@
 
 html {
   overflow-y: scroll;
+  font-size: 125%;
 }
 
 body {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Goudy Bookletter 1911', serif;
   line-height: 1.6;
   padding: 2rem;
 }

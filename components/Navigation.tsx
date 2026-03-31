@@ -11,11 +11,8 @@ const links = [
 export const Navigation = () => {
   return (
     <nav>
-      {links.map((link, i) => (
-        <span key={link.label}>
-          {i > 0 && ' / '}
-          <Link href={link.href}>{link.label}</Link>
-        </span>
+      {links.map((link) => (
+        <Link key={link.label} href={link.href}>{link.label}</Link>
       ))}
     </nav>
   );

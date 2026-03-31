@@ -82,6 +82,10 @@ p + p {
   margin-bottom: 0.25rem;
 }
 
+.paper-card .paper-authors strong {
+  -webkit-text-stroke: 0.4px currentColor;
+}
+
 .paper-card .paper-venue {
   margin-bottom: 0.25rem;
 }

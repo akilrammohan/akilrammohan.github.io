@@ -11,14 +11,11 @@ declare global {
 
 export const ClientColorizer = () => {
   const pathname = usePathname();
-  const isInitialMount = useRef(true);
+  const prevPathname = useRef(pathname);
 
   useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-    }
-    // Re-colorize on client-side navigation
+    if (pathname === prevPathname.current) return;
+    prevPathname.current = pathname;
     window.__colorizeLinks?.();
   }, [pathname]);
 

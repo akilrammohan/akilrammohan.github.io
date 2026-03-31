@@ -26,12 +26,7 @@ const colorizerScript = `
       l.style.color = sh[i % sh.length];
     });
   };
-  new MutationObserver(function(_, obs) {
-    if (document.querySelectorAll('a').length > 0) {
-      obs.disconnect();
-      window.__colorizeLinks();
-    }
-  }).observe(document, { childList: true, subtree: true });
+  window.__colorizeLinks();
 })();
 `;
 
@@ -46,11 +41,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&display=swap" rel="stylesheet" />
-        <script dangerouslySetInnerHTML={{ __html: colorizerScript }} />
       </head>
       <body>
         <ClientColorizer />
         {children}
+        <script dangerouslySetInnerHTML={{ __html: colorizerScript }} />
         <Analytics />
       </body>
     </html>

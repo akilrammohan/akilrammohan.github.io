@@ -28,7 +28,7 @@ export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) =>
       <Navigation />
 
       <p>
-        I'm a senior at the University of Wisconsin-Madison, where I study computer science and data science. I'm from the bay area originally, and my name is pronounced UH-kill (/ˈʌkɪl/). I'm interested in AI, <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a>, <Link href="/bookshelf">reading</Link>, edtech, tennis, and games.
+        I'm a senior at the University of Wisconsin-Madison, where I study computer science and data science. I'm from the bay area originally, and my name is pronounced UH-kill (/ˈʌkɪl/). I'm interested in AI, <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a>, <Link href="/bookshelf">reading</Link>, edtech, tennis, trivia, and games (of any form).
       </p>
 
       <p>
@@ -36,12 +36,12 @@ export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) =>
       </p>
 
       <p>
-        I'm currently working on a tool to help professors better engage their students with AI. You can reach out at akilan[dot]rammohan[at]gmail[dot]com.
+        I'm currently working on a tool to help professors better engage their students with AI. If that sounds interesting reach out at akilan[dot]rammohan[at]gmail[dot]com!
       </p>
 
       <p>
         {recentlyReadBook && (
-          <>The last thing I read was <a href={recentlyReadBook.link} target="_blank" rel="noopener noreferrer">{recentlyReadBook.title}</a> by <a href={`https://www.goodreads.com/search?q=${encodeURIComponent(recentlyReadBook.author_name)}&search_type=authors`} target="_blank" rel="noopener noreferrer">{recentlyReadBook.author_name}</a>. </>
+          <>The last book I read was <a href={recentlyReadBook.link} target="_blank" rel="noopener noreferrer">{recentlyReadBook.title}</a> by <a href={`https://www.goodreads.com/search?q=${encodeURIComponent(recentlyReadBook.author_name)}&search_type=authors`} target="_blank" rel="noopener noreferrer">{recentlyReadBook.author_name}</a>. </>
         )}
         {topAlbum && (
           <>The last album I listened to was <a href={topAlbum.albumUrl} target="_blank" rel="noopener noreferrer">{topAlbum.name}</a> by <a href={topAlbum.artistUrl} target="_blank" rel="noopener noreferrer">{topAlbum.artist}</a>.</>

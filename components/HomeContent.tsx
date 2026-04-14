@@ -32,7 +32,7 @@ export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) =>
       </p>
 
       <p>
-        I'm from the bay area originally, and my name is pronounced UH-kill (/ˈʌkɪl/). I'm interested in AI, <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a>, <Link href="/bookshelf">reading</Link>, edtech, tennis, trivia, and games (of any form).
+        I'm from the bay area, and my name is pronounced UH-kill (/ˈʌkɪl/). I'm interested in AI, <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a>, <Link href="/bookshelf">reading</Link>, edtech, tennis, trivia, and games (of any form).
       </p>
 
       <p>

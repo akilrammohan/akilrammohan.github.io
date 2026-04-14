@@ -28,7 +28,11 @@ export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) =>
       <Navigation />
 
       <p>
-        I'm a senior at the University of Wisconsin-Madison, where I study computer science and data science. I'm from the bay area originally, and my name is pronounced UH-kill (/ˈʌkɪl/). I'm interested in AI, <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a>, <Link href="/bookshelf">reading</Link>, edtech, tennis, trivia, and games (of any form).
+        I'm a junior software engineer at <a href="https://www.mechanize.work" target="_blank" rel="noopener noreferrer">Mechanize</a>, where I build reinforcement learning environments to completely automate software engineering. I'm also finishing my CS degree at the University of Wisconsin-Madison.
+      </p>
+
+      <p>
+        I'm from the bay area originally, and my name is pronounced UH-kill (/ˈʌkɪl/). I'm interested in AI, <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a>, <Link href="/bookshelf">reading</Link>, edtech, tennis, trivia, and games (of any form).
       </p>
 
       <p>

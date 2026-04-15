@@ -28,19 +28,15 @@ export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) =>
       <Navigation />
 
       <p>
-        I'm a junior software engineer at <a href="https://www.mechanize.work" target="_blank" rel="noopener noreferrer">Mechanize</a>, where I build reinforcement learning environments to completely automate software engineering. I'm also finishing my CS degree at the University of Wisconsin-Madison.
+        I build reinforcement learning environments at <a href="https://www.mechanize.work" target="_blank" rel="noopener noreferrer">Mechanize</a>. We're trying to completely automate software engineering. I'm also finishing the last semester of my CS degree at the University of Wisconsin-Madison.
       </p>
 
       <p>
-        I'm from the bay area, and my name is pronounced UH-kill (/ˈʌkɪl/). I'm interested in AI, <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a>, <Link href="/bookshelf">reading</Link>, edtech, tennis, trivia, and games (of any form).
+        I'm from the bay area, and my name is pronounced UH-kill (/ˈʌkɪl/). My interests include AI, <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a>, <Link href="/bookshelf">reading</Link>, edtech, tennis, trivia, and games (of any form).
       </p>
 
       <p>
         I've done AI in VR research at the <a href="https://neuroergolab.org/" target="_blank" rel="noopener noreferrer">NeuroErgonomics Lab</a>, worked on agentic AI for information diets at the <a href="https://nplus1.wisc.edu" target="_blank" rel="noopener noreferrer">N+1 Institute</a>'s Summer AI Lab (funded by OpenAI with API credits + a $1,500 scholarship), and analyzed podcast data to improve ad revenue at <a href="https://www.fastersmarter.io" target="_blank" rel="noopener noreferrer">Think Fast Talk Smart</a>.
-      </p>
-
-      <p>
-        I'm currently working on a tool to help professors better engage their students with AI. If that sounds interesting reach out at akilan[dot]rammohan[at]gmail[dot]com!
       </p>
 
       <p>

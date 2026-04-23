@@ -28,15 +28,15 @@ export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) =>
       <Navigation />
 
       <p>
-        I build reinforcement learning environments at <a href="https://www.mechanize.work" target="_blank" rel="noopener noreferrer">Mechanize</a>. We're trying to completely automate software engineering. I'm also finishing the last semester of my CS degree at the University of Wisconsin-Madison.
+        I build reinforcement learning environments at <a href="https://www.mechanize.work" target="_blank" rel="noopener noreferrer">Mechanize</a>. We're trying to completely automate software engineering.
       </p>
 
       <p>
-        I'm from the bay area, and my name is pronounced UH-kill (/ˈʌkɪl/). My interests include AI, <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a>, <Link href="/bookshelf">reading</Link>, edtech, tennis, trivia, and games (of any form).
+        I'm from the bay area, I went to the University of Wisconsin, and my name is pronounced UH-kill (/ˈʌkɪl/). My interests include AI, <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a>, <Link href="/bookshelf">reading</Link>, edtech, tennis, trivia, and games (of any form).
       </p>
 
       <p>
-        I've done AI in VR research at the <a href="https://neuroergolab.org/" target="_blank" rel="noopener noreferrer">NeuroErgonomics Lab</a>, worked on agentic AI for information diets at the <a href="https://nplus1.wisc.edu" target="_blank" rel="noopener noreferrer">N+1 Institute</a>'s Summer AI Lab (funded by OpenAI with API credits + a $1,500 scholarship), and analyzed podcast data to improve ad revenue at <a href="https://www.fastersmarter.io" target="_blank" rel="noopener noreferrer">Think Fast Talk Smart</a>.
+        Before <a href="https://www.mechanize.work" target="_blank" rel="noopener noreferrer">Mechanize</a> I worked at the <a href="https://neuroergolab.org/" target="_blank" rel="noopener noreferrer">NeuroErgonomics Lab</a>, the <a href="https://nplus1.wisc.edu/" target="_blank" rel="noopener noreferrer">N+1 Institute</a>, and <a href="https://www.fastersmarter.io/" target="_blank" rel="noopener noreferrer">Think Fast Talk Smart</a>. Check out my <a href="/resume.pdf">resume</a> or <a href="https://www.linkedin.com/in/akilrammohan/" target="_blank" rel="noopener noreferrer">LinkedIn</a> for more info.
       </p>
 
       <p>
@@ -48,16 +48,16 @@ export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) =>
         )}
       </p>
 
-      <p>
-        <a href="https://www.linkedin.com/in/akilrammohan/" target="_blank" rel="noopener noreferrer">linkedin</a> · <a href="/resume.pdf">resume</a> · <a href="https://github.com/akilrammohan" target="_blank" rel="noopener noreferrer">github</a> · <a href="https://x.com/kilrmcgee" target="_blank" rel="noopener noreferrer">x</a> · <a href="https://open.spotify.com/user/akster213" target="_blank" rel="noopener noreferrer">spotify</a> · <a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" target="_blank" rel="noopener noreferrer">goodreads</a>
-      </p>
-
       <div className="title-images" aria-label="Akil">
         <img src="/letter-A.jpg" alt="A" />
         <img src="/letter-K.jpg" alt="K" />
         <img src="/letter-I.jpg" alt="I" />
         <img src="/letter-L.jpg" alt="L" />
       </div>
+
+      <p className="social-links">
+        <a href="https://www.linkedin.com/in/akilrammohan/" target="_blank" rel="noopener noreferrer">linkedin</a> · <a href="/resume.pdf">resume</a> · <a href="https://github.com/akilrammohan" target="_blank" rel="noopener noreferrer">github</a> · <a href="https://x.com/kilrmcgee" target="_blank" rel="noopener noreferrer">x</a> · <a href="https://open.spotify.com/user/akster213" target="_blank" rel="noopener noreferrer">spotify</a> · <a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" target="_blank" rel="noopener noreferrer">goodreads</a>
+      </p>
     </div>
   );
 };

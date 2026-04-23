@@ -1,5 +1,6 @@
 import { Analytics } from '@vercel/analytics/react';
 import { ClientColorizer } from '@/components/ClientColorizer';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import '@/styles/globals.css';
 
 export const metadata = {
@@ -30,6 +31,17 @@ const colorizerScript = `
 })();
 `;
 
+const themeInitScript = `
+(function() {
+  try {
+    var d = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();
+`;
+
 export default function RootLayout({
   children,
 }: {
@@ -40,10 +52,12 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Goudy+Bookletter+1911&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&display=swap" rel="stylesheet" />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body>
         <ClientColorizer />
+        <ThemeToggle />
         {children}
         <script dangerouslySetInnerHTML={{ __html: colorizerScript }} />
         <Analytics />

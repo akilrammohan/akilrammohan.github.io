@@ -12,7 +12,8 @@ export const metadata = {
 
 const colorizerScript = `
 (function() {
-  var c = ['#c75a5a','#c9a84c','#6ab06a','#5a8fbf','#9a6abf'];
+  var earthen = ['#a85545','#b89045','#7a9670','#5e7a8e','#9a7585'];
+  var autumn  = ['#b65437','#c89039','#a86a3a','#3a8585','#7a3a4a','#8a5a82'];
   function s(a) {
     a = a.slice();
     for (var i = a.length - 1; i > 0; i--) {
@@ -22,7 +23,8 @@ const colorizerScript = `
     return a;
   }
   window.__colorizeLinks = function() {
-    var sh = s(c);
+    var theme = document.documentElement.getAttribute('data-theme');
+    var sh = s(theme === 'dark' ? autumn : earthen);
     document.querySelectorAll('a').forEach(function(l, i) {
       l.style.color = sh[i % sh.length];
     });
@@ -52,7 +54,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Benne&display=swap" rel="stylesheet" />
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body>

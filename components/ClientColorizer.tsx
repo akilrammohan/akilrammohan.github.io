@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 
 declare global {
@@ -9,11 +9,13 @@ declare global {
   }
 }
 
+const useIsoLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+
 export const ClientColorizer = () => {
   const pathname = usePathname();
   const prevPathname = useRef(pathname);
 
-  useEffect(() => {
+  useIsoLayoutEffect(() => {
     if (pathname === prevPathname.current) return;
     prevPathname.current = pathname;
     window.__colorizeLinks?.();

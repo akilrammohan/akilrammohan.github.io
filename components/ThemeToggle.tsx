@@ -32,15 +32,15 @@ export const ThemeToggle = () => {
   return (
     <div className="theme-toggle">
       {theme === 'light' ? (
-        <span>light</span>
+        <span className="toggle-item" data-text="light">light</span>
       ) : (
-        <a href="#" onClick={toggle('light')}>light</a>
+        <a href="#" className="toggle-item" data-text="light" onClick={toggle('light')}>light</a>
       )}
       <span className="sep">/</span>
       {theme === 'dark' ? (
-        <span>dark</span>
+        <span className="toggle-item" data-text="dark">dark</span>
       ) : (
-        <a href="#" onClick={toggle('dark')}>dark</a>
+        <a href="#" className="toggle-item" data-text="dark" onClick={toggle('dark')}>dark</a>
       )}
     </div>
   );

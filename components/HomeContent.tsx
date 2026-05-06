@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Navigation } from '@/components/Navigation';
+import { PageHeader } from '@/components/PageHeader';
 
 interface Book {
   title: string;
@@ -24,15 +24,14 @@ interface HomeContentProps {
 export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) => {
   return (
     <div className="container">
-      <h1>Akil Rammohan</h1>
-      <Navigation />
+      <PageHeader title="Akil Rammohan" />
 
       <p>
         I'm a software engineer at <a href="https://www.mechanize.work" target="_blank" rel="noopener noreferrer">Mechanize</a>, where I build reinforcement learning environments and evals. We're trying to completely automate software engineering.
       </p>
 
       <p>
-        I'm from the bay area, I went to the University of Wisconsin-Madison, and my name is pronounced UH-kill (<a href="https://en.wikipedia.org/wiki/International_Phonetic_Alphabet" target="_blank" rel="noopener noreferrer">/ˈʌkɪl/</a>). I like AI, <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a>, <Link href="/bookshelf">reading</Link>, edtech, tennis, trivia, and games (all types).
+        I'm from the bay area, I went to the University of Wisconsin-Madison, and my name is pronounced UH-kill (<a href="https://en.wikipedia.org/wiki/International_Phonetic_Alphabet" target="_blank" rel="noopener noreferrer" className="ipa">/ˈʌkɪl/</a>). I like AI, <a href="https://github.com/akilrammohan/canon" target="_blank" rel="noopener noreferrer">information diets</a>, <Link href="/bookshelf">reading</Link>, edtech, tennis, trivia, and games (all types).
       </p>
 
       <p>
@@ -48,9 +47,6 @@ export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) =>
         )}
       </p>
 
-      <p className="social-links">
-        <a href="https://www.linkedin.com/in/akilrammohan/" target="_blank" rel="noopener noreferrer">linkedin</a> · <a href="/resume.pdf">resume</a> · <a href="https://github.com/akilrammohan" target="_blank" rel="noopener noreferrer">github</a> · <a href="https://x.com/kilrmcgee" target="_blank" rel="noopener noreferrer">x</a> · <a href="https://open.spotify.com/user/akster213" target="_blank" rel="noopener noreferrer">spotify</a> · <a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" target="_blank" rel="noopener noreferrer">goodreads</a>
-      </p>
     </div>
   );
 };

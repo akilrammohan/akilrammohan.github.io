@@ -1,5 +1,5 @@
 import { fetchShelf } from '@/lib/goodreads';
-import { Navigation } from '@/components/Navigation';
+import { PageHeader } from '@/components/PageHeader';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,8 +20,7 @@ export default async function BookshelfPage() {
 
   return (
     <div className="container">
-      <h1>Akil Rammohan's Bookshelf</h1>
-      <Navigation />
+      <PageHeader title="Akil Rammohan's Bookshelf" />
 
       <p>
         I've been reading voraciously my whole life, and figured I should try to track it on{' '}

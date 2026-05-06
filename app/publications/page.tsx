@@ -1,4 +1,4 @@
-import { Navigation } from '@/components/Navigation';
+import { PageHeader } from '@/components/PageHeader';
 
 export const metadata = {
   title: 'Publications',
@@ -7,8 +7,7 @@ export const metadata = {
 export default function PublicationsPage() {
   return (
     <div className="container">
-      <h1>Akil Rammohan's Publications</h1>
-      <Navigation />
+      <PageHeader title="Akil Rammohan's Publications" />
 
       <div className="paper-card">
         <p className="paper-title">

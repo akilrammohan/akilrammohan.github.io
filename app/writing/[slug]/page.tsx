@@ -2,7 +2,7 @@ import { allPosts } from 'contentlayer/generated';
 import { notFound } from 'next/navigation';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import Link from 'next/link';
-import { Navigation } from '@/components/Navigation';
+import { PageHeader } from '@/components/PageHeader';
 
 export async function generateStaticParams() {
   return allPosts
@@ -24,8 +24,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
 
   return (
     <div className="container">
-      <h1>{post.title}</h1>
-      <Navigation />
+      <PageHeader title={post.title} />
       <article>
         <Link href="/writing">← Back to Writing</Link>
         <time dateTime={post.date}>

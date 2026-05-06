@@ -1,6 +1,8 @@
 import { Analytics } from '@vercel/analytics/react';
 import { ClientColorizer } from '@/components/ClientColorizer';
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { Logo } from '@/components/Logo';
+import { Navigation } from '@/components/Navigation';
+import { SiteFooter } from '@/components/SiteFooter';
 import '@/styles/globals.css';
 
 export const metadata = {
@@ -12,8 +14,8 @@ export const metadata = {
 
 const colorizerScript = `
 (function() {
-  var earthen = ['#a85545','#b89045','#7a9670','#5e7a8e','#9a7585'];
-  var autumn  = ['#b65437','#c89039','#a86a3a','#3a8585','#7a3a4a','#8a5a82'];
+  var berryDeep = ['#c6397d','#7d39c6','#b58a4a','#397dc6','#8ab54a'];
+  var berry     = ['#d878a8','#a878d8','#c8a878','#78a8d8','#a8c878'];
   function s(a) {
     a = a.slice();
     for (var i = a.length - 1; i > 0; i--) {
@@ -24,7 +26,7 @@ const colorizerScript = `
   }
   window.__colorizeLinks = function() {
     var theme = document.documentElement.getAttribute('data-theme');
-    var sh = s(theme === 'dark' ? autumn : earthen);
+    var sh = s(theme === 'dark' ? berry : berryDeep);
     document.querySelectorAll('a').forEach(function(l, i) {
       l.style.color = sh[i % sh.length];
     });
@@ -59,8 +61,16 @@ export default function RootLayout({
       </head>
       <body>
         <ClientColorizer />
-        <ThemeToggle />
-        {children}
+        <div className="site">
+          <aside className="sidebar">
+            <Logo />
+            <Navigation />
+          </aside>
+          <main className="main">
+            {children}
+            <SiteFooter />
+          </main>
+        </div>
         <script dangerouslySetInnerHTML={{ __html: colorizerScript }} />
         <Analytics />
       </body>

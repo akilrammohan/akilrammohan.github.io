@@ -1,4 +1,4 @@
-import { Navigation } from '@/components/Navigation';
+import { PageHeader } from '@/components/PageHeader';
 
 export const metadata = {
   title: 'Writing',
@@ -7,8 +7,7 @@ export const metadata = {
 export default function WritingPage() {
   return (
     <div className="container">
-      <h1>Writing</h1>
-      <Navigation />
+      <PageHeader title="Writing" />
       <p>Under construction...</p>
     </div>
   );

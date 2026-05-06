@@ -7,13 +7,14 @@
 
 html {
   overflow-y: scroll;
-  font-size: 112.5%;
-  --bg-color: #dde5d2;
+  font-size: 120%;
+  --bg-color: #f7f7f9;
   --text-color: #1a1a1a;
+  --main-width: 632px;
 }
 
 html[data-theme="dark"] {
-  --bg-color: #253026;
+  --bg-color: #1c1f26;
   --text-color: #e5e0d5;
 }
 
@@ -26,12 +27,95 @@ body {
   transition: background-color 220ms ease, color 220ms ease;
 }
 
+.site {
+  display: grid;
+  grid-template-columns: 160px minmax(0, var(--main-width)) 160px;
+  gap: 5rem;
+  width: fit-content;
+  margin: 0 auto;
+  padding-top: 5rem;
+  min-height: calc(100vh - 4rem);
+}
+
+.sidebar {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  grid-column: 2;
+}
+
+.site-logo {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  margin-left: 1rem;
+  background-image: url('/logo-light.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+html[data-theme="dark"] .site-logo {
+  background-image: url('/logo-dark.png');
+}
+
+.site-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 5rem;
+  font-size: 0.95rem;
+}
+
+.nav-item {
+  position: relative;
+  padding-left: 1rem;
+  line-height: 1.6;
+}
+
+.nav-item.active {
+  position: relative;
+}
+
+.nav-item.active::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  line-height: 1;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: var(--main-width);
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 5rem;
+}
+
+h1 {
+  text-align: left;
+  margin-bottom: 0;
+  font-size: 1.4rem;
+  letter-spacing: 0.02em;
+}
+
 .theme-toggle {
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  z-index: 100;
   font-size: 0.9rem;
+  flex-shrink: 0;
 }
 
 .theme-toggle .sep {
@@ -54,25 +138,6 @@ body {
   pointer-events: none;
 }
 
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 0.5rem;
-}
-
-nav {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-nav a {
-  margin: 0 0.5rem;
-}
-
 a {
   font-weight: bold;
   text-decoration: none;
@@ -81,6 +146,10 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+.ipa {
+  font-family: 'Charis SIL', 'Doulos SIL', 'Gentium Plus', 'Lucida Sans Unicode', 'Times New Roman', Times, serif;
 }
 
 h2 {
@@ -131,4 +200,12 @@ p + p {
 .paper-card .paper-links {
   margin-bottom: 0;
   font-size: 0.9rem;
+}
+
+.site-footer {
+  margin-top: auto;
+  padding-top: 4rem;
+  padding-bottom: 1rem;
+  text-align: right;
+  max-width: var(--main-width);
 }

@@ -11,6 +11,7 @@ html {
   --bg-color: #f7f7f9;
   --text-color: #1a1a1a;
   --main-width: 632px;
+  --sidebar-width: 160px;
 }
 
 html[data-theme="dark"] {
@@ -21,30 +22,43 @@ html[data-theme="dark"] {
 body {
   font-family: 'Benne', serif;
   line-height: 1.6;
-  padding: 2rem;
+  padding: clamp(0.75rem, 3vw, 2rem);
   background-color: var(--bg-color);
   color: var(--text-color);
   transition: background-color 220ms ease, color 220ms ease;
 }
 
+/*
+  Fluid, symmetric layout. The grid is bookended with 1fr columns that
+  absorb leftover viewport width equally on both sides, so the inner
+  content (sidebar | gap | main | gap | sidebar) is always perfectly
+  centered. Left margin always equals right margin by construction.
+  Spacing shrinks smoothly via clamp() as the viewport narrows; main is
+  the only flexible inner track.
+*/
 .site {
   display: grid;
-  grid-template-columns: 160px minmax(0, var(--main-width)) 160px;
-  gap: 5rem;
-  width: fit-content;
-  margin: 0 auto;
-  padding-top: 5rem;
+  grid-template-columns:
+    1fr
+    var(--sidebar-width)
+    clamp(2rem, 7vw, 5rem)
+    minmax(0, var(--main-width))
+    clamp(2rem, 7vw, 5rem)
+    var(--sidebar-width)
+    1fr;
+  width: 100%;
+  padding-top: clamp(2rem, 5vw, 5rem);
   min-height: calc(100vh - 4rem);
 }
 
 .sidebar {
-  grid-column: 1;
+  grid-column: 2;
   display: flex;
   flex-direction: column;
 }
 
 .main {
-  grid-column: 2;
+  grid-column: 4;
 }
 
 .site-logo {
@@ -104,6 +118,87 @@ html[data-theme="dark"] .site-logo {
   align-items: center;
   gap: 1rem;
   margin-bottom: 5rem;
+}
+
+.title-block {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+/* Inline logo lives in the title row only in single-column mode. */
+.title-block .site-logo {
+  display: none;
+}
+
+.page-nav {
+  display: none;
+}
+
+.page-nav .theme-toggle {
+  display: none;
+}
+
+/*
+  Single-column mode. Sidebar is dropped; the logo moves inline with the
+  title (left-aligned with body text), and the nav sits between the title
+  row and the body. Grid simplifies to [1fr | main | 1fr] so main stays
+  centered with identical left/right margins.
+*/
+@media (max-width: 900px) {
+  body {
+    padding: clamp(1.125rem, 3vw, 2rem);
+  }
+  .site {
+    grid-template-columns:
+      minmax(5rem, 1fr)
+      minmax(0, var(--main-width))
+      minmax(5rem, 1fr);
+  }
+  .sidebar {
+    display: none;
+  }
+  .main {
+    grid-column: 2;
+  }
+  .title-block .site-logo {
+    display: inline-block;
+    margin-left: 0;
+    width: 36px;
+    height: 36px;
+  }
+  .page-header {
+    margin-bottom: 1.25rem;
+  }
+  .page-header .theme-toggle {
+    display: none;
+  }
+  .page-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .page-nav .theme-toggle {
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .page-nav .site-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 0;
+    gap: 1.5rem;
+  }
+  .page-nav .nav-item {
+    padding-left: 0;
+  }
+  .page-nav .nav-item.active::before {
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+  }
 }
 
 h1 {

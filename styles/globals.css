@@ -61,22 +61,6 @@ body {
   grid-column: 4;
 }
 
-.site-logo {
-  display: inline-block;
-  width: 1.25rem;
-  height: 1.4rem;
-  margin-left: 1rem;
-  /* Center the glyph on the h1's line-box (1.4rem × line-height 1.6 = 2.24rem). */
-  margin-top: 0.42rem;
-  background-image: url('/logo-light.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-html[data-theme="dark"] .site-logo {
-  background-image: url('/logo-dark.png');
-}
-
 .site-nav {
   display: flex;
   flex-direction: column;
@@ -128,11 +112,6 @@ html[data-theme="dark"] .site-logo {
   min-width: 0;
 }
 
-/* Inline logo lives in the title row only in single-column mode. */
-.title-block .site-logo {
-  display: none;
-}
-
 .page-nav {
   display: none;
 }
@@ -142,10 +121,9 @@ html[data-theme="dark"] .site-logo {
 }
 
 /*
-  Single-column mode. Sidebar is dropped; the logo moves inline with the
-  title (left-aligned with body text), and the nav sits between the title
-  row and the body. Grid simplifies to [1fr | main | 1fr] so main stays
-  centered with identical left/right margins.
+  Single-column mode. Sidebar is dropped and the nav sits between the
+  title row and the body. Grid simplifies to [1fr | main | 1fr] so main
+  stays centered with identical left/right margins.
 */
 @media (max-width: 900px) {
   body {
@@ -162,12 +140,6 @@ html[data-theme="dark"] .site-logo {
   }
   .main {
     grid-column: 2;
-  }
-  .title-block .site-logo {
-    display: inline-block;
-    margin-left: 0;
-    margin-top: 0;
-    /* width/height inherited from base rule */
   }
   .page-header {
     margin-bottom: 1.25rem;

@@ -1,6 +1,5 @@
 import { Analytics } from '@vercel/analytics/react';
 import { ClientColorizer } from '@/components/ClientColorizer';
-import { Logo } from '@/components/Logo';
 import { Navigation } from '@/components/Navigation';
 import { SiteFooter } from '@/components/SiteFooter';
 import '@/styles/globals.css';
@@ -63,7 +62,6 @@ export default function RootLayout({
         <ClientColorizer />
         <div className="site">
           <aside className="sidebar">
-            <Logo />
             <Navigation />
           </aside>
           <main className="main">

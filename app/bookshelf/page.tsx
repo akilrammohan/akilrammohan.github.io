@@ -19,50 +19,51 @@ export default async function BookshelfPage() {
     .sort((a, b) => b.user_rating - a.user_rating);
 
   return (
-    <div className="container">
+    <>
       <PageHeader title="Akil Rammohan's Bookshelf" />
+      <div className="container">
+        <p>
+          I've been reading voraciously my whole life, and figured I should try to track it on{' '}
+          <a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" target="_blank" rel="noopener noreferrer">goodreads</a>{' '}
+          (and sync it here), but I'm sure I forgot many books when I went through adding stuff to goodreads. I.e. this is far from an exhaustive list.
+        </p>
 
-      <p>
-        I've been reading voraciously my whole life, and figured I should try to track it on{' '}
-        <a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" target="_blank" rel="noopener noreferrer">goodreads</a>{' '}
-        (and sync it here), but I'm sure I forgot many books when I went through adding stuff to goodreads. I.e. this is far from an exhaustive list.
-      </p>
+        {favoriteBooks.length > 0 && (
+          <>
+            <h2>favorites</h2>
+            <ul>
+              {favoriteBooks.map(book => (
+                <li key={book.book_id}>
+                  <a href={book.link} target="_blank" rel="noopener noreferrer">
+                    {book.title}
+                  </a>{' '}
+                  by {book.author_name}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
 
-      {favoriteBooks.length > 0 && (
-        <>
-          <h2>favorites</h2>
-          <ul>
-            {favoriteBooks.map(book => (
-              <li key={book.book_id}>
-                <a href={book.link} target="_blank" rel="noopener noreferrer">
-                  {book.title}
-                </a>{' '}
-                by {book.author_name}
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
+        {otherSiteBooks.length > 0 && (
+          <>
+            <h2>other (ordered by rating descending)</h2>
+            <ul>
+              {otherSiteBooks.map(book => (
+                <li key={book.book_id}>
+                  <a href={book.link} target="_blank" rel="noopener noreferrer">
+                    {book.title}
+                  </a>{' '}
+                  by {book.author_name}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
 
-      {otherSiteBooks.length > 0 && (
-        <>
-          <h2>other (ordered by rating descending)</h2>
-          <ul>
-            {otherSiteBooks.map(book => (
-              <li key={book.book_id}>
-                <a href={book.link} target="_blank" rel="noopener noreferrer">
-                  {book.title}
-                </a>{' '}
-                by {book.author_name}
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-
-      {favoriteBooks.length === 0 && otherSiteBooks.length === 0 && (
-        <p>No books found. Check back later!</p>
-      )}
-    </div>
+        {favoriteBooks.length === 0 && otherSiteBooks.length === 0 && (
+          <p>No books found. Check back later!</p>
+        )}
+      </div>
+    </>
   );
 }

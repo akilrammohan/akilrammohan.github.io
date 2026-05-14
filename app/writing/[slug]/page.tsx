@@ -23,22 +23,24 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
   const MDXContent = useMDXComponent(post.body.code);
 
   return (
-    <div className="container">
+    <>
       <PageHeader title={post.title} />
-      <article>
-        <Link href="/writing">← Back to Writing</Link>
-        <time dateTime={post.date}>
-          {new Date(post.date).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          })}
-        </time>
-        {post.draft && <span> Draft</span>}
-        <div>
-          <MDXContent />
-        </div>
-      </article>
-    </div>
+      <div className="container">
+        <article>
+          <Link href="/writing">← Back to Writing</Link>
+          <time dateTime={post.date}>
+            {new Date(post.date).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </time>
+          {post.draft && <span> Draft</span>}
+          <div>
+            <MDXContent />
+          </div>
+        </article>
+      </div>
+    </>
   );
 }

@@ -10,8 +10,8 @@ html {
   font-size: 120%;
   --bg-color: #f7f7f9;
   --text-color: #1a1a1a;
-  --main-width: 632px;
-  --sidebar-width: 160px;
+  --main-width: 33rem;
+  --sidebar-width: 8.5rem;
 }
 
 html[data-theme="dark"] {
@@ -53,7 +53,7 @@ body {
   grid-template-rows: auto 1fr auto;
   width: 100%;
   padding-top: clamp(2rem, 5vw, 5rem);
-  min-height: calc(100vh - 4rem);
+  min-height: calc(100dvh - 4rem);
 }
 
 .sidebar {
@@ -104,10 +104,6 @@ body {
   line-height: 1;
 }
 
-.container {
-  max-width: var(--main-width);
-}
-
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -136,15 +132,15 @@ body {
   title row and the body. Grid simplifies to [1fr | main | 1fr] so main
   stays centered with identical left/right margins.
 */
-@media (max-width: 900px) {
+@media (max-width: 1080px) {
   body {
-    padding: clamp(1.125rem, 3vw, 2rem);
+    padding: clamp(1rem, 4vw, 2rem);
   }
   .site {
     grid-template-columns:
-      minmax(5rem, 1fr)
+      minmax(0, 1fr)
       minmax(0, var(--main-width))
-      minmax(5rem, 1fr);
+      minmax(0, 1fr);
     grid-template-rows: 1fr;
   }
   .sidebar {
@@ -290,5 +286,4 @@ p + p {
   padding-top: 4rem;
   padding-bottom: 1rem;
   text-align: right;
-  max-width: var(--main-width);
 }

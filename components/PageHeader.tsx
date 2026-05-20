@@ -11,7 +11,6 @@ export const PageHeader = ({ title }: { title: string }) => (
     </div>
     <div className="page-nav">
       <Navigation />
-      <ThemeToggle />
     </div>
   </>
 );

@@ -123,10 +123,6 @@ body {
   display: none;
 }
 
-.page-nav .theme-toggle {
-  display: none;
-}
-
 /*
   Single-column mode. Sidebar is dropped and the nav sits between the
   title row and the body. Grid simplifies to [1fr | main | 1fr] so main
@@ -155,19 +151,11 @@ body {
   .page-header {
     margin-bottom: 1.25rem;
   }
-  .page-header .theme-toggle {
-    display: none;
-  }
   .page-nav {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 1rem;
     margin-bottom: 1.25rem;
-  }
-  .page-nav .theme-toggle {
-    display: inline-block;
-    flex-shrink: 0;
   }
   .page-nav .site-nav {
     flex-direction: row;

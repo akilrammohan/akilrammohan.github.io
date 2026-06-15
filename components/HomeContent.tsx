@@ -27,7 +27,7 @@ export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) =>
       <PageHeader title="Akil Rammohan" />
       <div className="container">
         <p>
-          I'm a software engineer at <a href="https://www.mechanize.work" target="_blank" rel="noopener noreferrer">Mechanize</a>, where I build reinforcement learning environments and evals. We're trying to completely automate software engineering.
+          I'm a software engineer at <a href="https://www.mechanize.work" target="_blank" rel="noopener noreferrer">Mechanize</a>, where I build reinforcement learning environments and evals for software engineering tasks.
         </p>
 
         <p>

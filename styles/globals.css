@@ -178,6 +178,12 @@ h1 {
   margin-bottom: 0;
   font-size: 1.4rem;
   letter-spacing: 0.02em;
+  /*
+    Tight line-height so the title's half-leading doesn't pad out the gap
+    below it. In narrow mode this keeps the title->nav gap equal to the
+    nav->body gap (both driven purely by the 1.25rem margins).
+  */
+  line-height: 1.2;
 }
 
 .theme-toggle {
@@ -217,6 +223,12 @@ a:hover {
 
 .ipa {
   font-family: 'Charis SIL', 'Doulos SIL', 'Gentium Plus', 'Lucida Sans Unicode', 'Times New Roman', Times, serif;
+  /*
+    Benne lacks IPA glyphs, so this falls back to a font with a taller glyph
+    box that would otherwise open up the line gap. Shrinking below the body's
+    line strut keeps the IPA line the same height as every other line.
+  */
+  font-size: 0.9em;
 }
 
 h2 {
@@ -233,11 +245,11 @@ li {
 }
 
 p {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 p + p {
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 }
 
 .paper-card {
@@ -283,4 +295,34 @@ p + p {
 
 .site-footer .sep {
   color: #888;
+}
+
+/* Text labels show by default; the icon is the narrow-screen fallback. */
+.footer-icon {
+  display: none;
+}
+
+/*
+  On phones the six text labels are too wide for one line. Below this width
+  we swap each label (and the separators) for its compact icon so the row
+  stays on a single line instead of wrapping.
+*/
+@media (max-width: 540px) {
+  .site-footer {
+    column-gap: 1.1rem;
+  }
+  .site-footer .footer-label,
+  .site-footer .sep {
+    display: none;
+  }
+  .site-footer a {
+    display: inline-flex;
+    padding: 0.15rem;
+  }
+  .footer-icon {
+    display: block;
+    width: 1.2rem;
+    height: 1.2rem;
+    fill: currentColor;
+  }
 }

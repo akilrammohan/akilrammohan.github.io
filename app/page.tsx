@@ -2,7 +2,7 @@ import { fetchShelf } from '@/lib/goodreads';
 import { getTopAlbumWeekly } from '@/lib/lastfm';
 import { HomeContent } from '@/components/HomeContent';
 
-export const dynamic = 'force-dynamic'; // Fetch fresh data on every request
+export const revalidate = 3600; // Serve static HTML, refresh data in the background hourly
 
 export default async function HomePage() {
   const [siteBooks, topAlbum] = await Promise.all([

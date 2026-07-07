@@ -1,7 +1,7 @@
 import { fetchShelf } from '@/lib/goodreads';
 import { PageHeader } from '@/components/PageHeader';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600; // Serve static HTML, refresh data in the background hourly
 
 export const metadata = {
   title: 'Bookshelf',

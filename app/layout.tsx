@@ -1,8 +1,11 @@
 import { Analytics } from '@vercel/analytics/react';
+import { Benne } from 'next/font/google';
 import { ClientColorizer } from '@/components/ClientColorizer';
 import { Navigation } from '@/components/Navigation';
 import { SiteFooter } from '@/components/SiteFooter';
 import '@/styles/globals.css';
+
+const benne = Benne({ weight: '400', subsets: ['latin'] });
 
 export const metadata = {
   title: {
@@ -53,12 +56,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Benne&display=swap" rel="stylesheet" />
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body>
+      <body className={benne.className}>
         <ClientColorizer />
         <div className="site">
           <aside className="sidebar">

@@ -20,7 +20,7 @@ html[data-theme="dark"] {
 }
 
 body {
-  font-family: 'Benne', serif;
+  /* font-family comes from next/font (Benne) in app/layout.tsx */
   line-height: 1.6;
   padding: clamp(0.75rem, 3vw, 2rem);
   background-color: var(--bg-color);

@@ -1,6 +1,6 @@
 # Personal Website
 
-Next.js 14 app router site — minimal, prose-driven personal website.
+Next.js 14 app router site — minimal, prose-driven personal website. Deployed at https://akilr.com via Vercel.
 
 ## Project Layout
 
@@ -13,16 +13,18 @@ styles/        - globals.css
 
 ## Key Files
 
-- `app/layout.tsx` - root layout
+- `app/layout.tsx` - root layout (sidebar/main grid, theme init, link colorizer)
 - `app/page.tsx` - homepage (server component, fetches data)
 - `components/HomeContent.tsx` - homepage client component
 - `components/Navigation.tsx` - shared nav component
+- `components/PageHeader.tsx` / `components/SiteFooter.tsx` - shared page chrome
+- `components/ThemeToggle.tsx` - light/dark toggle (`data-theme` on `<html>`)
 - `app/publications/page.tsx` - publications with paper citation card
 - `app/bookshelf/page.tsx` - bookshelf (fetches from Goodreads)
 
 ## Styling
 
-Minimal CSS in `styles/globals.css`. Content is in a `.container` (max-width 600px, centered). Body uses Times New Roman. Scrollbar is always visible (`overflow-y: scroll` on html) to prevent layout shift between pages.
+Minimal CSS in `styles/globals.css`. Layout is a CSS grid (`.site`): left sidebar nav + centered main column (`--main-width`), collapsing to a single column below 1080px. Light/dark themes via CSS variables keyed off `data-theme`. Body uses Benne, self-hosted via `next/font` in `app/layout.tsx`. Scrollbar is always visible (`overflow-y: scroll` on html) to prevent layout shift between pages.
 
 Publication cards use `.paper-card` with `.paper-title`, `.paper-authors`, `.paper-venue`, `.paper-links` classes.
 
@@ -30,3 +32,7 @@ Publication cards use `.paper-card` with `.paper-title`, `.paper-authors`, `.pap
 
 - Goodreads RSS → recently read books
 - Last.fm → weekly top album (getWeeklyAlbumChart)
+
+## Caching
+
+Homepage and bookshelf use ISR (`export const revalidate = 3600`) — served as static HTML, data refreshed in the background at most hourly. Goodreads is also cached via `unstable_cache` (tag: `goodreads`, on-demand revalidation via `/api/revalidate`). Don't add `force-dynamic` or `cache: 'no-store'` to these pages.

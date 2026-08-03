@@ -23,8 +23,8 @@ export default async function BookshelfPage() {
       <PageHeader title="Akil Rammohan's Bookshelf" />
       <div className="container">
         <p>
-          I've loved reading my whole life, and figured I should try to track it on{' '}
-          <a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" target="_blank" rel="noopener noreferrer">goodreads</a>. Here's a list of my favorites + the books I remembered reading off the top of my head when I joined goodreads.
+          I&apos;ve loved reading my whole life, and figured I should try to track it on{' '}
+          <a href="https://www.goodreads.com/user/show/109135301-akil-rammohan" target="_blank" rel="noopener noreferrer">goodreads</a>. Here&apos;s a list of my favorites + the books I remembered reading off the top of my head when I joined goodreads.
         </p>
 
         {favoriteBooks.length > 0 && (

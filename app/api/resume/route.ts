@@ -13,7 +13,9 @@ export async function GET() {
     return new Response(response.body, {
       headers: {
         'Content-Type': 'application/pdf',
-        'Cache-Control': 'public, max-age=86400', // 1 day cache
+        // s-maxage lets Vercel's CDN serve this without invoking the function;
+        // stale-while-revalidate keeps serving the old PDF while refreshing.
+        'Cache-Control': 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800',
       },
     });
   } catch (error) {

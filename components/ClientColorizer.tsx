@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 
 declare global {
   interface Window {
-    __colorizeLinks?: () => void;
+    __colorizeLinks?: (reshuffle?: boolean) => void;
   }
 }
 
@@ -18,7 +18,7 @@ export const ClientColorizer = () => {
   useIsoLayoutEffect(() => {
     if (pathname === prevPathname.current) return;
     prevPathname.current = pathname;
-    window.__colorizeLinks?.();
+    window.__colorizeLinks?.(true);
   }, [pathname]);
 
   return null;

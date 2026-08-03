@@ -20,8 +20,6 @@ export const ThemeToggle = () => {
       return;
     }
     document.documentElement.setAttribute('data-theme', theme);
-    const colorize = (window as unknown as { __colorizeLinks?: () => void }).__colorizeLinks;
-    if (colorize) colorize();
   }, [theme]);
 
   const toggle = (next: Theme) => (e: React.MouseEvent<HTMLAnchorElement>) => {

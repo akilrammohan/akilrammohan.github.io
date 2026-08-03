@@ -16,24 +16,32 @@ export const metadata = {
 
 const colorizerScript = `
 (function() {
-  var berryDeep = ['#c6397d','#7d39c6','#b58a4a','#397dc6','#8ab54a'];
-  var berry     = ['#d878a8','#a878d8','#c8a878','#78a8d8','#a8c878'];
+  var order;
   function s(a) {
-    a = a.slice();
     for (var i = a.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
       var t = a[i]; a[i] = a[j]; a[j] = t;
     }
     return a;
   }
-  window.__colorizeLinks = function() {
-    var theme = document.documentElement.getAttribute('data-theme');
-    var sh = s(theme === 'dark' ? berry : berryDeep);
+  function stamp() {
     document.querySelectorAll('a').forEach(function(l, i) {
-      l.style.color = sh[i % sh.length];
+      l.setAttribute('data-c', order[i % order.length]);
     });
+  }
+  window.__colorizeLinks = function(reshuffle) {
+    if (!order || reshuffle) order = s([0, 1, 2, 3, 4]);
+    stamp();
   };
   window.__colorizeLinks();
+  // Auto-stamp anchors added later (e.g. the theme toggle swapping its
+  // label from a span to a link) without reshuffling existing colors.
+  // Only ClientColorizer reshuffles, since only it knows a navigation
+  // happened rather than an in-place DOM change.
+  new MutationObserver(stamp).observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
 })();
 `;
 

@@ -24,7 +24,7 @@ styles/        - globals.css
 
 ## Styling
 
-Minimal CSS in `styles/globals.css`. Layout is a CSS grid (`.site`): left sidebar nav + centered main column (`--main-width`), collapsing to a single column below 1080px. Light/dark themes via CSS variables keyed off `data-theme`. Body uses Benne, self-hosted via `next/font` in `app/layout.tsx`. Scrollbar is always visible (`overflow-y: scroll` on html) to prevent layout shift between pages.
+Minimal CSS in `styles/globals.css`. Layout is a CSS grid (`.site`): left sidebar nav + centered main column (`--main-width`), collapsing to a single column below 1080px. Light/dark themes via CSS variables keyed off `data-theme`. Body uses Linden Hill (League of Moveable Type, OFL; regular + italic, no bold face — bold is synthesized), self-hosted via `next/font/local` from `app/fonts/` in `app/layout.tsx`. Scrollbar is always visible (`overflow-y: scroll` on html) to prevent layout shift between pages.
 
 Publication cards use `.paper-card` with `.paper-title`, `.paper-authors`, `.paper-venue`, `.paper-links` classes.
 

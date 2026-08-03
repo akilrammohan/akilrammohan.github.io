@@ -1,11 +1,19 @@
 import { Analytics } from '@vercel/analytics/react';
-import { Benne } from 'next/font/google';
+import localFont from 'next/font/local';
 import { ClientColorizer } from '@/components/ClientColorizer';
 import { Navigation } from '@/components/Navigation';
 import { SiteFooter } from '@/components/SiteFooter';
 import '@/styles/globals.css';
 
-const benne = Benne({ weight: '400', subsets: ['latin'] });
+// Linden Hill (League of Moveable Type, OFL) has no bold face; the
+// browser synthesizes bold for links and headings.
+const lindenHill = localFont({
+  src: [
+    { path: './fonts/LindenHill.woff2', weight: '400', style: 'normal' },
+    { path: './fonts/LindenHill-Italic.woff2', weight: '400', style: 'italic' },
+  ],
+  display: 'swap',
+});
 
 export const metadata = {
   title: {
@@ -66,7 +74,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className={benne.className}>
+      <body className={lindenHill.className}>
         <ClientColorizer />
         <div className="site">
           <aside className="sidebar">

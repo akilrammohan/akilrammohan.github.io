@@ -13,17 +13,18 @@ styles/        - globals.css
 
 ## Key Files
 
-- `app/layout.tsx` - root layout (sidebar/main grid, font, link colorizer)
+- `app/layout.tsx` - root layout (sidebar/main grid, theme init, link colorizer)
 - `app/page.tsx` - homepage (server component, fetches data)
 - `components/HomeContent.tsx` - homepage client component
 - `components/Navigation.tsx` - shared nav component
 - `components/PageHeader.tsx` / `components/SiteFooter.tsx` - shared page chrome
+- `components/ThemeToggle.tsx` - light/dark toggle (`data-theme` on `<html>`)
 - `app/publications/page.tsx` - publications with paper citation card
 - `app/bookshelf/page.tsx` - bookshelf (fetches from Goodreads)
 
 ## Styling
 
-Minimal CSS in `styles/globals.css`. Layout is a CSS grid (`.site`): left sidebar nav + centered main column (`--main-width`), collapsing to a single column below 1080px. One fixed theme: flat gray ground (`--bg-color`), black text, and five link hues in OKLCH (`--link-c0`..`--link-c4`, stamped onto anchors by the colorizer script). Body uses Ostrich Sans Medium (League of Moveable Type, OFL; caps-only, single weight — bold is synthesized), self-hosted via `next/font/local` from `app/fonts/` in `app/layout.tsx`. The body is uppercased with slight tracking and a hairline `-webkit-text-stroke` to thicken it; `.ipa` undoes those. The WOFF2 was converted from the repo OTF. Scrollbar is always visible (`overflow-y: scroll` on html) to prevent layout shift between pages.
+Minimal CSS in `styles/globals.css`. Layout is a CSS grid (`.site`): left sidebar nav + centered main column (`--main-width`), collapsing to a single column below 1080px. Light/dark themes via CSS variables keyed off `data-theme`. Body uses Linden Hill (League of Moveable Type, OFL; regular + italic, no bold face — bold is synthesized), self-hosted via `next/font/local` from `app/fonts/` in `app/layout.tsx`. Scrollbar is always visible (`overflow-y: scroll` on html) to prevent layout shift between pages.
 
 Publication cards use `.paper-card` with `.paper-title`, `.paper-authors`, `.paper-venue`, `.paper-links` classes.
 

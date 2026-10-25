@@ -1,4 +1,4 @@
-import { fetchShelf } from '@/lib/goodreads';
+import { effectiveReadDate, fetchShelf } from '@/lib/goodreads';
 import { getTopAlbumWeekly } from '@/lib/lastfm';
 import { HomeContent } from '@/components/HomeContent';
 
@@ -10,11 +10,9 @@ export default async function HomePage() {
     getTopAlbumWeekly(),
   ]);
 
-  const recentlyReadBook = siteBooks.sort((a, b) => {
-    const dateA = a.user_read_at ? new Date(a.user_read_at).getTime() : 0;
-    const dateB = b.user_read_at ? new Date(b.user_read_at).getTime() : 0;
-    return dateB - dateA;
-  })[0];
+  const recentlyReadBook = [...siteBooks].sort(
+    (a, b) => effectiveReadDate(b) - effectiveReadDate(a)
+  )[0];
 
   return (
     <HomeContent

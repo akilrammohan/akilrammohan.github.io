@@ -8,39 +8,39 @@
 html {
   overflow-y: scroll;
   font-size: 120%;
-  --bg-color: #f7f7f9;
-  --text-color: #1a1a1a;
+  --bg-color: #b4b4b4;
+  --text-color: #000;
+  --muted-color: #555;
+  --rule-color: #000;
   --main-width: 33rem;
   --sidebar-width: 8.5rem;
   /*
     Link palette in OKLCH: five evenly-weighted hues (pink, purple, gold,
-    blue, green) sharing one lightness/chroma per theme, so every color has
-    the same perceived weight and contrast against the background.
+    blue, green) sharing one lightness/chroma, so every color has the
+    same perceived weight and contrast against the gray ground.
   */
-  --link-c0: oklch(55% 0.14 350);
-  --link-c1: oklch(55% 0.14 300);
-  --link-c2: oklch(55% 0.14 75);
-  --link-c3: oklch(55% 0.14 250);
-  --link-c4: oklch(55% 0.14 135);
-}
-
-html[data-theme="dark"] {
-  --bg-color: #1c1f26;
-  --text-color: #e5e0d5;
-  --link-c0: oklch(75% 0.11 350);
-  --link-c1: oklch(75% 0.11 300);
-  --link-c2: oklch(75% 0.11 75);
-  --link-c3: oklch(75% 0.11 250);
-  --link-c4: oklch(75% 0.11 135);
+  --link-c0: oklch(44% 0.16 350);
+  --link-c1: oklch(44% 0.16 300);
+  --link-c2: oklch(44% 0.16 75);
+  --link-c3: oklch(44% 0.16 250);
+  --link-c4: oklch(44% 0.16 135);
 }
 
 body {
-  /* font-family comes from next/font (Linden Hill) in app/layout.tsx */
+  /* font-family comes from next/font (Ostrich Sans) in app/layout.tsx */
   line-height: 1.6;
   padding: clamp(0.75rem, 3vw, 2rem);
   background-color: var(--bg-color);
   color: var(--text-color);
-  transition: background-color 220ms ease, color 220ms ease;
+  /*
+    Ostrich Sans is caps-only, so uppercase explicitly (its lowercase
+    codepoints draw the same capitals anyway) and open the condensed
+    letters up with some tracking. The single weight is on the light
+    side, so a hairline stroke thickens it a touch.
+  */
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  -webkit-text-stroke: 0.35px currentColor;
 }
 
 /*
@@ -201,42 +201,14 @@ h1 {
   line-height: 1.2;
 }
 
-.theme-toggle {
-  font-size: 0.9rem;
-  flex-shrink: 0;
-}
-
-.theme-toggle .sep {
-  margin: 0 0.25rem;
-  color: #888;
-}
-
-.theme-toggle .toggle-item {
-  display: inline-block;
-  text-align: center;
-}
-
-.theme-toggle .toggle-item::before {
-  content: attr(data-text);
-  font-weight: bold;
-  display: block;
-  height: 0;
-  visibility: hidden;
-  overflow: hidden;
-  pointer-events: none;
-}
-
 a {
   font-weight: bold;
   text-decoration: none;
-  transition: color 220ms ease;
 }
 
 /*
   Link colors: the colorizer script stamps each anchor with a random
-  palette index (data-c); the vars above map index -> color per theme,
-  so toggling the theme recolors links in pure CSS (each hue cross-fades
-  to its dark/light counterpart) with no per-link JS writes.
+  palette index (data-c); the vars above map index -> color.
 */
 a[data-c="0"] { color: var(--link-c0); }
 a[data-c="1"] { color: var(--link-c1); }
@@ -250,11 +222,16 @@ a:hover {
 .ipa {
   font-family: 'Charis SIL', 'Doulos SIL', 'Gentium Plus', 'Lucida Sans Unicode', 'Times New Roman', Times, serif;
   /*
-    Benne lacks IPA glyphs, so this falls back to a font with a taller glyph
-    box that would otherwise open up the line gap. Shrinking below the body's
-    line strut keeps the IPA line the same height as every other line.
+    Ostrich lacks IPA glyphs, so this falls back to a font with a taller
+    glyph box that would otherwise open up the line gap. Shrinking below
+    the body's line strut keeps the IPA line the same height as every
+    other line. IPA is case-sensitive, so the body's uppercase and
+    tracking are undone here too.
   */
   font-size: 0.9em;
+  text-transform: none;
+  letter-spacing: normal;
+  -webkit-text-stroke: 0;
 }
 
 h2 {
@@ -279,7 +256,7 @@ p + p {
 }
 
 .paper-card {
-  border: 1px solid #ccc;
+  border: 1px solid var(--rule-color);
   padding: 1rem 1.25rem;
   margin-bottom: 1.5rem;
 }
@@ -320,7 +297,7 @@ p + p {
 }
 
 .site-footer .sep {
-  color: #888;
+  color: var(--muted-color);
 }
 
 /* Text labels show by default; the icon is the narrow-screen fallback. */

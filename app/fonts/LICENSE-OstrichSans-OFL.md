@@ -1,4 +1,6 @@
-    Copyright (c) 2010, Barry Schwartz <site-chieftain@crudfactory.com>, with Reserved Font Name OFL "Linden Hill".
+Ostrich Sans, by Tyler Finck (The League of Moveable Type, https://www.theleagueofmoveabletype.com/ostrich-sans). Source: https://github.com/theleagueof/ostrich-sans. WOFF2 files converted from the repo's OTFs.
+
+	Copyright (c) 2011, Tyler Finck <hi@tylerfinck.com>, with Reserved Font Name: "Ostrich Sans".
 
 	This Font Software is licensed under the SIL Open Font License, Version 1.1.
 	This license is copied below, and is also available with a FAQ at:

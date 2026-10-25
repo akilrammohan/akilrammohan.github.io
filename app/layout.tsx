@@ -5,13 +5,12 @@ import { Navigation } from '@/components/Navigation';
 import { SiteFooter } from '@/components/SiteFooter';
 import '@/styles/globals.css';
 
-// Linden Hill (League of Moveable Type, OFL) has no bold face; the
-// browser synthesizes bold for links and headings.
-const lindenHill = localFont({
-  src: [
-    { path: './fonts/LindenHill.woff2', weight: '400', style: 'normal' },
-    { path: './fonts/LindenHill-Italic.woff2', weight: '400', style: 'italic' },
-  ],
+// Ostrich Sans Medium (The League of Moveable Type, OFL): a caps-only
+// condensed face with one usable weight; globals.css thickens it with a
+// hairline stroke and the browser synthesizes bold for links.
+const ostrichSans = localFont({
+  src: './fonts/OstrichSans-Medium.woff2',
+  weight: '400',
   display: 'swap',
 });
 
@@ -42,25 +41,14 @@ const colorizerScript = `
     stamp();
   };
   window.__colorizeLinks();
-  // Auto-stamp anchors added later (e.g. the theme toggle swapping its
-  // label from a span to a link) without reshuffling existing colors.
+  // Auto-stamp anchors added later (e.g. by client-side re-renders)
+  // without reshuffling existing colors.
   // Only ClientColorizer reshuffles, since only it knows a navigation
   // happened rather than an in-place DOM change.
   new MutationObserver(stamp).observe(document.body, {
     childList: true,
     subtree: true,
   });
-})();
-`;
-
-const themeInitScript = `
-(function() {
-  try {
-    var d = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
-  } catch (e) {
-    document.documentElement.setAttribute('data-theme', 'light');
-  }
 })();
 `;
 
@@ -71,10 +59,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-      </head>
-      <body className={lindenHill.className}>
+      <body className={ostrichSans.className}>
         <ClientColorizer />
         <div className="site">
           <aside className="sidebar">

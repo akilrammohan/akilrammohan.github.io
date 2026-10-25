@@ -27,7 +27,7 @@ export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) =>
       <PageHeader title="Akil Rammohan" />
       <div className="container">
         <p>
-          I work at <a href="https://www.mechanize.work" target="_blank" rel="noopener noreferrer">Mechanize</a>, where I build reinforcement learning environments and evals for software engineering tasks. We&apos;re trying to fully automate software engineering.
+          I work at <a href="https://deepmind.google" target="_blank" rel="noopener noreferrer">Google Deepmind</a> on the Polaris team (part of midtraining), where I build reinforcement learning environments and evals for software engineering tasks.
         </p>
 
         <p>
@@ -39,7 +39,7 @@ export const HomeContent = ({ recentlyReadBook, topAlbum }: HomeContentProps) =>
         </p>
 
         <p>
-          Before Mechanize I was an inaugural SAIL fellow at the <a href="https://nplus1.wisc.edu" target="_blank" rel="noopener noreferrer">N+1 Institute</a>, building an agentic AI news aggregator, while also doing data analysis at <a href="https://www.fastersmarter.io" target="_blank" rel="noopener noreferrer">Think Fast Talk Smart</a>. Before that I was an undergraduate researcher at the <a href="https://neuroergolab.org/" target="_blank" rel="noopener noreferrer">NeuroErgonomics Lab</a> working on embodied AI in XR. Check out my <a href="/resume.pdf">resume</a> or <a href="https://www.linkedin.com/in/akilrammohan/" target="_blank" rel="noopener noreferrer">linkedin</a> for more info.
+          Previously I worked at <a href="https://www.mechanize.work" target="_blank" rel="noopener noreferrer">Mechanize</a>, also building rl envs and eval tasks. Before that I was a participant in the inaugural <a href="https://nplus1.wisc.edu" target="_blank" rel="noopener noreferrer">Summer AI Lab</a>. Before that I was an undergraduate researcher at the <a href="https://neuroergolab.org/" target="_blank" rel="noopener noreferrer">NeuroErgonomics Lab</a>, working on embodied AI in XR. For more info check out my <a href="/resume.pdf">resume</a>.
         </p>
 
         <p>
